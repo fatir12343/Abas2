@@ -47,8 +47,8 @@ class siswacontroller extends Controller
         // Cek apakah $waktu null, jika iya set nilai default
         $jam_masuk = $waktu ? $waktu->jam_masuk : '06:30:00';
         $jam_pulang = $waktu ? $waktu->jam_pulang : '15:30:00';
-        $batas_jam_masuk = $waktu ? $waktu->batas_jam_masuk : '07:05:00';
-        $batas_jam_pulang = $waktu ? $waktu->batas_jam_pulang : '16:30:00';
+        $batas_jam_masuk = $waktu ? $waktu->batas_jam_masuk : null;
+        $batas_jam_pulang = $waktu ? $waktu->batas_jam_pulang : null;
 
         return view('Siswa.siswa', [
             'waktu' => $waktu,
@@ -95,9 +95,9 @@ class siswacontroller extends Controller
         $radiussekolah = $lok_sekolah->radius;
         $koordinatSekolah = explode(",", $lok_sekolah->lokasi_sekolah);
         $koordinatSekolah = [-6.89030341484189, 107.5583515530317]; // Contoh data koordinat sekolah
-        if (isset($koordinatSekolah[0]) && isset($koordinatSekolah[2])) {
+        if (isset($koordinatSekolah[0]) && isset($koordinatSekolah[1])) {
             $latitudeSekolah = $koordinatSekolah[0];
-            $longitudeSekolah = $koordinatSekolah[2];
+            $longitudeSekolah = $koordinatSekolah[1];
         } else {
             // Handle error jika koordinat tidak lengkap
             echo "Koordinat sekolah tidak lengkap.";
@@ -120,6 +120,8 @@ class siswacontroller extends Controller
 
         // Ambil batas waktu masuk
         $batasMasuk = DB::table('waktu_absen')->value('batas_jam_masuk');
+        // Ambil batas waktu pulang
+        $batasPulang = DB::table('waktu_absen')->value('batas_jam_pulang');
 
         // Cek apakah siswa sudah absen masuk hari ini
         $absenHariIni = DB::table('absensi')->where('date', $date)->where('nis', $nis)->first();
@@ -136,18 +138,24 @@ class siswacontroller extends Controller
                     'jam_pulang' => $jam,
                     'titik_koordinat_pulang' => $lokasiSiswa,
                 ];
-                $update = DB::table('absensi')->where('date', $date)->where('nis', $nis)->update($data_pulang);
+
+                $update = DB::table('absensi')
+                    ->where('date', $date)
+                    ->where('nis', $nis)
+                    ->update($data_pulang);
+
                 if ($update) {
                     Storage::put($file, $image_base64);
                     return redirect('/siswa')->with('berhasil', 'Absen pulang berhasil dicatat.');
                 } else {
-                    return redirect('/siswa')->with('gagal', 'Absen pulang gagal.');
+                    // Jika update gagal, kemungkinan data tidak ditemukan
+                    return redirect('/siswa')->with('gagal', 'Absen pulang gagal. Data absensi tidak ditemukan.');
                 }
             } else {
                 // Jika belum absen masuk, lakukan absen masuk
                 $status = ($jam > $batasMasuk) ? 'Terlambat' : 'Hadir';
                 $data = [
-                    'nis' => $nis,
+                    'nis' => '00' . $nis,
                     'status' => $status,
                     'photo_in' => $fileName,
                     'date' => $date,
@@ -156,7 +164,6 @@ class siswacontroller extends Controller
                 ];
 
                 $simpan = DB::table('absensi')->insert($data);
-
                 if ($simpan) {
                     Storage::put($file, $image_base64);
                     return redirect('/siswa')->with('berhasil', 'Absen masuk berhasil dicatat.');

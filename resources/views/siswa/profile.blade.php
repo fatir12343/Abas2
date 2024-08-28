@@ -47,9 +47,6 @@
                 @csrf
                 <input type="hidden" name="id" value="{{ $siswa->id }}">
                 <h4 class="card-title mb-2">
-                    <a href="{{ route('profile') }}" class="btn rounded btn-outline-danger">
-                        <i class='bx bx-chevron-left'></i>
-                    </a>
                     Profil
                 </h4>
 
@@ -73,10 +70,11 @@
                             <div class="card-header"></div>
                             <div class="card-body">
                                 <div class="d-flex align-items-start gap-4">
-                                    <img src="{{ asset('/storage/user_avatar/' . $siswa->foto) }}" alt="Profile Picture" class="d-block rounded" height="100" width="100">
-                                    <div class="button-wrapper">
+                                    {{-- {{ dd($siswa->foto) }} --}}
+                                    <img src="{{ asset('/storage/defaultuser/' . ($siswa->foto ? $siswa->foto : 'vault.png')) }}" alt="Profile Picture" class="d-block rounded" height="100" width="100">
+                                    <div class="button-wrapper">`
                                         <label for="upload" class="btn btn-absen me-2 mb-4" tabindex="0">
-                                            <span class="d-none d-sm-block">Upload new photo</span>
+                                           <span class="d-none d-sm-block">Upload new photo</span>
                                             <i class="bx bx-upload d-block d-sm-none"></i>
                                             <input type="file" id="upload" class="account-file-input" hidden name="foto" accept="image/png, image/jpeg, image/jpg">
                                         </label>

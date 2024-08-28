@@ -93,73 +93,18 @@
                 </div>
 
 
-                {{-- <section class="absen">
-                    <div class="container">
+                <div class="card">
+                    <div class="card-body">
                         <div class="row">
-                            <div class="col-md-6 col-lg-6">
-                                @if ($statusAbsen == 'Sudah Pulang')
-                                    <a class="absen_item bg-secondary">
-                                        <div class="icon">
-                                            <div class="iconwrapper">
-                                                <i class="fa-solid fa-person-circle-check text-light"></i>
-                                                <p class="number">Mantap!</p>
-                                            </div>
-                                        </div>
-                                        <div class="textabsen">
-                                            <div class="textwrapperabsen">
-                                                <h2 class="number">Selamat beristirahat dan sampai jumpa besok!</h2>
-                                            </div>
-                                        </div>
-                                    </a>
-                                @elseif ($statusAbsen == 'Sudah Absen Masuk')
-                                    <a href="{{ url('/siswa') }}" class="absen_item bg-danger">
-                                        <div class="icon">
-                                            <div class="iconwrapper">
-                                                <i class="fa-solid fa-person-circle-check text-light"></i>
-                                                <p class="number">Absen Pulang</p>
-                                            </div>
-                                        </div>
-                                        <div class="textabsen">
-                                            <div class="textwrapperabsen">
-                                                <h2 class="number">Batas Absen</h2>
-                                                <h2 class="number">{{ \Carbon\Carbon::parse($waktu->jam_pulang)->format('H:i') }} -
-                                                    {{ \Carbon\Carbon::parse($waktu->batas_jam_pulang)->format('H:i') }} WIB
-                                                </h2>
-                                            </div>
-                                        </div>
-                                    </a>
-                                @else
-                                    <a href="{{ url('/siswa') }}" class="absen_item bg-success">
-                                        <div class="icon">
-                                            <div class="iconwrapper">
-                                                <i class="fa-solid fa-person-circle-check text-light"></i>
-                                                <p class="number">Absen Masuk</p>
-                                            </div>
-                                        </div>
-                                        <div class="textabsen">
-                                            <div class="textwrapperabsen">
-                                                <h2 class="number">Batas Absen</h2>
-                                                <h2 class="number">{{ \Carbon\Carbon::parse($waktu->jam_masuk)->format('H:i') }} -
-                                                    {{ \Carbon\Carbon::parse($waktu->batas_jam_masuk)->format('H:i') }} WIB
-                                                </h2>
-                                            </div>
-                                        </div>
-                                    </a>
-                                @endif
-                            </div>
-                        </div> --}}
-
-                        <!-- Additional row for presence cards -->
-                        <div class="row">
-                            <div class="col-6 mb-2">
-                                <div class="card gradasigreen {{ $statusAbsen == 'Sudah Absen Masuk' ? 'disabled' : '' }}">
+                            <div class="col-6 mb-1">
+                                <div class="card gradasigreen">
                                     <div class="card-body">
                                         <div class="presencecontent">
                                             <div class="iconpresence">
                                                 @if ($statusAbsen == 'Sudah Absen Masuk')
                                                     <ion-icon name="camera"></ion-icon>
                                                 @else
-                                                    <a href="{{ url('/siswa') }}" class="href">
+                                                    <a href="{{ url('/absen') }}" class="href">
                                                         <ion-icon name="camera"></ion-icon>
                                                     </a>
                                                 @endif
@@ -173,15 +118,15 @@
                                 </div>
                             </div>
 
-                            <div class="col-6 mb-2">
-                                <div class="card gradasired {{ $statusAbsen != 'Sudah Absen Masuk' ? 'disabled' : '' }}">
+                            <div class="col-6 mb-1">
+                                <div class="card gradasired {{ $statusAbsen != 'Sudah Absen Pulang' ? 'disabled' : '' }}">
                                     <div class="card-body">
                                         <div class="presencecontent">
                                             <div class="iconpresence">
-                                                @if ($statusAbsen != 'Sudah Absen Masuk')
+                                                @if ($statusAbsen != 'Sudah Absen Pulang')
                                                     <ion-icon name="camera" style="color: #ccc;"></ion-icon>
                                                 @else
-                                                    <a href="{{ url('/siswa') }}" class="href">
+                                                    <a href="{{ url('/absen') }}" class="href">
                                                         <ion-icon name="camera"></ion-icon>
                                                     </a>
                                                 @endif
@@ -196,12 +141,14 @@
                             </div>
                         </div>
                     </div>
-                </section>
+                </div>
 
 
 
+        <div class="card">
+            <div class="card-body">
                 <div class="row">
-                    <div class="col-6 mb-2">
+                    <div class="col-6 mb-1">
                         <div class="card gradasiblue" data-toggle="modal" data-target="#FormulirModal" data-status="izin">
                             <div class="card-body">
                                 <div class="presencecontent">
@@ -217,7 +164,7 @@
                         </div>
                     </div>
 
-                    <div class="col-6 mb-2">
+                    <div class="col-6 mb-1">
                         <div class="card gradasipurple" data-toggle="modal" data-target="#FormulirModal" data-status="sakit">
                             <div class="card-body">
                                 <div class="presencecontent">
@@ -233,6 +180,8 @@
                         </div>
                     </div>
                 </div>
+            </div>
+         </div>
     <!-- * App Capsule -->
 
     <!-- Popup Formulir Izin -->
@@ -300,7 +249,7 @@
         <a href="#" class="item">
             <div class="col">
                 <ion-icon name="albums-outline" class="icon"></ion-icon>
-                <strong>Riwayat</strong>
+                <strong>Rekap</strong>
             </div>
         </a>
 
