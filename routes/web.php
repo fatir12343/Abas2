@@ -50,9 +50,9 @@ Route::middleware(['auth', 'kesiswaan:kesiswaan'])->group(function () {
 });
 Route::middleware(['auth', 'siswa:siswa'])->group(function () {
     Route::get('/siswa', [App\Http\Controllers\siswacontroller::class, 'index'])->name('siswa');
-    Route::get('/absen', [App\Http\Controllers\siswacontroller::class, 'absen'])->name('absen');
+    Route::post('/absen', [App\Http\Controllers\siswacontroller::class, 'absen'])->name('absen');
     Route::get('/profile', [App\Http\Controllers\siswacontroller::class, 'profile'])->name('profile');
-    Route::post('/update-profile', [App\Http\Controllers\siswacontroller::class, 'updateprofile'])->name('update-profile');
+    Route::put('/update-profile', [App\Http\Controllers\siswacontroller::class, 'updateprofile'])->name('update-profile');
     Route::post('/ambil-absen', [App\Http\Controllers\siswacontroller::class, 'store'])->name('ambil-absen');
     Route::post('/upload-file', [App\Http\Controllers\SiswaController::class, 'uploadfile'])->name('upload-file');
 });

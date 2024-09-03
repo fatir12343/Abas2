@@ -96,44 +96,44 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
+                            <!-- Form Absen Masuk/Pulang -->
                             <div class="col-6 mb-1">
-                                <div class="card gradasigreen">
-                                    <div class="card-body">
-                                        <div class="presencecontent">
-                                            <div class="iconpresence">
-                                                @if ($statusAbsen == 'Sudah Absen Masuk')
-                                                    <ion-icon name="camera"></ion-icon>
-                                                @else
-                                                    <a href="{{ url('/absen') }}" class="href">
+                                <form action="{{ url('/absen') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="jenis_absen" value="{{ $statusAbsen == 'Sudah Absen Masuk' ? 'pulang' : 'masuk' }}">
+                                    <div class="card {{ $statusAbsen == 'Sudah Absen Masuk' ? 'gradasired' : 'gradasigreen' }}">
+                                        <div class="card-body">
+                                            <div class="presencecontent">
+                                                <div class="iconpresence">
+                                                    <button type="submit" class="btn btn-link">
                                                         <ion-icon name="camera"></ion-icon>
-                                                    </a>
-                                                @endif
-                                            </div>
-                                            <div class="presencedetail">
-                                                <h4 class="presencetitle">Masuk</h4>
-                                                <span>{{ $jam_masuk }}</span>
+                                                    </button>
+                                                </div>
+                                                <div class="presencedetail">
+                                                    <h4 class="presencetitle">
+                                                        {{ $statusAbsen == 'Sudah Absen Masuk' ? 'Pulang' : 'Masuk' }}
+                                                    </h4>
+                                                    <span>
+                                                        {{ $statusAbsen == 'Sudah Absen Masuk' ? $jam_pulang : $jam_masuk }}
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
 
+                            <!-- Form Izin/Sakit -->
                             <div class="col-6 mb-1">
-                                <div class="card gradasired {{ $statusAbsen != 'Sudah Absen Pulang' ? 'disabled' : '' }}">
+                                <div class="card gradasiblue" data-toggle="modal" data-target="#FormulirModal" data-status="izin">
                                     <div class="card-body">
                                         <div class="presencecontent">
                                             <div class="iconpresence">
-                                                @if ($statusAbsen != 'Sudah Absen Pulang')
-                                                    <ion-icon name="camera" style="color: #ccc;"></ion-icon>
-                                                @else
-                                                    <a href="{{ url('/absen') }}" class="href">
-                                                        <ion-icon name="camera"></ion-icon>
-                                                    </a>
-                                                @endif
+                                                <ion-icon name="paper-plane-outline"></ion-icon>
                                             </div>
                                             <div class="presencedetail">
-                                                <h4 class="presencetitle">Pulang</h4>
-                                                <span>{{ $jam_pulang }}</span>
+                                                <h4 class="presencetitle">Izin/Sakit</h4>
+                                                <span>Isi form izin/sakit</span>
                                             </div>
                                         </div>
                                     </div>
@@ -145,43 +145,8 @@
 
 
 
-        <div class="card">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-6 mb-1">
-                        <div class="card gradasiblue" data-toggle="modal" data-target="#FormulirModal" data-status="izin">
-                            <div class="card-body">
-                                <div class="presencecontent">
-                                    <div class="iconpresence">
-                                        <ion-icon name="paper-plane-outline"></ion-icon>
-                                    </div>
-                                    <div class="presencedetail">
-                                        <h4 class="presencetitle">Izin</h4>
-                                        <span>Isi form izin</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="col-6 mb-1">
-                        <div class="card gradasipurple" data-toggle="modal" data-target="#FormulirModal" data-status="sakit">
-                            <div class="card-body">
-                                <div class="presencecontent">
-                                    <div class="iconpresence">
-                                        <ion-icon name="medkit-outline"></ion-icon>
-                                    </div>
-                                    <div class="presencedetail">
-                                        <h4 class="presencetitle">Sakit</h4>
-                                        <span>Isi form sakit</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-         </div>
+
     <!-- * App Capsule -->
 
     <!-- Popup Formulir Izin -->
@@ -223,7 +188,7 @@
                         <div class="form-group row mt-3">
                             <label class="col-md-3 col-form-label">Upload File</label>
                             <div class="col-md-9">
-                                <input type="file" class="form-control" name="photo_file" required>
+                                <input type="file" class="form-control" name="photo_in" required>
                                 <small class="form-text text-muted">Upload surat keterangan atau bukti pendukung.</small>
                             </div>
                         </div>

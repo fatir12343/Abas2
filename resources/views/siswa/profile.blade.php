@@ -33,99 +33,83 @@
     </div>
 
     <!-- Content Wrapper -->
-    <div class="content-wrapper">
-        <div class="container flex-grow-1 container-p-y">
-            <!-- Spacing for Responsive Design -->
-            <div class="d-block d-sm-none" style="min-height: 25px"></div>
-            <div class="d-none d-sm-block d-md-none" style="min-height: 30px"></div>
-            <div class="d-none d-md-block d-lg-none" style="min-height: 50px"></div>
-            <div class="d-none d-lg-block d-xl-none" style="min-height: 60px"></div>
-            <div class="d-none d-xl-block" style="min-height: 60px"></div>
-
-            <!-- Profile Form -->
-            <form action="{{ route('update-profile') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <input type="hidden" name="id" value="{{ $siswa->id }}">
-                <h4 class="card-title mb-2">
-                    Profil
-                </h4>
-
-                <!-- Alert Messages -->
-                @if (Session('success'))
-                    <div class="alert alert-success alert-dismissible" role="alert">
-                        {{ Session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @elseif(Session('failed'))
-                    <div class="alert alert-warning alert-dismissible" role="alert">
-                        {{ Session('failed') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
-
-                <!-- Profile Details -->
-                <div class="row mb-2">
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-header"></div>
-                            <div class="card-body">
-                                <div class="d-flex align-items-start gap-4">
-                                    {{-- {{ dd($siswa->foto) }} --}}
-                                    <img src="{{ asset('/storage/defaultuser/' . ($siswa->foto ? $siswa->foto : 'vault.png')) }}" alt="Profile Picture" class="d-block rounded" height="100" width="100">
-                                    <div class="button-wrapper">`
-                                        <label for="upload" class="btn btn-absen me-2 mb-4" tabindex="0">
-                                           <span class="d-none d-sm-block">Upload new photo</span>
-                                            <i class="bx bx-upload d-block d-sm-none"></i>
-                                            <input type="file" id="upload" class="account-file-input" hidden name="foto" accept="image/png, image/jpeg, image/jpg">
-                                        </label>
-                                        <p class="text-muted mb-0">Allowed JPG, GIF or PNG.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr class="my-0">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="mb-3 col-md-6">
-                                        <label for="Nama" class="form-label">Nama Panjang</label>
-                                        <input class="form-control" type="text" id="Nama" value="{{ $siswa->name }}" disabled>
-                                    </div>
-                                    <div class="mb-3 col-md-6">
-                                        <label for="NIS" class="form-label">NIS</label>
-                                        <input class="form-control" type="text" id="NIS" value="00{{ $siswa->nis }}" disabled>
-                                        <input type="hidden" name="nis" value="00{{ $siswa->nis }}">
-                                    </div>
-                                    <div class="mb-3 col-md-6">
-                                        <label for="Email" class="form-label">Email</label>
-                                        <input class="form-control" type="email" id="Email" name="email" value="{{ $siswa->email }}">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="mb-3 col-md-6">
-                                        <label for="password" class="form-label">Ganti Password</label>
-                                        <input class="form-control" type="password" id="password" name="password" placeholder="Masukkan password baru">
-                                    </div>
-                                    <div class="mb-3 col-md-6">
-                                        <label for="kpassword" class="form-label">Konfirmasi Password</label>
-                                        <input class="form-control" type="password" id="kpassword" name="kPassword" placeholder="Masukkan password baru">
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <div class="mt-2">
-                                        <button type="submit" class="btn btn-secondary me-2">Save changes</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <div class="container">
+        <h2>Profile Siswa</h2>
+        <div class="row">
+            <!-- Foto Profil di Kiri -->
+            <div class="col-md-4 text-center">
+                <div class="profile-picture">
+                    @if ($siswa->foto)
+                        <img src="{{ asset('storage/defaultuser/' . $siswa->foto) }}" alt="Foto Profil" width="150" class="img-thumbnail">
+                    @else
+                        <img src="{{ asset('images/vault.png') }}" alt="Foto Profil" width="150" class="img-thumbnail">
+                    @endif
                 </div>
-            </form>
+                <!-- Upload Foto di Bawah Foto Profil -->
+                <form action="{{ route('update-profile') }}" method="PUT" enctype="multipart/form-data" class="mt-3">
+                    @csrf
+                    @method('PUT')
+                    <div class="form-group">
+                        <label for="foto">Ganti Foto Profil</label>
+                        <input type="file" class="form-control-file" id="foto" name="foto">
+                    </div>
+                    <button type="submit" class="btn btn-secondary btn-sm">Upload Foto</button>
+                </form>
+            </div>
 
-            <!-- Footer -->
-            <div>
-                <i class='bx bx-copyright'></i> Aplikasi Absensi Sebelas, 2024
-                <div class="d-md-none" style="height:60px;"></div>
+            <!-- Form di Kanan -->
+            <div class="col-md-8">
+                <form action="{{ route('update-profile') }}" method="PUT">
+                    @csrf
+                    @method('PUT')
+
+                    <!-- Nama -->
+                    <div class="form-group">
+                        <label for="name">Nama Lengkap</label>
+                        <input type="text" class="form-control" id="name" name="name" value="{{ $siswa->name }}" disabled>
+                    </div>
+
+                    <!-- NIS -->
+                    <div class="form-group">
+                        <label for="nis">NIS</label>
+                        <input type="text" class="form-control" id="nis" name="nis" value="{{ $siswa->nis }}" disabled>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" value="{{ $siswa->email }}">
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label for="password">Password Baru</label>
+                        <input type="password" class="form-control" id="password" name="password">
+                    </div>
+
+                    <!-- Konfirmasi Password -->
+                    <div class="form-group">
+                        <label for="kPassword">Konfirmasi Password</label>
+                        <input type="password" class="form-control" id="kPassword" name="kPassword">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Update Profil</button>
+                </form>
             </div>
         </div>
+
+        <!-- Notifikasi -->
+        @if (session('success'))
+            <div class="alert alert-success mt-3">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('failed'))
+            <div class="alert alert-danger mt-3">
+                {{ session('failed') }}
+            </div>
+        @endif
     </div>
 
     <div class="appBottomMenu">

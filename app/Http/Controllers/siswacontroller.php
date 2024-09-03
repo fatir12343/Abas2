@@ -18,13 +18,13 @@ class siswacontroller extends Controller
      */
     public function index(Request $request)
     {
+
         $user = Auth::user();
         $nis = $user->nis;
         $hariini = date("Y-m-d");
 
         // Cek apakah ada absen pada hari ini
         $cek = DB::table('absensi')->where('date', $hariini)->where('nis', $nis)->first();
-
         $statusAbsen = 'Belum Absen';
 
         if ($cek) {
@@ -34,9 +34,13 @@ class siswacontroller extends Controller
                 $statusAbsen = 'Pulang';
             }
         }
+        // dd($statusAbsen);
 
         // Ambil waktu absen dari database
         $waktu = DB::table('waktu_absen')->where('id_waktu_absen', 1)->first();
+
+        $izin = DB::table('absensi')->where('nis', $nis)->whereDate('date', $hariini)->first();
+        $statusIzin = $izin ? 'Sudah Mengisi Izin/Sakit' : 'Belum Mengisi Izin/Sakit';
 
         // Ambil lokasi sekolah
         $lok_sekolah = DB::table('koordinat_sekolah')->where('id_koordinat_sekolah', 1)->first();
@@ -60,7 +64,8 @@ class siswacontroller extends Controller
             'jam_masuk' => $jam_masuk,
             'jam_pulang' => $jam_pulang,
             'batas_jam_masuk' => $batas_jam_masuk,
-            'batas_jam_pulang' => $batas_jam_pulang
+            'batas_jam_pulang' => $batas_jam_pulang,
+            'statusIzin' => $statusIzin
         ]);
     }
 
@@ -184,17 +189,11 @@ class siswacontroller extends Controller
 
     public function uploadfile(Request $request)
 {
-    // Validasi input
-    $request->validate([
-        'photo_in' => 'required|mimes:png,jpg,jpeg,pdf|max:10240', // Maksimal 10MB
-        'status' => 'required|string',
-        'keterangan' => 'required|string',
-    ]);
 
     if ($request->hasFile('photo_in')) {
         // Ambil data dari request
         $user = Auth::user();
-        $nis = $user->nis;
+        $nis = $user->siswa->nis;
         $date = date("Y-m-d");
         $status = $request->input('status');
         $keterangan = $request->input('keterangan');
@@ -204,7 +203,7 @@ class siswacontroller extends Controller
 
         // Menyimpan file dengan nama unik menggunakan Storage Laravel
         $extension = $foto->getClientOriginalExtension();
-        $folderPath = public_path('public/uploads/absensi/');
+        $folderPath =('public/uploads/absensi/');
         $fileName = $nis . '_' . $date . '_' . $status . '.' . $extension;
         $file = $folderPath . $fileName;
 
@@ -212,7 +211,7 @@ class siswacontroller extends Controller
 
         // Simpan data ke database
         $data = [
-            'nis' => $nis,
+            'nis' => '00' . $nis,
             'status' => $status,
             'photo_in' => $fileName,
             'keterangan' => $keterangan,
@@ -222,9 +221,9 @@ class siswacontroller extends Controller
         $simpan = Absensi::create($data);
         if ($simpan) {
             Storage::put($file, file_get_contents($foto));
-            return redirect()->route('siswa.siswa')->with('berhasil', 'Kehadiran berhasil dicatat.');
+            return redirect()->back()->with('berhasil', 'Kehadiran berhasil dicatat.');
             } else {
-                return redirect()->route('siswa.siswa')->with('gagal', 'File tidak ada.');
+                return redirect()->route('siswa')->with('gagal', 'File tidak ada.');
             }
         }
     }
@@ -235,51 +234,54 @@ class siswacontroller extends Controller
         return view('siswa.profile', compact('siswa'));
     }
 
-    public function updateprofil(Request $request)
+    public function updateprofile(Request $request)
     {
-        $f=false;
-        $P=false;
+        $user = Auth::user();  // Mengambil data user yang sedang login
 
-        //password
-        if ($request->password != $request->kPassword) {
-            return redirect()->back()->with('failed', 'Password Berbeda');
-        }
-        $count = strlen($request->password);
-        if ($count > 0) {
-            $p = User::where('id', $request->id)->update([
-                'password' => password_hash($request->password, PASSWORD_DEFAULT)
-            ]);
-        }
-
-        //foto
-        if ($request->hasFile('foto'))
-        {
-            $foto = $request->file('foto');
-
-            $folderPath = "public/user_avatar/";
-
-            $extension = $foto->getClientOriginalExtension();
-            $fileName = $request->nis . '.' . $extension;
-            $file = $folderPath . $fileName;
-
-            Storage::put($file, file_get_contents($foto));
-
-            $f= User::where('id', $request->id)->update([
-                'foto' => $fileName
-            ]);
-        }
-
-        // email
-        $u = User::where('id', $request->id)->update([
-            'email' => $request->email,
+        // Validasi data
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'nullable|min:6|confirmed', // Password hanya diubah jika diisi dan dikonfirmasi
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        //redirecting
-        if ($u || $f || $p) {
-            return redirect()->back()->with('success', "Data Berhasil di Update");
-        } else {
-            return redirect()->back()->with('failed', "Data Gagal di Update");
+        $updateFields = [];
+
+        // Update email
+        if ($request->email !== $user->email) {
+            $updateFields['email'] = $request->email;
         }
+
+        // Update password jika diisi
+        if ($request->password) {
+            $updateFields['password'] = bcrypt($request->password);
+        }
+
+        // Update foto profil jika ada file yang diupload
+        if ($request->hasFile('foto')) {
+            $foto = $request->file('foto');
+            $fileName = $user->nis . '.' . $foto->getClientOriginalExtension();
+            $folderPath = 'public/user_avatar/';
+
+            // Simpan foto di storage
+            Storage::put($folderPath . $fileName, file_get_contents($foto));
+
+            // Jika sudah ada foto sebelumnya, hapus dulu
+            if ($user->foto) {
+                Storage::delete($folderPath . $user->foto);
+            }
+
+            $updateFields['foto'] = $fileName;
+        }
+
+        // Update data di database
+        if (!empty($updateFields)) {
+            User::where('id', $user->id)->update($updateFields);
+        }
+
+        // Redirect dengan pesan sukses
+        return redirect()->back()->with('success', 'Data Berhasil di Update');
+    
     }
 
     function distance($lat1, $lon1, $lat2, $lon2)

@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class absensi extends Model
 {
     use HasFactory;
+
+    protected $table = 'absensi';
     protected $primaryKey = 'id_absensi';
     public $incrementing = true;
     public $timestamps = false;

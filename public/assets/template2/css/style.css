@@ -28,6 +28,8 @@ body {
     box-shadow: 0 8px 16px rgba(0,0,0,0.2);
     width: 100%; /* Menyesuaikan lebar dropdown dengan lebar layar */
     max-width: 200px; /* Maksimal lebar dropdown */
+    max-height: 300px; /* Maksimal tinggi dropdown untuk mengaktifkan scrollbar */
+    overflow-y: auto; /* Tambahkan scrollbar jika konten melebihi tinggi */
     z-index: 1000; /* Memastikan dropdown tampil di atas elemen lainnya */
 }
 
@@ -38,9 +40,22 @@ body {
     width: 100%;
     justify-content: space-between; /* Menempatkan ikon dan teks dengan baik */
 }
+
+/* Tampilan scrollbar */
 ::-webkit-scrollbar {
-  width: 0;
+    width: 0; /* Lebar scrollbar */
 }
+
+::-webkit-scrollbar-thumb {
+    background-color: #ccc; /* Warna scrollbar */
+    border-radius: 4px; /* Sudut melengkung pada scrollbar */
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Warna track scrollbar */
+    border-radius: 4px;
+}
+
 
 ::selection {
   background: rgba(30, 116, 253, 0.3);
