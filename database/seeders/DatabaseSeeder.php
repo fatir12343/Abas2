@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
             JurusanSeeder::class,
             KelasSeeder::class,
             SiswaSeeder::class,
+            AbsensiSeeder::class,
+            KoordinatSeeder::class
             // otherTable::class
         ]);
 
