@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
+use app\Models\absensi;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use app\Models\absensi;
+
 
 class AbsensiSeeder extends Seeder
 {
@@ -16,7 +17,7 @@ class AbsensiSeeder extends Seeder
         $nis = '0062894371';
         $titikKoordinat = '-6.890622076541303, 107.55806983605572';
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Hadir',
             'photo_in' => '0062894371_2024-08-01_masuk.png',
@@ -28,7 +29,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => $titikKoordinat,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Hadir',
             'photo_in' => '0062894371_2024-08-02_masuk.png',
@@ -40,7 +41,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => $titikKoordinat,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Hadir',
             'photo_in' => '0062894371_2024-08-03_masuk.png',
@@ -52,7 +53,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => $titikKoordinat,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Hadir',
             'photo_in' => '0062894371_2024-08-04_masuk.png',
@@ -64,7 +65,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => $titikKoordinat,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Hadir',
             'photo_in' => '0062894371_2024-08-05_masuk.png',
@@ -76,7 +77,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => $titikKoordinat,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Sakit',
             'photo_in' => '0062894371_2024-08-06_masuk.png',
@@ -88,7 +89,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => null,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Sakit',
             'photo_in' => '0062894371_2024-08-06_masuk.png',
@@ -100,7 +101,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => null,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Hadir',
             'photo_in' => '0062894371_2024-08-08_masuk.png',
@@ -112,7 +113,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => $titikKoordinat,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Hadir',
             'photo_in' => '0062894371_2024-08-09_masuk.png',
@@ -124,7 +125,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => $titikKoordinat,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Hadir',
             'photo_in' => '0062894371_2024-08-10_masuk.png',
@@ -136,7 +137,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => $titikKoordinat,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Izin',
             'photo_in' => '0062894371_2024-08-11_masuk.png',
@@ -148,7 +149,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => null,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Hadir',
             'photo_in' => '0062894371_2024-08-12_masuk.png',
@@ -160,7 +161,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => $titikKoordinat,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Hadir',
             'photo_in' => '0062894371_2024-08-13_masuk.png',
@@ -172,7 +173,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => $titikKoordinat,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Hadir',
             'photo_in' => '0062894371_2024-08-14_masuk.png',
@@ -184,7 +185,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => $titikKoordinat,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'TAP',
             'photo_in' => '0062894371_2024-08-15_masuk.png',
@@ -196,7 +197,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => null,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Terlambat',
             'photo_in' => '0062894371_2024-08-16_masuk.png',
@@ -209,7 +210,7 @@ class AbsensiSeeder extends Seeder
             'menit_keterlambatan' => '180',
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Hadir',
             'photo_in' => '0062894371_2024-08-17_masuk.png',
@@ -221,7 +222,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => $titikKoordinat,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Hadir',
             'photo_in' => '0062894371_2024-08-18_masuk.png',
@@ -233,7 +234,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => $titikKoordinat,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Terlambat',
             'photo_in' => '0062894371_2024-08-19_masuk.png',
@@ -246,7 +247,7 @@ class AbsensiSeeder extends Seeder
             'menit_keterlambatan' => '60',
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Alfa',
             'photo_in' => null,
@@ -258,7 +259,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => null,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Hadir',
             'photo_in' => '0062894371_2024-08-21_masuk.png',
@@ -270,7 +271,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => $titikKoordinat,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Hadir',
             'photo_in' => '0062894371_2024-08-22_masuk.png',
@@ -282,7 +283,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => $titikKoordinat,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Hadir',
             'photo_in' => '0062894371_2024-08-23_masuk.png',
@@ -294,7 +295,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => $titikKoordinat,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'TAP',
             'photo_in' => '0062894371_2024-08-24_masuk.png',
@@ -306,7 +307,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => null,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Hadir',
             'photo_in' => '0062894371_2024-08-25_masuk.png',
@@ -318,7 +319,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => $titikKoordinat,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Hadir',
             'photo_in' => '0062894371_2024-08-26_masuk.png',
@@ -330,7 +331,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => $titikKoordinat,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Hadir',
             'photo_in' => '0062894371_2024-08-27_masuk.png',
@@ -342,7 +343,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => $titikKoordinat,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Terlambat',
             'photo_in' => '0062894371_2024-08-28_masuk.png',
@@ -355,7 +356,7 @@ class AbsensiSeeder extends Seeder
             'menit_keterlambatan' => '43',
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Alfa',
             'photo_in' => null,
@@ -367,7 +368,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => null,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Hadir',
             'photo_in' => '0062894371_2024-08-27_masuk.png',
@@ -379,7 +380,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => $titikKoordinat,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Hadir',
             'photo_in' => '0062894371_2024-08-27_masuk.png',
@@ -391,7 +392,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => $titikKoordinat,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Hadir',
             'photo_in' => '0062894371_2024-08-27_masuk.png',
@@ -403,7 +404,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => $titikKoordinat,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Hadir',
             'photo_in' => '0062894371_2024-08-27_masuk.png',
@@ -415,7 +416,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => $titikKoordinat,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Hadir',
             'photo_in' => '0062894371_2024-08-27_masuk.png',
@@ -427,7 +428,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => $titikKoordinat,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Hadir',
             'photo_in' => '0062894371_2024-08-27_masuk.png',
@@ -439,7 +440,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => $titikKoordinat,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Hadir',
             'photo_in' => '0062894371_2024-08-27_masuk.png',
@@ -451,7 +452,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => $titikKoordinat,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Hadir',
             'photo_in' => '0062894371_2024-08-27_masuk.png',
@@ -463,7 +464,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => $titikKoordinat,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Hadir',
             'photo_in' => '0062894371_2024-08-27_masuk.png',
@@ -475,7 +476,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => $titikKoordinat,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Hadir',
             'photo_in' => '0062894371_2024-08-27_masuk.png',
@@ -487,7 +488,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => $titikKoordinat,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Hadir',
             'photo_in' => '0062894371_2024-08-27_masuk.png',
@@ -499,7 +500,7 @@ class AbsensiSeeder extends Seeder
             'titik_koordinat_pulang' => $titikKoordinat,
         ]);
 
-        Absensi::create([
+        absensi::create([
             'nis' => $nis,
             'status' => 'Hadir',
             'photo_in' => '0062894371_2024-08-27_masuk.png',
@@ -512,6 +513,6 @@ class AbsensiSeeder extends Seeder
         ]);
 
 
-    
+
     }
 }
