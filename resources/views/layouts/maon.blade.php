@@ -25,5 +25,6 @@
     </body>
 
     @stack('myscript')
+    @stack('myscript')
 
 </html>

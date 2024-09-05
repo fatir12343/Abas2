@@ -10,6 +10,7 @@ use App\Models\absensi;
 use App\Models\siswa;
 use App\Models\koordinat_sekolah;
 use App\Models\User;
+use App\Models\waktu_absen;
 
 class siswacontroller extends Controller
 {
@@ -18,57 +19,106 @@ class siswacontroller extends Controller
      */
     public function index(Request $request)
     {
-
         $user = Auth::user();
-        $nis = $user->nis;
+        $nis = $user->siswa->nis; // Menggunakan relasi siswa untuk mendapatkan NIS
         $hariini = date("Y-m-d");
-
-        // Cek apakah ada absen pada hari ini
-        $cek = DB::table('absensi')->where('date', $hariini)->where('nis', $nis)->first();
-        $statusAbsen = 'Belum Absen';
-
-        if ($cek) {
-            if ($cek->jam_masuk && !$cek->jam_pulang) {
-                $statusAbsen = 'Hadir';
-            } elseif ($cek->jam_pulang) {
-                $statusAbsen = 'Pulang';
+    
+        // Ambil data dari tabel koordinat_sekolah dan waktu_absen
+        $koordinatsekolah = Koordinat_Sekolah::first();
+        $jam = waktu_absen::first();
+    
+        // Cek absensi hari ini
+        $cekabsen = Absensi::where('date', $hariini)
+            ->where('nis', $nis)
+            ->first();
+    
+        // Hitung keterlambatan bulan ini dan bulan sebelumnya
+        $late2 = Absensi::where('nis', $nis)
+            ->whereMonth('date', date('m', strtotime('first day of previous month')))
+            ->sum('menit_keterlambatan');
+        $late = Absensi::where('nis', $nis)
+            ->whereMonth('date', date('m'))
+            ->sum('menit_keterlambatan');
+    
+        // Data absensi bulan ini dan bulan sebelumnya
+        $dataBulanIni = Absensi::whereYear('date', date('Y'))
+            ->where('nis', $nis)
+            ->whereMonth('date', date('m'))
+            ->select('status', DB::raw('count(*) as total'))
+            ->groupBy('status')
+            ->pluck('total', 'status')
+            ->toArray();
+    
+        $dataBulanSebelumnya = Absensi::whereYear('date', date('Y'))
+            ->where('nis', $nis)
+            ->whereMonth('date', date('m', strtotime('first day of previous month')))
+            ->select('status', DB::raw('count(*) as total'))
+            ->groupBy('status')
+            ->pluck('total', 'status')
+            ->toArray();
+    
+        // Gabungkan 'Sakit' dan 'Izin' menjadi satu kategori
+        $dataBulanIni['Sakit/Izin'] = ($dataBulanIni['Sakit'] ?? 0) + ($dataBulanIni['Izin'] ?? 0);
+        unset($dataBulanIni['Sakit'], $dataBulanIni['Izin']);
+    
+        $dataBulanSebelumnya['Sakit/Izin'] = ($dataBulanSebelumnya['Sakit'] ?? 0) + ($dataBulanSebelumnya['Izin'] ?? 0);
+        unset($dataBulanSebelumnya['Sakit'], $dataBulanSebelumnya['Izin']);
+    
+        // Status yang tersisa
+        $statuses = ['Hadir', 'Sakit/Izin', 'Alfa', 'Terlambat', 'TAP'];
+        foreach ($statuses as $status) {
+            if (!array_key_exists($status, $dataBulanIni)) {
+                $dataBulanIni[$status] = 0;
+            }
+            if (!array_key_exists($status, $dataBulanSebelumnya)) {
+                $dataBulanSebelumnya[$status] = 0;
             }
         }
-        // dd($statusAbsen);
-
-        // Ambil waktu absen dari database
-        $waktu = DB::table('waktu_absen')->where('id_waktu_absen', 1)->first();
-
-        $izin = DB::table('absensi')->where('nis', $nis)->whereDate('date', $hariini)->first();
-        $statusIzin = $izin ? 'Sudah Mengisi Izin/Sakit' : 'Belum Mengisi Izin/Sakit';
-
-        // Ambil lokasi sekolah
-        $lok_sekolah = DB::table('koordinat_sekolah')->where('id_koordinat_sekolah', 1)->first();
-
-        // Ambil data siswa dengan relasi user
-        $siswa = Siswa::with('user')->get();
-
-        // Cek apakah $waktu null, jika iya set nilai default
-        $jam_masuk = $waktu ? $waktu->jam_masuk : '06:30:00';
-        $jam_pulang = $waktu ? $waktu->jam_pulang : '15:30:00';
-        $batas_jam_masuk = $waktu ? $waktu->batas_jam_masuk : null;
-        $batas_jam_pulang = $waktu ? $waktu->batas_jam_pulang : null;
-
-        return view('Siswa.siswa', [
-            'waktu' => $waktu,
-            'cek' => $cek ? 1 : 0,
+    
+        $totalAbsenBulanIni = array_sum($dataBulanIni);
+        $persentaseHadirBulanIni = $totalAbsenBulanIni > 0 ? round(($dataBulanIni['Hadir'] / $totalAbsenBulanIni) * 100) : 0;
+    
+        $totalAbsenBulanSebelumnya = array_sum($dataBulanSebelumnya);
+        $persentaseHadirBulanSebelumnya = $totalAbsenBulanSebelumnya > 0 ? round(($dataBulanSebelumnya['Hadir'] / $totalAbsenBulanSebelumnya) * 100) : 0;
+    
+        // Riwayat absensi mingguan
+        $startOfWeek = date('Y-m-d', strtotime('monday this week'));
+        $endOfWeek = date('Y-m-d', strtotime('sunday this week'));
+    
+        $riwayatmingguini = Absensi::whereBetween('date', [$startOfWeek, $endOfWeek])
+            ->where('nis', $nis)
+            ->get();
+    
+        // Cek status absensi
+        $statusAbsen = $cekabsen ? $cekabsen->status : 'Belum Absen';
+        $absenMasuk = $cekabsen ? !empty($cekabsen->photo_in) : false;
+        $absenPulang = $cekabsen ? !empty($cekabsen->photo_out) : false;
+        $statusValidasi = $statusAbsen === "Izin" || $statusAbsen === "Sakit";
+    
+        $jamskrg = date("H:i:s");
+        $validasijam = $jam ? (strtotime($jamskrg) > strtotime($jam->batas_absen_pulang) || strtotime($jamskrg) < strtotime($jam->jam_absen)) : false;
+    
+        return view('siswa.siswa', [
+            'waktu' => $jam,
+            'cekabsen' => $cekabsen ? 1 : 0,
             'statusAbsen' => $statusAbsen,
-            'lok_sekolah' => $lok_sekolah,
-            'siswa' => $siswa,
-            'jam' => date("H:i:s"),
-            'jam_masuk' => $jam_masuk,
-            'jam_pulang' => $jam_pulang,
-            'batas_jam_masuk' => $batas_jam_masuk,
-            'batas_jam_pulang' => $batas_jam_pulang,
-            'statusIzin' => $statusIzin
+            'lok_sekolah' => $koordinatsekolah,
+            'siswa' => Siswa::with('user')->get(),
+            'jam' => $jamskrg,
+            'jam_masuk' => $jam ? $jam->jam_masuk : '06:30:00',
+            'jam_pulang' => $jam ? $jam->jam_pulang : '15:30:00',
+            'batas_jam_masuk' => $jam ? $jam->batas_jam_masuk : null,
+            'batas_jam_pulang' => $jam ? $jam->batas_jam_pulang : null,
+            'statusIzin' => $cekabsen ? ($cekabsen->status === 'Izin' || $cekabsen->status === 'Sakit' ? 'Sudah Mengisi Izin/Sakit' : 'Belum Mengisi Izin/Sakit') : 'Belum Mengisi Izin/Sakit',
+            'late' => $late,
+            'late2' => $late2,
+            'persentaseHadirBulanIni' => $persentaseHadirBulanIni,
+            'persentaseHadirBulanSebelumnya' => $persentaseHadirBulanSebelumnya,
+            'riwayatmingguini' => $riwayatmingguini,
+            'statusValidasi' => $statusValidasi
         ]);
     }
-
+    
 
     public function Absen()
     {
@@ -179,6 +229,57 @@ class siswacontroller extends Controller
         }
     }
 
+    public function Rekap(Request $request)
+    {
+        $user = Auth::user();
+        $nis = $user->siswa->nis;
+
+        // Tentukan rentang tanggal
+        $start_date = $request->input('start_date', date('Y-m-d'));
+        $end_date = $request->input('end_date', date('Y-m-d'));
+
+        // Query untuk semua data dalam rentang tanggal
+        $allAbsensi = Absensi::where('nis', $nis)
+            ->whereBetween('date', [$start_date, $end_date])
+            ->get();
+
+        // Hitung statistik
+        $stats = $this->filterrekap($allAbsensi);
+
+        // Query dengan paginasi untuk tampilan tabel
+        $absensi = Absensi::where('nis', $nis)
+            ->whereBetween('date', [$start_date, $end_date])
+            ->paginate(7)
+            ->appends($request->only(['start_date', 'end_date']));
+
+        return view('siswa.rekap', array_merge(
+            compact('absensi', 'start_date', 'end_date'),
+            $stats
+        ));
+    }
+
+    private function filterrekap($absensi)
+    {
+        $jumlahHadir = $absensi->where('status', 'Hadir')->count();
+        $jumlahIzin = $absensi->whereIn('status', ['Sakit', 'Izin'])->count();
+        $jumlahTerlambat = $absensi->where('status', 'Terlambat')->count();
+        $jumlahAlfa = $absensi->where('status', 'Alfa')->count();
+        $jumlahTap = $absensi->where('status', 'TAP')->count();
+        $totalKeterlambatan = $absensi->sum('menit_keterlambatan');
+
+        $totalAbsensi = $absensi->count();
+        $persentaseHadir = $totalAbsensi > 0 ? round(($jumlahHadir / $totalAbsensi) * 100) : 0;
+
+        return compact(
+            'jumlahHadir',
+            'jumlahIzin',
+            'jumlahTerlambat',
+            'jumlahAlfa',
+            'jumlahTap',
+            'totalKeterlambatan',
+            'persentaseHadir'
+        );
+    }
 
 
 
@@ -281,7 +382,7 @@ class siswacontroller extends Controller
 
         // Redirect dengan pesan sukses
         return redirect()->back()->with('success', 'Data Berhasil di Update');
-    
+
     }
 
     function distance($lat1, $lon1, $lat2, $lon2)

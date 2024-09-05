@@ -211,7 +211,7 @@
                 <strong>Home</strong>
             </div>
         </a>
-        <a href="#" class="item">
+        <a href="{{route('rekap')}}" class="item">    
             <div class="col">
                 <ion-icon name="albums-outline" class="icon"></ion-icon>
                 <strong>Rekap</strong>

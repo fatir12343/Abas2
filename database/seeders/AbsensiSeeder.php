@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use app\Models\absensi;
+use App\Models\absensi;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
