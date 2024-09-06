@@ -92,7 +92,6 @@
                     </div>
                 </div>
 
-
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
@@ -100,16 +99,21 @@
                             <div class="col-6 mb-1">
                                 <form action="{{ url('/absen') }}" method="POST">
                                     @csrf
+                                    <!-- Tentukan jenis absen berdasarkan status absen -->
                                     <input type="hidden" name="jenis_absen" value="{{ $statusAbsen == 'Sudah Absen Masuk' ? 'pulang' : 'masuk' }}">
-                                    <div class="card {{ $statusAbsen == 'Sudah Absen Masuk' ? 'gradasired' : 'gradasigreen' }}">
+                
+                                    <!-- Kondisi card warna berdasarkan status absen -->
+                                    <div class="card {{ $statusAbsen == 'Sudah Absen Masuk' ? ($statusAbsen == 'Sudah Absen Pulang' ? 'gradasigrey' : 'gradasired') : 'gradasigreen' }}">
                                         <div class="card-body">
                                             <div class="presencecontent">
                                                 <div class="iconpresence">
-                                                    <button type="submit" class="btn btn-link">
+                                                    <!-- Tombol absen masuk/pulang: disable jika sudah absen pulang atau sedang izin -->
+                                                    <button type="submit" class="btn btn-link" {{ $statusAbsen == 'Sudah Absen Pulang' || $izin ? 'disabled' : '' }}>
                                                         <ion-icon name="camera"></ion-icon>
                                                     </button>
                                                 </div>
                                                 <div class="presencedetail">
+                                                    <!-- Tampilkan status absen (Masuk/Pulang) -->
                                                     <h4 class="presencetitle">
                                                         {{ $statusAbsen == 'Sudah Absen Masuk' ? 'Pulang' : 'Masuk' }}
                                                     </h4>
@@ -122,10 +126,12 @@
                                     </div>
                                 </form>
                             </div>
-
+                
                             <!-- Form Izin/Sakit -->
                             <div class="col-6 mb-1">
-                                <div class="card gradasiblue" data-toggle="modal" data-target="#FormulirModal" data-status="izin">
+                                <div class="card {{ $statusAbsen == 'Sudah Absen Masuk' || $statusAbsen == 'Sudah Absen Pulang' || $izin ? 'gradasigrey' : 'gradasiblue' }}" 
+                                     data-toggle="modal" data-target="#FormulirModal" data-status="izin" 
+                                     style="{{ $statusAbsen == 'Sudah Absen Masuk' || $statusAbsen == 'Sudah Absen Pulang' || $izin ? 'pointer-events: none;' : '' }}">
                                     <div class="card-body">
                                         <div class="presencecontent">
                                             <div class="iconpresence">
@@ -142,6 +148,8 @@
                         </div>
                     </div>
                 </div>
+                
+                
 
 
 
@@ -201,6 +209,154 @@
             </div>
         </div>
     </div>
+
+    
+    <div class="section mt-2" id="attendance-dashboard">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 text-center">
+                    <h3 class="title-5 m-b-35 text-center">Riwayat Kehadiran Anda <strong>Minggu Ini</strong></h3>
+                    <div class="table-responsive table--no-card m-b-30">
+                        <table class="table table-borderless table-striped table-earning">
+                            <thead>
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <th>Status</th>
+                                    <th>Absen Masuk</th>
+                                    <th>Absen Pulang</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($riwayatmingguini as $riwayatM)
+                                    <tr>
+                                        <td>{{ $riwayatM->date }}</td>
+                                        <td>
+                                            @if ($riwayatM->status == 'Hadir')
+                                                <span class="status hadir">{{ $riwayatM->status }}</span>
+                                            @elseif ($riwayatM->status == 'Terlambat')
+                                                <span class="status terlambat">{{ $riwayatM->status }}</span>
+                                            @elseif ($riwayatM->status == 'TAP')
+                                                <span class="status tap">{{ $riwayatM->status }}</span>
+                                            @elseif ($riwayatM->status == 'Sakit' || $riwayatM->status == 'Izin')
+                                                <span class="status izin">{{ $riwayatM->status }}</span>
+                                            @elseif ($riwayatM->status == 'Alfa')
+                                                <span class="status alfa">{{ $riwayatM->status }}</span>
+                                            @endif
+                                        </td>
+                                        <td>{{ $riwayatM->jam_masuk }}</td>
+                                        <td>{{ $riwayatM->jam_pulang }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="au-card">
+                        <h3 class="title-5 m-b-35 text-center">Jumlah Kehadiran Anda</h3>
+                        <div class="au-card-inner">
+                            <div class="card">
+                                <div class="card-header p-0">
+                                    <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
+                                        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab"
+                                            href="#nav-home" role="tab" aria-controls="nav-home"
+                                            aria-selected="true"><strong>Bulan Ini</strong></a>
+                                        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab"
+                                            href="#nav-profile" role="tab" aria-controls="nav-profile"
+                                            aria-selected="false"><strong>Bulan Sebelumnya</strong></a>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="tab-content" id="nav-tabContent">
+                                        <!-- Tab Bulan Ini -->
+                                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                                            aria-labelledby="nav-home-tab">
+                                            <div class="progress mb-2">
+                                                <div class="progress-bar bg-success" role="progressbar"
+                                                    style="width: {{ $persentaseHadirBulanIni }}%"
+                                                    aria-valuenow="{{ $persentaseHadirBulanIni }}" aria-valuemin="0"
+                                                    aria-valuemax="100">
+                                                    Persentase Hadir: {{ $persentaseHadirBulanIni }}%
+                                                </div>
+                                            </div>
+                                            <ul class="list-group">
+                                                <li class="list-group-item">
+                                                    <i class="fas fa-check-circle text-success"></i> Hadir :
+                                                    {{ $dataBulanIni['Hadir'] ?? 0 }}
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <i class="fas fa-user-md text-info"></i> Sakit/Izin :
+                                                    {{ $dataBulanIni['Sakit/Izin'] ?? 0 }}
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <i class="fas fa-clock text-warning"></i> Terlambat :
+                                                    {{ $dataBulanIni['Terlambat'] ?? 0 }}
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <i class="fas fa-times-circle text-danger"></i> Alfa :
+                                                    {{ $dataBulanIni['Alfa'] ?? 0 }}
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <i class="fas fa-bell text-primary"></i> TAP :
+                                                    {{ $dataBulanIni['TAP'] ?? 0 }}
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <i class="fas fa-user-clock text-secondary"></i> Total
+                                                    Keterlambatan :
+                                                    {{ $late }} Menit
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <!-- Tab Bulan Sebelumnya -->
+                                        <div class="tab-pane fade" id="nav-profile" role="tabpanel"
+                                            aria-labelledby="nav-profile-tab">
+                                            <div class="progress mb-2">
+                                                <div class="progress-bar bg-success" role="progressbar"
+                                                    style="width: {{ $persentaseHadirBulanSebelumnya }}%"
+                                                    aria-valuenow="{{ $persentaseHadirBulanSebelumnya }}"
+                                                    aria-valuemin="0" aria-valuemax="100">
+                                                    Persentase Hadir: {{ $persentaseHadirBulanSebelumnya }}%
+                                                </div>
+                                            </div>
+                                            <ul class="list-group">
+                                                <li class="list-group-item">
+                                                    <i class="fas fa-check-circle text-success"></i> Hadir:
+                                                    {{ $dataBulanSebelumnya['Hadir'] ?? 0 }}
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <i class="fas fa-user-md text-info"></i> Sakit/Izin:
+                                                    {{ $dataBulanSebelumnya['Sakit/Izin'] ?? 0 }}
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <i class="fas fa-clock text-warning"></i> Terlambat:
+                                                    {{ $dataBulanSebelumnya['Terlambat'] ?? 0 }}
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <i class="fas fa-times-circle text-danger"></i> Alfa:
+                                                    {{ $dataBulanSebelumnya['Alfa'] ?? 0 }}
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <i class="fas fa-bell text-primary"></i> TAP:
+                                                    {{ $dataBulanSebelumnya['TAP'] ?? 0 }}
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <i class="fas fa-user-clock text-secondary"></i> Total
+                                                    Keterlambatan:
+                                                    {{ $late2 }} Menit
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
     <!-- * Popup Formulir Sakit -->
 
     <!-- App Bottom Menu -->

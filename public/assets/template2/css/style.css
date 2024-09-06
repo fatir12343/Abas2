@@ -1595,6 +1595,34 @@ code {
         }
     }
 
+    @media (max-width: 768px) {
+        .appHeader {
+            position: relative;
+            width: 100%;
+            z-index: 1;
+            top: 0;
+        }
+        .pageTitle {
+            font-size: 18px;
+        }
+        #dropdownMenu {
+            width: 100%;
+            right: 0;
+            left: 0;
+            top: 50px; /* Adjust dropdown position */
+        }
+        #dropdownButton {
+            justify-content: center;
+            display: flex;
+        }
+        .filter-section .form-group {
+            width: 100%;
+        }
+        .table {
+            font-size: 14px;
+        }
+    }
+    
 figure.codebox {
   background: #e1e1e1;
   border-radius: 6px;
@@ -8275,6 +8303,43 @@ body.dark-mode-active .cart-item .cart-item-footer {
   justify-content: space-evenly;
 }
 
+
+.table-responsive {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.status {
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.status.hadir { background-color: #28a745; color: white; }
+.status.terlambat { background-color: #ffc107; color: black; }
+.status.tap { background-color: #17a2b8; color: white; }
+.status.izin { background-color: #6c757d; color: white; }
+.status.alfa { background-color: #dc3545; color: white; }
+
+.progress {
+    height: 25px;
+}
+
+.progress-bar {
+    line-height: 25px;
+    font-size: 14px;
+}
+
+.list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.list-group-item i {
+    margin-right: 10px;
+}
 .gradasigreen {
   color: white;
   background-image: linear-gradient(
@@ -8309,6 +8374,10 @@ body.dark-mode-active .cart-item .cart-item-footer {
         #AC94FA,
         #AC94FA
     );
+}
+.gradasigrey {
+    background-color: #b0b0b0;
+    color: #fff;
 }
 .iconpresence {
   font-size: 30px;
