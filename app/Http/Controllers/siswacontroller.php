@@ -98,8 +98,8 @@ class siswacontroller extends Controller
 
     // Cek status absensi
     $statusAbsen = $cekabsen ? $cekabsen->status : 'Belum Absen';
-    $absenMasuk = $cekabsen ? !empty($cekabsen->photo_in) : false;
-    $absenPulang = $cekabsen ? !empty($cekabsen->photo_out) : false;
+    $absenMasuk = $cekabsen ? !empty($cekabsen->photo_in) : 'Hadir';
+    $absenPulang = $cekabsen ? !empty($cekabsen->photo_out) : 'Pulang';
     $statusValidasi = $statusAbsen === "Izin" || $statusAbsen === "Sakit";
 
     $jamskrg = date("H:i:s");
@@ -116,6 +116,8 @@ class siswacontroller extends Controller
         'jam_pulang' => $jam ? $jam->jam_pulang : '15:30:00',
         'batas_jam_masuk' => $jam ? $jam->batas_jam_masuk : null,
         'batas_jam_pulang' => $jam ? $jam->batas_jam_pulang : null,
+        'dataBulanIni' => $dataBulanIni,
+        'dataBulanSebelumnya' => $dataBulanSebelumnya,
         'statusIzin' => $cekabsen ? ($cekabsen->status === 'Izin' || $cekabsen->status === 'Sakit' ? 'Sudah Mengisi Izin/Sakit' : 'Belum Mengisi Izin/Sakit') : 'Belum Mengisi Izin/Sakit',
         'late' => $late,
         'late2' => $late2,
@@ -127,7 +129,7 @@ class siswacontroller extends Controller
     ]);
 }
 
-    
+
 
     public function Absen()
     {

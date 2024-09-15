@@ -36,9 +36,12 @@ Route::get('/', function () {
             return redirect('wali');
         } elseif ($role == 'operator') {
             return redirect('operator');
+        } elseif ($role == 'walis'){
+            return redirect('walis');
         } else {
             return redirect('/home');
         }
+
 
 
     }
@@ -101,4 +104,7 @@ Route::middleware(['auth', 'wali:wali'])->group(function () {
     Route::get('/wali', [App\Http\Controllers\wali::class, 'index'])->name('wali');
 });
 
+Route::middleware(['auth', 'walis:walis'])->group(function () {
+    Route::get('/walis', [App\Http\Controllers\walis::class, 'index'])->name('walis');
+});
 

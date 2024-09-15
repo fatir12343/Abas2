@@ -55,8 +55,8 @@ async function detectFaces() {
 
 
 Webcam.set({
-    height: 450,
-    width: 600,
+    height: 400,
+    width: 430,
     image_format: 'jpeg',
     jpeg_quality: 90,
     flip_horiz: true

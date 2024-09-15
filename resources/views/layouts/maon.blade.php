@@ -14,8 +14,8 @@
     <title>ABAS</title>
     <meta name="description" content="Mobilekit HTML Mobile UI Kit">
     <meta name="keywords" content="bootstrap 4, mobile template, cordova, phonegap, mobile, html" />
-    <link rel="icon" type="image/png" href="{{asset ('assets/template2/img/favicon.png')}}" sizes="32x32">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{asset ('assets/template2/img/icon/192x192.png')}}">
+    <link rel="icon" type="image/png" href="{{asset ('assets/template2/img/icon/icon_abas.png')}}" sizes="32x32">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{asset ('assets/template2/img/icon/icon_abas.png')}}">
     <link rel="stylesheet" href="{{ asset('assets/template2/css/style.css') }}">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <link rel="manifest" href="__manifest.json">

@@ -1500,7 +1500,24 @@ code {
     }
 
     .webcam-container {
-        margin-bottom: 20px; /* Jarak bawah antara kamera dan peta */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 450px;
+        height: 200px;
+        max-width: auto;
+    }
+
+    @media (max-width: 700px) {
+        .webcam-container {
+            height: auto;
+        }
+    }
+
+    @media (min-width: 700px) {
+        .webcam-container {
+            height: 400px;
+        }
     }
 
     .d-flex.justify-content-center.align-items-center {
@@ -1622,7 +1639,7 @@ code {
             font-size: 14px;
         }
     }
-    
+
 figure.codebox {
   background: #e1e1e1;
   border-radius: 6px;
@@ -2224,7 +2241,7 @@ a.badge-dark {
 }
 
 .card .card-body {
-  padding: 24px 16px;
+  padding: 50px 10px;
   line-height: 1.4em;
 }
 
@@ -8303,6 +8320,59 @@ body.dark-mode-active .cart-item .cart-item-footer {
   justify-content: space-evenly;
 }
 
+/* Kustomisasi pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination .page-link {
+    color: #007bff;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    padding: 0.5rem 0.75rem;
+    margin: 0 5px;
+    transition: all 0.3s ease;
+}
+
+.pagination .page-link:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: white;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #6c757d;
+    background-color: #fff;
+    border-color: #dee2e6;
+    cursor: not-allowed;
+}
+
+
+.btn-login {
+            width: 460px; /* Tombol menyesuaikan dengan lebar container */
+            max-width: 300px; /* Maksimal lebar tombol */
+            height: 45px;
+            font-size: 16px;
+            padding: 10px;
+            margin-top: 20px; /* Memberikan jarak di atas tombol */
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Align the remember me and forgot password on the same line */
+        .form-links {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
 .table-responsive {
     max-height: 400px;
@@ -8389,7 +8459,7 @@ body.dark-mode-active .cart-item .cart-item-footer {
 
 .presencetitle {
   color: white;
-  font-weight: 600;
+  font-weight: 600
 }
 
 .rekappresencetitle {
@@ -8398,4 +8468,8 @@ body.dark-mode-active .cart-item .cart-item-footer {
 #chartdiv {
   width: 100%;
   height: 500px;
+}
+
+.marginlayout {
+    margin-bottom: 100px;
 }
