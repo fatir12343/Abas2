@@ -12,17 +12,17 @@
         <div style="margin-left: auto; position: relative;">
             <button id="dropdownButton" style="background: none; border: none; cursor: pointer; display: flex; align-items: center; color: #cacaca;">
                 <ion-icon name="person-circle-outline" style="font-size: 24px;"></ion-icon>
-                <strong style="margin-left: 5px; font-size: 16px;">{{ Auth::user()->name }}</strong>
-                <ion-icon name="chevron-down-outline" style="margin-left: 5px; font-size: 16px;"></ion-icon>
+                <strong style="margin-left: 5px; font-size: 14px;">{{ Auth::user()->name }}</strong>
+                <ion-icon name="chevron-down-outline" style="margin-left: 5px; font-size: 15px;"></ion-icon>
             </button>
-            <div id="dropdownMenu" style="display: none; position: absolute; right: 0; background: white; border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); width: 200px;">
+            <div id="dropdownMenu" style="display: none; position: absolute; right: 0; background: white; border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 8px 15px rgba(0,0,0,0.2); width: 200px;">
                 <a href="/profile" class="item" style="display: flex; align-items: center; text-decoration: none; padding: 10px 20px; color: #6c757d;">
                     <ion-icon name="person-outline" style="font-size: 18px;"></ion-icon>
-                    <span style="margin-left: 10px; font-size: 16px;">Profile</span>
+                    <span style="margin-left: 10px; font-size: 15px;">Profile</span>
                 </a>
                 <a href="{{ route('logout') }}" class="item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="display: flex; align-items: center; text-decoration: none; padding: 10px 20px; color: #dc3545;">
                     <ion-icon name="log-out-outline" style="font-size: 18px;"></ion-icon>
-                    <span style="margin-left: 10px; font-size: 16px;">Logout</span>
+                    <span style="margin-left: 10px; font-size: 15px;">Logout</span>
                 </a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf

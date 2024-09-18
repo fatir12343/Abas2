@@ -34,7 +34,6 @@ async function detectFaces() {
         fullFaceDescriptions = faceapi.resizeResults(fullFaceDescriptions, displaySize);
 
         faceapi.draw.drawDetections(canvas, fullFaceDescriptions);
-        // faceapi.draw.drawFaceLandmarks(canvas, fullFaceDescriptions);
 
         // Calculate average face confidence
         if (fullFaceDescriptions.length > 0) {
@@ -52,21 +51,20 @@ async function detectFaces() {
     }
 }
 
-
-
-Webcam.set({
-    height: 400,
-    width: 430,
-    image_format: 'jpeg',
-    jpeg_quality: 90,
-    flip_horiz: true
-});
-Webcam.attach('#webcamCapture');
-
+function setupWebcam() {
+    Webcam.set({
+        height: 400,
+        width: 430,
+        image_format: 'jpeg',
+        jpeg_quality: 90,
+        flip_horiz: true
+    });
+    Webcam.attach('#webcamCapture');
+}
 
 document.getElementById('takeSnapshot').addEventListener('click', async function () {
     if (isCameraOn) {
-        Webcam.snap(async function(data_uri) {
+        Webcam.snap(async function (data_uri) {
             const resultImg = document.getElementById('result');
             const webcamCapture = document.getElementById('webcamCapture');
             const imageInput = document.getElementById('image');
@@ -81,7 +79,7 @@ document.getElementById('takeSnapshot').addEventListener('click', async function
             resultImg.style.display = 'block';
 
             // Wait until the image is fully loaded
-            resultImg.onload = async function() {
+            resultImg.onload = async function () {
                 // Ensure canvas matches the size of the image
                 if (canvas) {
                     canvas.width = resultImg.width;
@@ -98,13 +96,9 @@ document.getElementById('takeSnapshot').addEventListener('click', async function
     }
 });
 
-
-
-
-
 document.getElementById('resetCamera').addEventListener('click', function () {
     if (!isCameraOn) {
-        Webcam.attach('#webcamCapture');
+        setupWebcam();
         isCameraOn = true;
     }
     document.getElementById('webcamCapture').style.display = 'block';
@@ -117,17 +111,13 @@ document.getElementById('resetCamera').addEventListener('click', function () {
     }
 });
 
-// Load models when the page loads
+// Load models and setup webcam when the page loads
 window.onload = async function () {
-    await loadModels();
-};
-
-window.onload = async function() {
     await loadModels();
     const webcamElement = document.getElementById('webcamCapture');
     if (webcamElement) {
         console.log('Element found:', webcamElement);
-        Webcam.attach('#webcamCapture');
+        setupWebcam();
     } else {
         console.error('Element not found: #webcamCapture');
     }

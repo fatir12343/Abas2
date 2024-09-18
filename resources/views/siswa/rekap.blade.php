@@ -140,11 +140,12 @@
                                     <label for="to-date">To</label>
                                     <input type="date" id="to-date" name="end_date" class="form-control">
                                 </div>
-                                <div class="form-group align-self-end">
-                                    <button class="btn btn-primary" type="submit">
+                                <div class="form-group d-flex justify-content-md-end justify-content-center mt-3 mt-md-0">
+                                    <button class="btn btn-primary btn-lg w-100 w-md-auto" type="submit" style="min-width: 150px;">
                                         <i class="zmdi zmdi-search"></i> Cari
                                     </button>
                                 </div>
+
                             </form>
                         </div>
                         <h4 class="card-title text-center mb-4">Jumlah Kehadiran Anda</h4>
@@ -204,7 +205,7 @@
     <a href="{{ route('rekap') }}" class="item">
         <div class="col">
             <ion-icon name="albums-outline" class="icon"></ion-icon>
-            <strong>Riwayat</strong>
+            <strong>Rekap</strong>
         </div>
     </a>
 </div>

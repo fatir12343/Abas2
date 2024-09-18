@@ -21,23 +21,23 @@
                 </div>
                 <div id="user-info" class="d-flex flex-column align-items-center text-center">
                     <h2 id="user-name" style="font-size: 18px; font-weight: bold; margin-bottom: 0.5rem;">{{ Auth::user()->name }}</h2>
-                    <span id="user-role" style="color: #6c757d; font-size: 15px;">siswa</span>
+                    <span id="user-role" style="color: #6c757d; font-size: 17px;">siswa</span>
                 </div>
             </div>
             <div style="position: absolute; top: 10px; right: 10px;">
                 <button id="dropdownButton" style="background: none; border: none; cursor: pointer; display: flex; align-items: center; color: #cacaca;">
                     <ion-icon name="person-circle-outline" role="img" class="md hydrated" aria-label="profile icon" style="font-size: 24px;"></ion-icon>
-                    <strong style="margin-left: 5px; font-size: 16px;">{{ Auth::user()->name }}</strong>
-                    <ion-icon name="chevron-down-outline" role="img" class="md hydrated" aria-label="chevron down" style="margin-left: 5px; font-size: 16px;"></ion-icon>
+                    <strong style="margin-left: 5px; font-size: 10px;">{{ Auth::user()->name }}</strong>
+                    <ion-icon name="chevron-down-outline" role="img" class="md hydrated" aria-label="chevron down" style="margin-left: 5px; font-size: 15px;"></ion-icon>
                 </button>
                 <div id="dropdownMenu" style="display: none; position: absolute; right: 0; background: white; border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); width: 200px; z-index: 1000;">
                     <a href="/profile" class="item" style="display: flex; align-items: center; text-decoration: none; padding: 10px 20px; color: #6c757d;">
                         <ion-icon name="person-outline" role="img" class="md hydrated" aria-label="profile outline" style="font-size: 18px;"></ion-icon>
-                        <span style="margin-left: 10px; font-size: 16px;">Profile</span>
+                        <span style="margin-left: 10px; font-size: 10px;">Profile</span>
                     </a>
                     <a href="{{ route('logout') }}" class="item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="display: flex; align-items: center; text-decoration: none; padding: 10px 20px; color: #dc3545;">
                         <ion-icon name="log-out-outline" role="img" class="md hydrated" aria-label="log out outline" style="font-size: 18px;"></ion-icon>
-                        <span style="margin-left: 10px; font-size: 16px;">Logout</span>
+                        <span style="margin-left: 10px; font-size: 10px;">Logout</span>
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
@@ -50,9 +50,9 @@
         <div class="section mt-2" id="presence-section">
             <div class="todaypresence">
                 <div class="container-fluid mt-2">
-                    <div class="row d-flex-row">    
+                    <div class="row d-flex-row">
                         <!-- Jam -->
-                        <div class="col-7 col-md-3 mb-4">
+                        <div class="col-12 col-md-3 mb-3">
                             <div class="d-flex align-items-center p-3 bg-white border rounded shadow-sm">
                                 <ion-icon name="time-outline" class="icon-time"></ion-icon>
                                 <div>
@@ -63,7 +63,7 @@
                         </div>
 
                         <!-- Radius -->
-                        <div class="col-7 col-md-3 mb-4">
+                        <div class="col-12 col-md-3 mb-3">
                             <div class="d-flex align-items-center p-3 bg-white border rounded shadow-sm">
                                 <ion-icon name="location-outline" class="icon-radius"></ion-icon>
                                 <div>
@@ -74,7 +74,7 @@
                         </div>
 
                         <!-- Kalender -->
-                        <div class="col-7 col-md-3 mb-4">
+                        <div class="col-12 col-md-3 mb-3">
                             <div class="d-flex align-items-center p-3 bg-white border rounded shadow-sm">
                                 <ion-icon name="calendar-outline" class="icon-calendar"></ion-icon>
                                 <div>
@@ -85,7 +85,7 @@
                         </div>
 
                         <!-- Keterangan -->
-                        <div class="col-7 col-md-3 mb-4">
+                        <div class="col-12 col-md-3 mb-3">
                             <div class="d-flex align-items-center p-3 bg-white border rounded shadow-sm">
                                 <ion-icon name="document-text-outline" class="icon-keterangan"></ion-icon>
                                 <div>
@@ -97,35 +97,29 @@
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card mt-3">
                     <div class="card-body">
                         <div class="row">
                             <!-- Form Absen Masuk/Pulang -->
-                            <div class="col-6 mb-1">
+                            <div class="col-md-6 col-sm-12 mb-2">
                                 <form action="{{ url('/absen') }}" method="POST">
                                     @csrf
                                     <!-- Tentukan jenis absen berdasarkan status absen -->
                                     <input type="hidden" name="jenis_absen" value="{{ $statusAbsen == 'Sudah Absen Masuk' ? 'pulang' : 'masuk' }}">
 
                                     <!-- Kondisi card warna berdasarkan status absen -->
-                                    <div class="card {{ $statusAbsen == 'Sudah Absen Masuk' ? ($statusAbsen == 'Sudah Absen Pulang' ? 'gradasigrey' : 'gradasired') : 'gradasigreen' }}">
-                                        <div class="card-body">
-                                            <div class="presencecontent">
-                                                <div class="iconpresence">
-                                                    <!-- Tombol absen masuk/pulang: disable jika sudah absen pulang atau sedang izin -->
-                                                    <button type="submit" class="btn btn-link" {{ $statusAbsen == 'Sudah Absen Pulang' || $izin ? 'disabled' : '' }}>
-                                                        <ion-icon name="camera"></ion-icon>
-                                                    </button>
-                                                </div>
-                                                <div class="presencedetail">
-                                                    <!-- Tampilkan status absen (Masuk/Pulang) -->
-                                                    <h4 class="presencetitle">
-                                                        {{ $statusAbsen == 'Sudah Absen Masuk' ? 'Pulang' : 'Masuk' }}
-                                                    </h4>
-                                                    <span>
-                                                        {{ $statusAbsen == 'Sudah Absen Masuk' ? $jam_pulang : $jam_masuk }}
-                                                    </span>
-                                                </div>
+                                    <div class="card card-hover h-100 text-center {{ $statusAbsen == 'Sudah Absen Masuk' ? ($statusAbsen == 'Sudah Absen Pulang' ? 'gradasigrey' : 'gradasired') : 'gradasigreen' }} shadow-sm">
+                                        <div class="card-body d-flex flex-column justify-content-center align-items-center p-3">
+                                            <div class="iconpresence mb-2">
+                                                <!-- Tombol absen masuk/pulang: disable jika sudah absen pulang atau sedang izin -->
+                                                <button type="submit" class="btn btn-link" {{ $statusAbsen == 'Sudah Absen Pulang' || $izin ? 'disabled' : '' }}>
+                                                    <ion-icon name="camera" size="large"></ion-icon>
+                                                </button>
+                                            </div>
+                                            <div class="presencedetail">
+                                                <!-- Tampilkan status absen (Masuk/Pulang) -->
+                                                <h5 class="presencetitle">{{ $statusAbsen == 'Sudah Absen Masuk' ? 'Pulang' : 'Masuk' }}</h5>
+                                                <span>{{ $statusAbsen == 'Sudah Absen Masuk' ? $jam_pulang : $jam_masuk }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -133,19 +127,17 @@
                             </div>
 
                             <!-- Form Izin/Sakit -->
-                            <div class="col-6 mb-2">
-                                <div class="card {{ $statusAbsen == 'Sudah Absen Masuk' || $statusAbsen == 'Sudah Absen Pulang' || $izin ? 'gradasigrey' : 'gradasiblue' }}"
+                            <div class="col-md-6 col-sm-12 mb-2">
+                                <div class="card card-hover h-100 text-center {{ $statusAbsen == 'Sudah Absen Masuk' || $statusAbsen == 'Sudah Absen Pulang' || $izin ? 'gradasigrey' : 'gradasiblue' }} shadow-sm"
                                      data-toggle="modal" data-target="#FormulirModal" data-status="izin"
                                      style="{{ $statusAbsen == 'Sudah Absen Masuk' || $statusAbsen == 'Sudah Absen Pulang' || $izin ? 'pointer-events: none;' : '' }}">
-                                    <div class="card-body">
-                                        <div class="presencecontent">
-                                            <div class="iconpresence">
-                                                <ion-icon name="paper-plane-outline"></ion-icon>
-                                            </div>
-                                            <div class="presencedetail">
-                                                <h4 class="presencetitle">Izin/Sakit</h4>
-                                                <span>Isi form izin/sakit</span>
-                                            </div>
+                                    <div class="card-body d-flex flex-column justify-content-center align-items-center p-3">
+                                        <div class="iconpresence mb-2">
+                                            <ion-icon name="paper-plane-outline" size="large"></ion-icon>
+                                        </div>
+                                        <div class="presencedetail">
+                                            <h5 class="presencetitle">Izin/Sakit</h5>
+                                            <span>Isi form izin/sakit</span>
                                         </div>
                                     </div>
                                 </div>
@@ -153,13 +145,6 @@
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
-
     <!-- * App Capsule -->
 
     <!-- Popup Formulir Izin -->
@@ -216,137 +201,146 @@
     </div>
 
 
-    <div class="section mt-2" id="attendance-dashboard">
+    <div class="section mt-4" id="attendance-dashboard">
         <div class="container">
             <div class="row">
-                <div class="col-lg-8 text-center">
-                    <h3 class="title-5 m-b-35 text-center font-weight-bold text-dark">Riwayat Kehadiran Anda <strong>Minggu Ini</strong></h3>
-                    <div class="table-responsive table--no-card m-b-30">
-                        <table class="table table-hover table-striped table-earning">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th>Tanggal</th>
-                                    <th>Status</th>
-                                    <th>Absen Masuk</th>
-                                    <th>Absen Pulang</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($riwayatmingguini as $riwayatM)
-                                    <tr>
-                                        <td>{{ $riwayatM->date }}</td>
-                                        <td>
-                                            @if ($riwayatM->status == 'Hadir')
-                                                <span class="badge badge-success"><i class="fas fa-check-circle"></i> {{ $riwayatM->status }}</span>
-                                            @elseif ($riwayatM->status == 'Terlambat')
-                                                <span class="badge badge-warning"><i class="fas fa-clock"></i> {{ $riwayatM->status }}</span>
-                                            @elseif ($riwayatM->status == 'TAP')
-                                                <span class="badge badge-primary"><i class="fas fa-bell"></i> {{ $riwayatM->status }}</span>
-                                            @elseif ($riwayatM->status == 'Sakit' || $riwayatM->status == 'Izin')
-                                                <span class="badge badge-info"><i class="fas fa-user-md"></i> {{ $riwayatM->status }}</span>
-                                            @elseif ($riwayatM->status == 'Alfa')
-                                                <span class="badge badge-danger"><i class="fas fa-times-circle"></i> {{ $riwayatM->status }}</span>
-                                            @endif
-                                        </td>
-                                        <td>{{ $riwayatM->jam_masuk }}</td>
-                                        <td>{{ $riwayatM->jam_pulang }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                <div class="col-lg-8">
+                    <div class="card border-0 shadow-lg rounded-lg mb-4">
+                        <div class="card-header bg-primary text-white text-center">
+                            <h3 class="font-weight-bold mb-0">Riwayat Kehadiran Anda <strong>Minggu Ini</strong></h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Tanggal</th>
+                                            <th>Status</th>
+                                            <th>Absen Masuk</th>
+                                            <th>Absen Pulang</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($riwayatmingguini as $riwayatM)
+                                            <tr>
+                                                <td>{{ $riwayatM->date }}</td>
+                                                <td>
+                                                    @if ($riwayatM->status == 'Hadir')
+                                                        <span class="badge badge-success"><i class="fas fa-check-circle"></i> {{ $riwayatM->status }}</span>
+                                                    @elseif ($riwayatM->status == 'Terlambat')
+                                                        <span class="badge badge-warning"><i class="fas fa-clock"></i> {{ $riwayatM->status }}</span>
+                                                    @elseif ($riwayatM->status == 'TAP')
+                                                        <span class="badge badge-primary"><i class="fas fa-bell"></i> {{ $riwayatM->status }}</span>
+                                                    @elseif ($riwayatM->status == 'Sakit' || $riwayatM->status == 'Izin')
+                                                        <span class="badge badge-info"><i class="fas fa-user-md"></i> {{ $riwayatM->status }}</span>
+                                                    @elseif ($riwayatM->status == 'Alfa')
+                                                        <span class="badge badge-danger"><i class="fas fa-times-circle"></i> {{ $riwayatM->status }}</span>
+                                                    @endif
+                                                </td>
+                                                <td>{{ $riwayatM->jam_masuk }}</td>
+                                                <td>{{ $riwayatM->jam_pulang }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="au-card marginlayout shadow-sm border border-light rounded-lg">
-                        <h3 class="title-5 m-b-35 text-center font-weight-bold text-dark">Jumlah Kehadiran Anda</h3>
-                        <div class="au-card-inner">
-                            <div class="card border-0">
-                                <div class="card-header p-0 bg-transparent">
-                                    <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
-                                        <a class="nav-item nav-link active text-primary" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true"><strong>Bulan Ini</strong></a>
-                                        <a class="nav-item nav-link text-secondary" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false"><strong>Bulan Sebelumnya</strong></a>
+                <div class="col-lg-4 marginlayout">
+                    <div class="card border-0 shadow-lg rounded-lg">
+                        <div class="card-header bg-info text-white text-center">
+                            <h3 class="font-weight-bold mb-0">Jumlah Kehadiran Anda</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="nav nav-tabs mb-4" id="nav-tab" role="tablist">
+                                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">
+                                    <strong>Bulan Ini</strong>
+                                </a>
+                                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">
+                                    <strong>Bulan Sebelumnya</strong>
+                                </a>
+                            </div>
+                            <div class="tab-content" id="nav-tabContent">
+                                <!-- Tab Bulan Ini -->
+                                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                    <div class="progress mb-3" style="height: 20px;">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: {{ $persentaseHadirBulanIni }}%;" aria-valuenow="{{ $persentaseHadirBulanIni }}" aria-valuemin="0" aria-valuemax="100">
+                                           {{ $persentaseHadirBulanIni }}%
+                                        </div>
                                     </div>
+                                    <ul class="list-group">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <i class="fas fa-check-circle text-success"></i> Hadir
+                                            <span class="badge badge-success badge-pill">{{ $dataBulanIni['Hadir'] ?? 0 }}</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <i class="fas fa-user-md text-info"></i> Sakit/Izin
+                                            <span class="badge badge-info badge-pill">{{ $dataBulanIni['Sakit/Izin'] ?? 0 }}</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <i class="fas fa-clock text-warning"></i> Terlambat
+                                            <span class="badge badge-warning badge-pill">{{ $dataBulanIni['Terlambat'] ?? 0 }}</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <i class="fas fa-times-circle text-danger"></i> Alfa
+                                            <span class="badge badge-danger badge-pill">{{ $dataBulanIni['Alfa'] ?? 0 }}</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <i class="fas fa-bell text-primary"></i> TAP
+                                            <span class="badge badge-primary badge-pill">{{ $dataBulanIni['TAP'] ?? 0 }}</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <i class="fas fa-user-clock text-secondary"></i> Total Keterlambatan
+                                            <span>{{ $late }} Menit</span>
+                                        </li>
+                                    </ul>
                                 </div>
-                                <div class="card-body">
-                                    <div class="tab-content" id="nav-tabContent">
-                                        <!-- Tab Bulan Ini -->
-                                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                                            <div class="progress mb-2" style="height: 15px;">
-                                                <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: {{ $persentaseHadirBulanIni }}%" aria-valuenow="{{ $persentaseHadirBulanIni }}" aria-valuemin="0" aria-valuemax="100">
-                                                   {{ $persentaseHadirBulanIni }}%
-                                                </div>
-                                            </div>
-                                            <ul class="list-group">
-                                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <i class="fas fa-check-circle text-success"></i> Hadir
-                                                    <span class="badge badge-success badge-pill">{{ $dataBulanIni['Hadir'] ?? 0 }}</span>
-                                                </li>
-                                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <i class="fas fa-user-md text-info"></i> Sakit/Izin
-                                                    <span class="badge badge-info badge-pill">{{ $dataBulanIni['Sakit/Izin'] ?? 0 }}</span>
-                                                </li>
-                                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <i class="fas fa-clock text-warning"></i> Terlambat
-                                                    <span class="badge badge-warning badge-pill">{{ $dataBulanIni['Terlambat'] ?? 0 }}</span>
-                                                </li>
-                                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <i class="fas fa-times-circle text-danger"></i> Alfa
-                                                    <span class="badge badge-danger badge-pill">{{ $dataBulanIni['Alfa'] ?? 0 }}</span>
-                                                </li>
-                                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <i class="fas fa-bell text-primary"></i> TAP
-                                                    <span class="badge badge-primary badge-pill">{{ $dataBulanIni['TAP'] ?? 0 }}</span>
-                                                </li>
-                                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <i class="fas fa-user-clock text-secondary"></i> Total Keterlambatan
-                                                    <span>{{ $late }} Menit</span>
-                                                </li>
-                                            </ul>
-                                        </div>
 
-                                        <!-- Tab Bulan Sebelumnya -->
-                                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                                            <div class="progress mb-2" style="height: 25px;">
-                                                <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: {{ $persentaseHadirBulanSebelumnya }}%" aria-valuenow="{{ $persentaseHadirBulanSebelumnya }}" aria-valuemin="0" aria-valuemax="100">
-                                                    Persentase Hadir: {{ $persentaseHadirBulanSebelumnya }}%
-                                                </div>
-                                            </div>
-                                            <ul class="list-group">
-                                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <i class="fas fa-check-circle text-success"></i> Hadir
-                                                    <span class="badge badge-success badge-pill">{{ $dataBulanSebelumnya['Hadir'] ?? 0 }}</span>
-                                                </li>
-                                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <i class="fas fa-user-md text-info"></i> Sakit/Izin
-                                                    <span class="badge badge-info badge-pill">{{ $dataBulanSebelumnya['Sakit/Izin'] ?? 0 }}</span>
-                                                </li>
-                                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <i class="fas fa-clock text-warning"></i> Terlambat
-                                                    <span class="badge badge-warning badge-pill">{{ $dataBulanSebelumnya['Terlambat'] ?? 0 }}</span>
-                                                </li>
-                                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <i class="fas fa-times-circle text-danger"></i> Alfa
-                                                    <span class="badge badge-danger badge-pill">{{ $dataBulanSebelumnya['Alfa'] ?? 0 }}</span>
-                                                </li>
-                                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <i class="fas fa-bell text-primary"></i> TAP
-                                                    <span class="badge badge-primary badge-pill">{{ $dataBulanSebelumnya['TAP'] ?? 0 }}</span>
-                                                </li>
-                                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <i class="fas fa-user-clock text-secondary"></i> Total Keterlambatan
-                                                    <span>{{ $late2 }} Menit</span>
-                                                </li>
-                                            </ul>
+                                <!-- Tab Bulan Sebelumnya -->
+                                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                    <div class="progress mb-3" style="height: 20px;">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: {{ $persentaseHadirBulanSebelumnya }}%;" aria-valuenow="{{ $persentaseHadirBulanSebelumnya }}" aria-valuemin="0" aria-valuemax="100">
+                                            {{ $persentaseHadirBulanSebelumnya }}%
                                         </div>
                                     </div>
+                                    <ul class="list-group">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <i class="fas fa-check-circle text-success"></i> Hadir
+                                            <span class="badge badge-success badge-pill">{{ $dataBulanSebelumnya['Hadir'] ?? 0 }}</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <i class="fas fa-user-md text-info"></i> Sakit/Izin
+                                            <span class="badge badge-info badge-pill">{{ $dataBulanSebelumnya['Sakit/Izin'] ?? 0 }}</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <i class="fas fa-clock text-warning"></i> Terlambat
+                                            <span class="badge badge-warning badge-pill">{{ $dataBulanSebelumnya['Terlambat'] ?? 0 }}</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <i class="fas fa-times-circle text-danger"></i> Alfa
+                                            <span class="badge badge-danger badge-pill">{{ $dataBulanSebelumnya['Alfa'] ?? 0 }}</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <i class="fas fa-bell text-primary"></i> TAP
+                                            <span class="badge badge-primary badge-pill">{{ $dataBulanSebelumnya['TAP'] ?? 0 }}</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <i class="fas fa-user-clock text-secondary"></i> Total Keterlambatan
+                                            <span>{{ $late2 }} Menit</span>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
+
+
 
 
 </div>

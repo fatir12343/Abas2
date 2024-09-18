@@ -8410,52 +8410,77 @@ body.dark-mode-active .cart-item .cart-item-footer {
 .list-group-item i {
     margin-right: 10px;
 }
+/* Hover effect hanya pada card absen dan izin/sakit */
+.card-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Warna gradasi yang digunakan untuk absen dan izin/sakit */
 .gradasigreen {
-  color: white;
-  background-image: linear-gradient(
-    to bottom right,
-    rgba(21, 189, 74, 1),
-    rgba(21, 189, 74, 0.8)
-  );
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    color: white;
+    border-radius: 10px;
 }
 
 .gradasired {
-  color: white;
-  background-image: linear-gradient(
-    to bottom right,
-    #8B8B97,
-    #8B8B97
-  );
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    border-radius: 10px;
 }
 
 .gradasiblue {
+    background: linear-gradient(135deg, #3498db, #2980b9);
     color: white;
-    background-image: linear-gradient(
-        to bottom right,
-       #00D1FF,
-       #00D1FF
-    );
+    border-radius: 10px;
 }
 
-.gradasipurple {
-    color: white;
-    background-image: linear-gradient(
-        to bottom right,
-        #AC94FA,
-        #AC94FA
-    );
-}
 .gradasigrey {
-    background-color: #b0b0b0;
-    color: #fff;
-}
-.iconpresence {
-  font-size: 30px;
+    background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+    color: white;
+    border-radius: 10px;
 }
 
-.presencedetail {
-  line-height: 2px;
+.presencetitle {
+    font-size: 1.2rem;
+    font-weight: bold;
 }
+
+.iconpresence ion-icon {
+    font-size: 2rem;
+    color: white;
+}
+
+.presencedetail span {
+    font-size: 0.9rem;
+    color: #f0f0f0;
+}
+
+.btn-link {
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: inherit;
+    text-decoration: none;
+}
+
+.shadow-sm {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+    padding: 0.75rem; /* Menyempitkan padding card agar lebih ringkas */
+}
+
+.mb-2 {
+    margin-bottom: 0.5rem !important; /* Mengurangi margin antar elemen */
+}
+
 
 .presencetitle {
   color: white;
@@ -8472,4 +8497,21 @@ body.dark-mode-active .cart-item .cart-item-footer {
 
 .marginlayout {
     margin-bottom: 100px;
+}
+
+
+bg-gradient-success {
+    background: linear-gradient(135deg, #28a745, #218838);
+}
+.bg-gradient-warning {
+    background: linear-gradient(135deg, #ffc107, #e0a800);
+}
+.bg-gradient-primary {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+}
+.bg-gradient-secondary {
+    background: linear-gradient(135deg, #6c757d, #343a40);
+}
+.bg-gradient-light {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
 }

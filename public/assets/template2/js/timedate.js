@@ -1,5 +1,5 @@
 function updateClock() {
-    const clockElement = document.querySelector('.col-6 .bg-white div span'); // Ganti selector sesuai kebutuhan
+    const clockElement = document.querySelector('.col-12  .bg-white div span'); // Ganti selector sesuai kebutuhan
     const now = new Date();
     const hours = now.getHours().toString().padStart(2, '0');
     const minutes = now.getMinutes().toString().padStart(2, '0');

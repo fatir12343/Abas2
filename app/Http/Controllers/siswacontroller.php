@@ -112,7 +112,7 @@ class siswacontroller extends Controller
         'lok_sekolah' => $koordinatsekolah,
         'siswa' => Siswa::with('user')->get(),
         'jam' => $jamskrg,
-        'jam_masuk' => $jam ? $jam->jam_masuk : '06:30:00',
+        'jam_masuk' => $jam ? $jam->jam_masuk : '06:00:00',
         'jam_pulang' => $jam ? $jam->jam_pulang : '15:30:00',
         'batas_jam_masuk' => $jam ? $jam->batas_jam_masuk : null,
         'batas_jam_pulang' => $jam ? $jam->batas_jam_pulang : null,
