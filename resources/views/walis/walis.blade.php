@@ -481,21 +481,21 @@
                                             </li>
                                             <li class="flex justify-between">
                                                 <span class="flex items-center">
+                                                    <svg class="w-4 h-4 text-blue-500" fill="currentColor"><path d="..."/></svg> TAP
+                                                </span>
+                                                <span class="bg-blue-100 text-blue-600 px-2 py-1 rounded">{{ $dataBulanIni['TAP'] ?? 0 }}</span>
+                                            </li>
+                                            <li class="flex justify-between">
+                                                <span class="flex items-center">
                                                     <svg class="w-4 h-4 text-red-500" fill="currentColor"><path d="..."/></svg> Alfa
                                                 </span>
                                                 <span class="bg-red-100 text-red-600 px-2 py-1 rounded">{{ $dataBulanIni['Alfa'] ?? 0 }}</span>
                                             </li>
-                                            <ul class="list-group list-none p-0">
-                                                <li class="list-group-item flex justify-between items-center px-6 py-3 border-b border-gray-300">
-                                                    <i class="fas fa-bell text-blue-500"></i>
-                                                    <span class="font-medium">TAP</span>
-                                                    <span class="bg-blue-500 text-white rounded-full px-3 py-1 text-xs">{{ $dataBulanIni['TAP'] ?? 0 }}</span>
-                                                </li>
-                                            {{-- <li class="list-group-item flex justify-between items-center px-6 py-3 border-b border-gray-300">
-                                                    <i class="fas fa-user-clock text-gray-600"></i>
-                                                    <span class="font-medium">Total Keterlambatan</span>
-                                                    <span>{{ $totalKeterlambatan }} Menit</span>
-                                            </li> --}}
+                                            <li class="list-group-item flex justify-between items-center px-6 py-3 border-b border-gray-300">
+                                                <i class="fas fa-user-clock text-gray-600"></i>
+                                                <span class="font-medium">Total Keterlambatan</span>
+                                                <span>{{ $menitketerlambatan }} Menit</span>
+                                            </li>
                                         </ul>
                                     </div>
 

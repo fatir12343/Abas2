@@ -78,6 +78,18 @@ class walis extends Controller
             }
         }
 
+        // Hitung keterlambatan bulan ini dan bulan sebelumnya
+            $late2 = Absensi::where('nis', $nik)
+            ->whereMonth('date', date('m', strtotime('first day of previous month')))
+            ->sum('menit_keterlambatan');
+
+            $late = Absensi::where('nis', $nik)
+            ->whereMonth('date', date('m'))
+            ->sum('menit_keterlambatan');
+
+            // Menambahkan total keterlambatan
+            $menitketerlambatan = $late;
+
         $totalAbsenBulanIni = array_sum($dataBulanIni);
         $persentaseHadirBulanIni = $totalAbsenBulanIni > 0 ? round(($dataBulanIni['Hadir'] / $totalAbsenBulanIni) * 100) : 0;
 
@@ -121,6 +133,7 @@ class walis extends Controller
             'persentaseHadirBulanSebelumnya' => $persentaseHadirBulanSebelumnya,
             'riwayatmingguini' => $riwayatmingguini,
             'statusValidasi' => $statusValidasi,
+            'menitketerlambatan' => $menitketerlambatan,
             'izin' => $izin // Mengirimkan data izin ke view
             ]);
     }
