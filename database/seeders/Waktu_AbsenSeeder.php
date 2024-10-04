@@ -6,7 +6,7 @@ use App\Models\waktu_absen;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class waktu__absen extends Seeder
+class Waktu_AbsenSeeder extends Seeder
 {
     /**
      * Run the database seeds.

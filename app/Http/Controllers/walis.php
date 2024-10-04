@@ -6,135 +6,197 @@ use Illuminate\Http\Request;
 use App\Models\siswa;
 use App\Models\absensi;
 use App\Models\koordinat_sekolah;
+use App\Models\User;
 use App\Models\waktu_absen;
 use App\Models\wali_siswa;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class walis extends Controller
 {
     public function index()
     {
-        $walisiswa = wali_siswa::where('id_user', Auth::id())->first();
-        $nik = $walisiswa->siswa()->get(); // Menggunakan relasi siswa untuk mendapatkan NIK
-        $hariini = date("Y-m-d");
+        
+        // Dapatkan bulan dan tahun sekarang
+        $currentMonth = now()->month;
+        $currentYear = now()->year;
 
-        // Ambil data dari tabel koordinat_sekolah dan waktu_absen
-        $koordinatsekolah = Koordinat_Sekolah::first();
-        $jam = Waktu_Absen::first();
+        // Dapatkan bulan dan tahun sebelumnya
+        $previousMonth = now()->subMonth()->month;
+        $previousYear = now()->subMonth()->year;
 
-        // Cek absensi hari ini
-        $cekabsen = Absensi::where('date', $hariini)
-            ->where('nis', $nik)
+        // Query untuk absensi bulan ini
+        $dataBulanIni = DB::table('absensi')
+            ->select(DB::raw('
+                SUM(CASE WHEN status = "Hadir" THEN 1 ELSE 0 END) as Hadir,
+                SUM(CASE WHEN status = "Sakit/Izin" THEN 1 ELSE 0 END) as `Sakit/Izin`,
+                SUM(CASE WHEN status = "Terlambat" THEN 1 ELSE 0 END) as Terlambat,
+                SUM(CASE WHEN status = "TAP" THEN 1 ELSE 0 END) as TAP,
+                SUM(CASE WHEN status = "Alfa" THEN 1 ELSE 0 END) as Alfa
+            '))
+            ->whereMonth('date', $currentMonth)
+            ->whereYear('date', $currentYear)
             ->first();
 
-        // Cek status izin atau sakit
-        $izin = Absensi::where('nis', $nik)
-            ->where('status', 'Izin')
-            ->orWhere('status', 'Sakit')
-            ->where('date', $hariini)
+        // Query untuk absensi bulan sebelumnya
+        $dataBulanSebelumnya = DB::table('absensi')
+            ->select(DB::raw('
+                SUM(CASE WHEN status = "Hadir" THEN 1 ELSE 0 END) as Hadir,
+                SUM(CASE WHEN status = "Sakit/Izin" THEN 1 ELSE 0 END) as `Sakit/Izin`,
+                SUM(CASE WHEN status = "Terlambat" THEN 1 ELSE 0 END) as Terlambat,
+                SUM(CASE WHEN status = "TAP" THEN 1 ELSE 0 END) as TAP,
+                SUM(CASE WHEN status = "Alfa" THEN 1 ELSE 0 END) as Alfa
+            '))
+            ->whereMonth('date', $previousMonth)
+            ->whereYear('date', $previousYear)
             ->first();
 
-        // Hitung keterlambatan bulan ini dan bulan sebelumnya
-        $late2 = Absensi::where('nis', $nik)
-            ->whereMonth('date', date('m', strtotime('first day of previous month')))
-            ->sum('menit_keterlambatan');
-        $late = Absensi::where('nis', operator: $nik)
-            ->whereMonth('date', date('m'))
-            ->sum('menit_keterlambatan');
-
-        // Data absensi bulan ini dan bulan sebelumnya
-        $dataBulanIni = Absensi::whereYear('date', date('Y'))
-            ->where('nis', $nik)
-            ->whereMonth('date', date('m'))
-            ->select('status', DB::raw('count(*) as total'))
-            ->groupBy('status')
-            ->pluck('total', 'status')
-            ->toArray();
-
-        $dataBulanSebelumnya = Absensi::whereYear('date', date('Y'))
-            ->where('nis', $nik)
-            ->whereMonth('date', date('m', strtotime('first day of previous month')))
-            ->select('status', DB::raw('count(*) as total'))
-            ->groupBy('status')
-            ->pluck('total', 'status')
-            ->toArray();
-
-        // Gabungkan 'Sakit' dan 'Izin' menjadi satu kategori
-        $dataBulanIni['Sakit/Izin'] = ($dataBulanIni['Sakit'] ?? 0) + ($dataBulanIni['Izin'] ?? 0);
-        unset($dataBulanIni['Sakit'], $dataBulanIni['Izin']);
-
-        $dataBulanSebelumnya['Sakit/Izin'] = ($dataBulanSebelumnya['Sakit'] ?? 0) + ($dataBulanSebelumnya['Izin'] ?? 0);
-        unset($dataBulanSebelumnya['Sakit'], $dataBulanSebelumnya['Izin']);
-
-        // Status yang tersisa
-        $statuses = ['Hadir', 'Sakit/Izin', 'Alfa', 'Terlambat', 'TAP'];
-        foreach ($statuses as $status) {
-            if (!array_key_exists($status, $dataBulanIni)) {
-                $dataBulanIni[$status] = 0;
-            }
-            if (!array_key_exists($status, $dataBulanSebelumnya)) {
-                $dataBulanSebelumnya[$status] = 0;
-            }
-        }
-
-        // Hitung keterlambatan bulan ini dan bulan sebelumnya
-            $late2 = Absensi::where('nis', $nik)
-            ->whereMonth('date', date('m', strtotime('first day of previous month')))
+        // Hitung total keterlambatan
+        $totalKeterlambatan = DB::table('absensi')
+            ->where('status', 'Terlambat')
+            ->whereMonth('date', $currentMonth)
+            ->whereYear('date', $currentYear)
             ->sum('menit_keterlambatan');
 
-            $late = Absensi::where('nis', $nik)
-            ->whereMonth('date', date('m'))
+        $totalKeterlambatanBulanSebelumnya = DB::table('absensi')
+            ->where('status', 'Terlambat')
+            ->whereMonth('date', $previousMonth)
+            ->whereYear('date', $previousYear)
             ->sum('menit_keterlambatan');
 
-            // Menambahkan total keterlambatan
-            $menitketerlambatan = $late;
+        // Cek untuk menghindari division by zero
+        $totalHadirBulanIni = ($dataBulanIni->Hadir + $dataBulanIni->Alfa) > 0
+            ? ($dataBulanIni->Hadir / ($dataBulanIni->Hadir + $dataBulanIni->Alfa)) * 100
+            : 0;
 
-        $totalAbsenBulanIni = array_sum($dataBulanIni);
-        $persentaseHadirBulanIni = $totalAbsenBulanIni > 0 ? round(($dataBulanIni['Hadir'] / $totalAbsenBulanIni) * 100) : 0;
+        $totalHadirBulanSebelumnya = ($dataBulanSebelumnya->Hadir + $dataBulanSebelumnya->Alfa) > 0
+            ? ($dataBulanSebelumnya->Hadir / ($dataBulanSebelumnya->Hadir + $dataBulanSebelumnya->Alfa)) * 100
+            : 0;
 
-        $totalAbsenBulanSebelumnya = array_sum($dataBulanSebelumnya);
-        $persentaseHadirBulanSebelumnya = $totalAbsenBulanSebelumnya > 0 ? round(($dataBulanSebelumnya['Hadir'] / $totalAbsenBulanSebelumnya) * 100) : 0;
-
-        // Riwayat absensi mingguan
-        $startOfWeek = date('Y-m-d', strtotime('monday this week'));
-        $endOfWeek = date('Y-m-d', strtotime('sunday this week'));
-
-        $riwayatmingguini = Absensi::whereBetween('date', [$startOfWeek, $endOfWeek])
-            ->where('nis', $nik)
-            ->get();
-
-        // Cek status absensi
-        $statusAbsen = $cekabsen ? $cekabsen->status : 'Belum Absen';
-        $absenMasuk = $cekabsen ? !empty($cekabsen->photo_in) : 'Hadir';
-        $absenPulang = $cekabsen ? !empty($cekabsen->photo_out) : 'Pulang';
-        $statusValidasi = $statusAbsen === "Izin" || $statusAbsen === "Sakit";
-
-        $jamskrg = date("H:i:s");
-        $validasijam = $jam ? (strtotime($jamskrg) > strtotime($jam->batas_absen_pulang) || strtotime($jamskrg) < strtotime($jam->jam_absen)) : false;
-
+        // Kirim data ke view
         return view('walis.walis', [
-            'waktu' => $jam,
-            'cekabsen' => $cekabsen ? 1 : 0,
-            'statusAbsen' => $statusAbsen,
-            'lok_sekolah' => $koordinatsekolah,
-            'siswa' => siswa::with('user')->get(),
-            'jam' => $jamskrg,
-            'jam_masuk' => $jam ? $jam->jam_masuk : '06:00:00',
-            'jam_pulang' => $jam ? $jam->jam_pulang : '15:30:00',
-            'batas_jam_masuk' => $jam ? $jam->batas_jam_masuk : null,
-            'batas_jam_pulang' => $jam ? $jam->batas_jam_pulang : null,
             'dataBulanIni' => $dataBulanIni,
             'dataBulanSebelumnya' => $dataBulanSebelumnya,
-            'statusIzin' => $cekabsen ? ($cekabsen->status === 'Izin' || $cekabsen->status === 'Sakit' ? 'Sudah Mengisi Izin/Sakit' : 'Belum Mengisi Izin/Sakit') : 'Belum Mengisi Izin/Sakit',
-            'late' => $late,
-            'late2' => $late2,
-            'persentaseHadirBulanIni' => $persentaseHadirBulanIni,
-            'persentaseHadirBulanSebelumnya' => $persentaseHadirBulanSebelumnya,
-            'riwayatmingguini' => $riwayatmingguini,
-            'statusValidasi' => $statusValidasi,
-            'menitketerlambatan' => $menitketerlambatan,
-            'izin' => $izin // Mengirimkan data izin ke view
-            ]);
+            'totalKeterlambatan' => $totalKeterlambatan,
+            'totalKeterlambatanBulanSebelumnya' => $totalKeterlambatanBulanSebelumnya,
+            'persentaseHadirBulanIni' => $totalHadirBulanIni,
+            'persentaseHadirBulanSebelumnya' => $totalHadirBulanSebelumnya,
+        ]);
+    }
+
+
+    private function filterrekap($absensi)
+    {
+        // Mendapatkan data bulan ini
+    $bulanIni = Carbon::now()->month;
+    $tahunIni = Carbon::now()->year;
+
+    $dataBulanIni = Absensi::whereMonth('tanggal', $bulanIni)
+        ->whereYear('tanggal', $tahunIni)
+        ->selectRaw('SUM(CASE WHEN status = "Hadir" THEN 1 ELSE 0 END) as Hadir')
+        ->selectRaw('SUM(CASE WHEN status = "Sakit/Izin" THEN 1 ELSE 0 END) as `Sakit/Izin`')
+        ->selectRaw('SUM(CASE WHEN status = "Terlambat" THEN 1 ELSE 0 END) as Terlambat')
+        ->first();
+
+    $totalKeterlambatan = Absensi::whereMonth('tanggal', $bulanIni)
+        ->whereYear('tanggal', $tahunIni)
+        ->where('status', 'Terlambat')
+        ->sum('keterlambatan'); // Misalnya ada kolom keterlambatan dalam hitungan menit
+
+    // Menghitung persentase kehadiran bulan ini
+    $totalHariBulanIni = Carbon::now()->daysInMonth;
+    $persentaseHadirBulanIni = ($dataBulanIni->Hadir / $totalHariBulanIni) * 100;
+
+    // Mendapatkan data bulan sebelumnya
+    $bulanSebelumnya = Carbon::now()->subMonth()->month;
+    $tahunSebelumnya = Carbon::now()->subMonth()->year;
+
+    $dataBulanSebelumnya = Absensi::whereMonth('tanggal', $bulanSebelumnya)
+        ->whereYear('tanggal', $tahunSebelumnya)
+        ->selectRaw('SUM(CASE WHEN status = "Hadir" THEN 1 ELSE 0 END) as Hadir')
+        ->selectRaw('SUM(CASE WHEN status = "Sakit/Izin" THEN 1 ELSE 0 END) as `Sakit/Izin`')
+        ->selectRaw('SUM(CASE WHEN status = "Terlambat" THEN 1 ELSE 0 END) as Terlambat')
+        ->selectRaw('SUM(CASE WHEN status = "TAP" THEN 1 ELSE 0 END) as TAP')
+        ->selectRaw('SUM(CASE WHEN status = "Alfa" THEN 1 ELSE 0 END) as Alfa')
+        ->first();
+
+    $totalKeterlambatanBulanSebelumnya = Absensi::whereMonth('tanggal', $bulanSebelumnya)
+        ->whereYear('tanggal', $tahunSebelumnya)
+        ->where('status', 'Terlambat')
+        ->sum('keterlambatan');
+
+    // Menghitung persentase kehadiran bulan sebelumnya
+    $totalHariBulanSebelumnya = Carbon::create($tahunSebelumnya, $bulanSebelumnya)->daysInMonth;
+    $persentaseHadirBulanSebelumnya = ($dataBulanSebelumnya->Hadir / $totalHariBulanSebelumnya) * 100;
+
+    return ([
+        'dataBulanIni' => $dataBulanIni,
+        'persentaseHadirBulanIni' => $persentaseHadirBulanIni,
+        'totalKeterlambatan' => $totalKeterlambatan,
+        'dataBulanSebelumnya' => $dataBulanSebelumnya,
+        'persentaseHadirBulanSebelumnya' => $persentaseHadirBulanSebelumnya,
+        'totalKeterlambatanBulanSebelumnya' => $totalKeterlambatanBulanSebelumnya
+    ]);
+    }
+
+
+
+    public function profile()
+    {
+        $walis = Auth::user();
+        return view('walis.profile', compact('walis'));
+    }
+
+    public function updateprofile(Request $request)
+    {
+        $user = Auth::user();  // Mengambil data user yang sedang login
+
+        // Validasi data
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'nullable|min:6|confirmed', // Password hanya diubah jika diisi dan dikonfirmasi
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $updateFields = [];
+
+        // Update email
+        if ($request->email !== $user->email) {
+            $updateFields['email'] = $request->email;
+        }
+
+        // Update password jika diisi
+        if ($request->password) {
+            $updateFields['password'] = bcrypt($request->password);
+        }
+
+        // Update foto profil jika ada file yang diupload
+        if ($request->hasFile('foto')) {
+            $foto = $request->file('foto');
+            $fileName = $user->nis . '.' . $foto->getClientOriginalExtension();
+            $folderPath = 'user_avatar/';  // Tanpa 'public/' di depan
+
+            // Simpan foto di storage/public/user_avatar/
+            $foto->storeAs($folderPath, $fileName, 'public');
+
+            // Hapus foto lama jika ada
+            if ($user->foto && Storage::disk('public')->exists($folderPath . $user->foto)) {
+                Storage::disk('public')->delete($folderPath . $user->foto);
+            }
+
+            // Update nama file foto baru ke database
+            $updateFields['foto'] = $fileName;
+        }
+
+        // Update data di database jika ada perubahan
+        if (!empty($updateFields)) {
+            User::where('id', $user->id)->update($updateFields);
+        }
+
+        // Redirect dengan pesan sukses
+        return redirect()->back()->with('success', 'Data Berhasil di Update');
+
     }
 }

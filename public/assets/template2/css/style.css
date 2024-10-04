@@ -8324,35 +8324,25 @@ body.dark-mode-active .cart-item .cart-item-footer {
 .pagination {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
 }
 
-.pagination .page-link {
-    color: #007bff;
-    background-color: #fff;
-    border: 1px solid #dee2e6;
-    padding: 0.5rem 0.75rem;
-    margin: 0 5px;
-    transition: all 0.3s ease;
-}
-
-.pagination .page-link:hover {
+.page-item.active .page-link {
     background-color: #007bff;
-    color: white;
+    border-color: #007bff;
 }
 
-.pagination .page-item.active .page-link {
-    background-color: #28a745;
-    border-color: #28a745;
-    color: white;
+.page-link {
+    color: #007bff;
 }
 
-.pagination .page-item.disabled .page-link {
+.page-link:hover {
+    color: #0056b3;
+}
+
+.page-item.disabled .page-link {
     color: #6c757d;
-    background-color: #fff;
-    border-color: #dee2e6;
-    cursor: not-allowed;
 }
+
 
 
 .btn-login {

@@ -4,7 +4,8 @@
 <!-- Header -->
 <div class="appHeader bg-secondary text-light">
     <div class="left">
-        <a href="javascript:;" class="headerButton goBack">
+        <a href="javascript:history.back();" class="headerButton goBack">
+            <ion-icon name="arrow-back-outline" style="font-size: 24px; color: #ffffff;"></ion-icon>
         </a>
     </div>
     <div class="pageTitle">Rekap Absensi</div>
@@ -36,7 +37,6 @@
 <section class="statisticrekap p-t-20 mt-5">
     <div class="container">
         <div class="row">
-
             <!-- Rekap Kehadiran Card -->
             <div class="col-lg-7 mb-4">
                 <div class="card">
@@ -56,7 +56,7 @@
                                         <tr>
                                             <td>{{ $a->date }}</td>
                                             <td>
-                                                <span class="status {{ strtolower($a->status) }}">{{ $a->status }}</span>
+                                                <span class="badge badge-{{ strtolower($a->status) }}">{{ $a->status }}</span>
                                             </td>
                                             <td>
                                                 <button class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#DetailModal{{ $a->id_absensi }}">
@@ -68,89 +68,63 @@
                                 </tbody>
                             </table>
 
-                            <!-- Pagination -->
                             <div class="d-flex justify-content-center">
-                                {{ $absensi->links() }}
+                                {{ $absensi->links('pagination::bootstrap-4') }}
                             </div>
-                        </div>
 
-                        <!-- Modals -->
-                        @foreach ($absensi as $a)
-                            <div class="modal fade" id="DetailModal{{ $a->id_absensi }}" tabindex="-1" role="dialog" aria-labelledby="DetailModalLabel{{ $a->id_absensi }}" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content border-0 rounded-lg shadow-lg">
-                                        <div class="modal-header border-bottom-0">
-                                            <h5 class="modal-title" id="DetailModalLabel{{ $a->id_absensi }}">
-                                                Detail Kehadiran <strong>{{ $a->date }}</strong>
-                                            </h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body text-left">
-                                            <table class="table table-borderless">
-                                                <tbody>
-                                                    <tr>
-                                                        <th>Status:</th>
-                                                        <td>{{ $a->status }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Jam Masuk:</th>
-                                                        <td>{{ $a->jam_masuk ?? 'Tidak tersedia' }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Jam Pulang:</th>
-                                                        <td>{{ $a->jam_pulang ?? 'Tidak tersedia' }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Menit Keterlambatan:</th>
-                                                        <td>{{ $a->menit_keterlambatan ? $a->menit_keterlambatan . ' menit' : 'Tidak tersedia' }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Keterangan:</th>
-                                                        <td>{{ $a->keterangan ?? 'Tidak tersedia' }}</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="modal-footer border-top-0">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                            <!-- Modal for Absensi Details -->
+                            @foreach ($absensi as $a)
+                                <div class="modal fade" id="DetailModal{{ $a->id_absensi }}" tabindex="-1" role="dialog" aria-labelledby="DetailModalLabel{{ $a->id_absensi }}" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Detail Kehadiran {{ $a->date }}</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <table class="table table-borderless">
+                                                    <tr><th>Status:</th><td>{{ $a->status }}</td></tr>
+                                                    <tr><th>Jam Masuk:</th><td>{{ $a->jam_masuk ?? 'Tidak tersedia' }}</td></tr>
+                                                    <tr><th>Jam Pulang:</th><td>{{ $a->jam_pulang ?? 'Tidak tersedia' }}</td></tr>
+                                                    <tr><th>Menit Keterlambatan:</th><td>{{ $a->menit_keterlambatan ? $a->menit_keterlambatan . ' menit' : 'Tidak tersedia' }}</td></tr>
+                                                    <tr><th>Keterangan:</th><td>{{ $a->keterangan ?? 'Tidak tersedia' }}</td></tr>
+                                                </table>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endforeach
-                        <!-- End Modals -->
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </div>
-            <!-- End of Rekap Kehadiran Card -->
 
             <!-- Jumlah Kehadiran Anda Card -->
             <div class="col-lg-5 mb-5">
                 <div class="card">
                     <div class="card-body">
-                        <div class="filter-section mb-2">
-                            <form action="{{ route('rekap') }}" method="GET" class="d-flex flex-column flex-md-row justify-content-between">
-                                <div class="form-group mb-2">
-                                    <label for="from-date">From</label>
-                                    <input type="date" id="from-date" name="start_date" class="form-control">
-                                </div>
-                                <div class="form-group mb-2">
-                                    <label for="to-date">To</label>
-                                    <input type="date" id="to-date" name="end_date" class="form-control">
-                                </div>
-                                <div class="form-group d-flex justify-content-md-end justify-content-center mt-3 mt-md-0">
-                                    <button class="btn btn-primary btn-lg w-100 w-md-auto" type="submit" style="min-width: 150px;">
-                                        <i class="zmdi zmdi-search"></i> Cari
-                                    </button>
-                                </div>
+                        <form action="{{ route('rekap') }}" method="GET" class="d-flex flex-column flex-md-row justify-content-between">
+                            <div class="form-group">
+                                <label for="from-date">From</label>
+                                <input type="date" id="from-date" name="start_date" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="to-date">To</label>
+                                <input type="date" id="to-date" name="end_date" class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg mt-md-0 mt-3">
+                                <i class="zmdi zmdi-search"></i> Cari
+                            </button>
+                        </form>
 
-                            </form>
-                        </div>
-                        <h4 class="card-title text-center mb-4">Jumlah Kehadiran Anda</h4>
-                        <div class="progress mb-2" style="height: 15px">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: {{ $persentaseHadir }}%" aria-valuenow="{{ $persentaseHadir }}" aria-valuemin="0" aria-valuemax="100">
+                        <h4 class="card-title text-center my-4">Jumlah Kehadiran Anda</h4>
+                        <div class="progress mb-2" style="height: 15px;">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: {{ $persentaseHadir }}%;">
                                 {{ $persentaseHadir }}%
                             </div>
                         </div>
@@ -183,8 +157,6 @@
                     </div>
                 </div>
             </div>
-            <!-- End of Jumlah Kehadiran Anda Card -->
-
         </div>
     </div>
 </section>
@@ -267,6 +239,11 @@
             // Panggil callback untuk set teks default dan input hidden
             cb(start, end);
         });
+
+        document.getElementById('dropdownButton').addEventListener('click', function() {
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+    });
     </script>
 @endpush
 @endsection

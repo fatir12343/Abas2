@@ -48,21 +48,11 @@
                                 <img src="{{ asset('assets/template2/img/sample/avatar/avatar1.jpg') }}" alt="Foto Profil" width="150" class="img-thumbnail">
                             @endif
                         </div>
-                        <!-- Upload Foto di Bawah Foto Profil -->
-                        <form action="{{ route('update-profile') }}" method="POST" enctype="multipart/form-data" class="mt-3">
-                            @csrf
-                            @method('PUT')
-                            <div class="form-group">
-                                <label for="foto">Ganti Foto Profil</label>
-                                <input type="file" class="form-control-file" id="foto" name="foto">
-                            </div>
-                            <button type="submit" class="btn btn-secondary btn-sm">Upload Foto</button>
-                        </form>
                     </div>
 
                     <!-- Form di Kanan -->
                     <div class="col-md-8">
-                        <form action="{{ route('update-profile') }}" method="POST" id="profileForm">
+                        <form action="{{ route('update-profile') }}" method="POST" enctype="multipart/form-data" id="profileForm">
                             @csrf
                             @method('PUT')
 
@@ -93,7 +83,13 @@
                             <!-- Konfirmasi Password -->
                             <div class="form-group">
                                 <label for="kPassword">Konfirmasi Password</label>
-                                <input type="password" class="form-control" id="kPassword" name="kPassword">
+                                <input type="password" class="form-control" id="kPassword" name="password_confirmation">
+                            </div>
+
+                            <!-- Upload Foto Profil -->
+                            <div class="form-group">
+                                <label for="foto">Ganti Foto Profil</label>
+                                <input type="file" class="form-control-file" id="foto" name="foto">
                             </div>
 
                             <button type="submit" class="btn btn-primary">Update Profil</button>
@@ -122,6 +118,7 @@
             </script>
         @endif
     </div>
+
 
     <div class="appBottomMenu">
         <a href="/siswa" class="item">

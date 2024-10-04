@@ -1,8 +1,6 @@
 @extends('layouts.main')
 
 @section('content')
-
-
     <div
       class="flex h-screen bg-gray-50 dark:bg-gray-900"
       :class="{ 'overflow-hidden': isSideMenuOpen }"
@@ -11,98 +9,98 @@
       <aside
         class="z-20 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0"
       >
-        <div class="py-4 text-gray-500 dark:text-gray-400">
-          <a
-            class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
-            href="#"
-          >
-            ABAS
-          </a>
-          <ul class="mt-6">
-            <li class="relative px-6 py-3">
-              <span
-                class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
-                aria-hidden="true"
-              ></span>
-              <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                            href="/operator">
-                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                <path
-                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
-                                </path>
-                            </svg>
-                            <span class="ml-4">Dashboard</span>
-                        </a>
-                    </li>
-                </ul>
-                <ul>
+      <div class="py-4 text-gray-500 dark:text-gray-400">
+        <a
+          class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
+          href="#"
+        >
+          ABAS
+        </a>
+        <ul class="mt-6">
+          <li class="relative px-6 py-3">
+            <span
+              class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+              aria-hidden="true"
+            ></span>
+            <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                          href="/operator">
+                          <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                              stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                              <path
+                                  d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                              </path>
+                          </svg>
+                          <span class="ml-4">Dashboard</span>
+                      </a>
+                  </li>
+              </ul>
+              <ul>
 
-                    <li class="relative px-6 py-3">
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                  <li class="relative px-6 py-3">
+                      <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                           href="{{route('walisiswa')}}">
-                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                <path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
-                                <path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
-                            </svg>
-                            <span class="ml-4">Wali Siswa</span>
-                        </a>
-                    </li>
-                    <li class="relative px-6 py-3">
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="/oo">
-                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                <path
-                                    d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122">
-                                </path>
-                            </svg>
-                            <span class="ml-4">Jurusan</span>
-                        </a>
-                    </li>
-                    <li class="relative px-6 py-3">
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="/pp">
-                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                <path
-                                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
-                                </path>
-                            </svg>
-                            <span class="ml-4">Wali Kelas</span>
-                        </a>
-                    </li>
-                    <li class="relative px-6 py-3">
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="/qq">
-                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
-                            </svg>
-                            <span class="ml-4">Kelas</span>
-                        </a>
-                    </li>
+                          <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                              stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                              <path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
+                              <path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
+                          </svg>
+                          <span class="ml-4">Wali Siswa</span>
+                      </a>
+                  </li>
+                  <li class="relative px-6 py-3">
+                      <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                          href="/oo">
+                          <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                              stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                              <path
+                                  d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122">
+                              </path>
+                          </svg>
+                          <span class="ml-4">Jurusan</span>
+                      </a>
+                  </li>
+                  <li class="relative px-6 py-3">
+                      <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                          href="/pp">
+                          <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                              stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                              <path
+                                  d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                              </path>
+                          </svg>
+                          <span class="ml-4">Wali Kelas</span>
+                      </a>
+                  </li>
+                  <li class="relative px-6 py-3">
+                      <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                          href="/qq">
+                          <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                              stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                              <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                          </svg>
+                          <span class="ml-4">Kelas</span>
+                      </a>
+                  </li>
 
-                    <li class="relative px-6 py-3">
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="/kesiswaan">
-                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
-                            </svg>
-                            <span class="ml-4">Kesiswaan</span>
-                        </a>
-                    </li>
-          <div class="px-6 my-6">
-            <button
-              class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-            >
-              Create account
-              <span class="ml-2" aria-hidden="true">+</span>
-            </button>
-          </div>
+                  <li class="relative px-6 py-3">
+                      <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                          href="/kesiswaan">
+                          <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                              stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                              <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                          </svg>
+                          <span class="ml-4">Kesiswaan</span>
+                      </a>
+                  </li>
+        <div class="px-6 my-6">
+          <button
+            class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+          >
+            Create account
+            <span class="ml-2" aria-hidden="true">+</span>
+          </button>
         </div>
+      </div>
       </aside>
       <!-- Mobile sidebar -->
       <!-- Backdrop -->
@@ -157,13 +155,13 @@
 
                   <li class="relative px-6 py-3">
                       <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                        href="{{route('walisiswa')}}">
+                          href="{{route('walisiswa')}}">
                           <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                               stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                               <path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
                               <path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
                           </svg>
-                          <span class="ml-4">Setting Koordinat dan Waktu</span>
+                          <span class="ml-4">Wali Siswa</span>
                       </a>
                   </li>
                   <li class="relative px-6 py-3">
@@ -482,145 +480,200 @@
             </ul>
           </div>
         </header>
-        <main class="h-full overflow-y-auto">
-          <div class="container px-6 mx-auto grid">
-            <h2
-              class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
-            >
-            <strong style="margin-left: 5px; font-size: 30px;">Selamat Datang {{ Auth::user()->name }}!!</strong>
-            </h2>
-            <!-- CTA -->
-            {{-- <a
-              class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
-              href="https://github.com/estevanmaito/windmill-dashboard"
-            >
-              <div class="flex items-center">
-                <svg
-                  class="w-5 h-5 mr-2"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                  ></path>
-                </svg>
-                <span>Star this project on GitHub</span>
-              </div>
-              <span>View more &RightArrow;</span>
-            </a> --}}
-            <!-- Cards -->
 
-            <!-- New Table -->
-            <div class="container mx-auto p-6">
-                <h2 class="text-2xl font-bold mb-6">Settings</h2>
+        <div class="container mx-auto p-6">
+            <h1 class="text-2xl font-bold mb-5">Daftar Wali Siswa</h1>
 
-                <!-- School Location Settings -->
-                <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                    <h3 class="text-xl font-semibold mb-4">Lokasi Sekolah</h3>
-
-                    <!-- Peta -->
-                    <div id="map" class="w-full h-64 mb-4"></div>
-
-                    <form action="{{ route('updatelokasi') }}" method="POST">
-                        @csrf
-                        <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="titik_koordinat">
-                                Koordinat Sekolah
-                            </label>
-                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                   id="titik_koordinat" type="text" name="titik_koordinat" value="{{ $lok_sekolah->titik_koordinat ?? '' }}"
-                                   placeholder="Latitude, Longitude">
-                        </div>
-                        <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="radius">
-                                Radius (meters)
-                            </label>
-                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                   id="radius" type="number" name="radius" value="{{ $lok_sekolah->radius ?? '' }}"
-                                   placeholder="Radius in meters">
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                    type="submit">
-                                Update Location
-                            </button>
-                        </div>
-                    </form>
+            <!-- Notifikasi sukses -->
+            @if(session('success'))
+                <div class="alert alert-success bg-green-100 text-green-700 p-4 rounded mb-4">
+                    {{ session('success') }}
                 </div>
+            @endif
 
-                <!-- Time Settings -->
-                <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                    <h3 class="text-xl font-semibold mb-4">Attendance Time</h3>
-                    <form action="{{ route('updatewaktu') }}" method="POST">
+            <!-- Tombol untuk membuka modal tambah -->
+            <button onclick="openAddModal()" class="bg-blue-500 text-white px-4 py-2 rounded mb-5">
+                Tambah Wali
+            </button>
+
+            <!-- Tabel Data Wali -->
+            <div class="w-full overflow-hidden rounded-lg shadow-xs">
+                <div class="w-full overflow-x-auto">
+                    <table class="w-full whitespace-no-wrap">
+                        <thead>
+                            <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                <th class="px-4 py-3">NIK</th>
+                                <th class="px-4 py-3">ID User</th>
+                                <th class="px-4 py-3">Jenis Kelamin</th>
+                                <th class="px-4 py-3">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                            @foreach($walis as $w)
+                            <tr class="text-gray-700 dark:text-gray-400">
+                                <td class="px-4 py-3 text-sm">{{ $w->nik }}</td>
+                                <td class="px-4 py-3 text-sm">{{ $w->id_user }}</td>
+                                <td class="px-4 py-3 text-sm">{{ $w->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
+                                <td class="px-4 py-3 text-sm">
+                                    <div class="flex items-center space-x-4 text-sm">
+                                        <!-- Edit Button with Icon -->
+                                        <button
+                                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                            aria-label="Edit"
+                                            onclick="openEditModal('{{ $w->id_user }}', '{{ $w->nik }}', '{{ $w->jenis_kelamin }}')"
+                                        >
+                                            <svg
+                                                class="w-5 h-5"
+                                                aria-hidden="true"
+                                                fill="currentColor"
+                                                viewBox="0 0 20 20"
+                                            >
+                                                <path
+                                                    d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
+                                                ></path>
+                                            </svg>
+                                        </button>
+
+                                        <!-- Delete Button with Icon -->
+                                        <form action="{{ route('walis.destroy', ['id' => $w->id_user]) }}" method="POST" class="inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button
+                                                type="submit"
+                                                class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                                aria-label="Delete"
+                                            >
+                                                <svg
+                                                    class="w-5 h-5"
+                                                    aria-hidden="true"
+                                                    fill="currentColor"
+                                                    viewBox="0 0 20 20"
+                                                >
+                                                    <path
+                                                        fill-rule="evenodd"
+                                                        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                                        clip-rule="evenodd"
+                                                    ></path>
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            <!-- Modal Tambah Wali -->
+            <div id="addModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center hidden opacity-0 transition-opacity duration-300 ease-in-out">
+                <div class="bg-white w-1/3 rounded-lg shadow-lg p-6 relative">
+                    <button onclick="closeAddModal()" class="absolute top-3 right-3 text-gray-600 font-bold text-xl">&times;</button>
+                    <h2 class="text-2xl font-bold mb-4">Tambah Wali</h2>
+                    <form action="{{ route('walis.store') }}" method="POST">
                         @csrf
                         <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="jam_masuk">
-                                Jam Masuk
-                            </label>
-                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                   id="jam_masuk" type="time" name="jam_masuk" value="{{ $waktu->jam_masuk ?? '' }}">
+                            <label for="nik" class="block text-gray-700">NIK:</label>
+                            <input type="text" class="w-full border rounded p-2" name="nik" required>
                         </div>
                         <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="jam_pulang">
-                               Jam Pulang
-                            </label>
-                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                   id="jam_pulang" type="time" name="jam_pulang" value="{{ $waktu->jam_pulang ?? '' }}">
+                            <label for="id_user" class="block text-gray-700">ID User:</label>
+                            <input type="text" class="w-full border rounded p-2" name="id_user" required>
                         </div>
                         <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="batas_jam_masuk">
-                                Batas Masuk
-                            </label>
-                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                   id="batas_jam_masuk" type="time" name="batas_jam_masuk" value="{{ $waktu->batas_jam_masuk ?? '' }}">
+                            <label for="jenis_kelamin" class="block text-gray-700">Jenis Kelamin:</label>
+                            <select name="jenis_kelamin" class="w-full border rounded p-2">
+                                <option value="L">Laki-laki</option>
+                                <option value="P">Perempuan</option>
+                            </select>
                         </div>
-                        <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="batas_jam_pulang">
-                                Batas Pulang
-                            </label>
-                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                   id="batas_jam_pulang" type="time" name="batas_jam_pulang" value="{{ $waktu->batas_jam_pulang ?? '' }}">
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                    type="submit">
-                                Update Time
-                            </button>
+                        <div class="flex justify-end">
+                            <button type="button" onclick="closeAddModal()" class="mr-3 bg-gray-500 text-white px-4 py-2 rounded">Batal</button>
+                            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Simpan</button>
                         </div>
                     </form>
                 </div>
             </div>
 
-            <!-- Tambahkan link CSS Leaflet di bagian head dokumen Anda -->
-            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+            <!-- Modal Edit Wali -->
+            <div id="editModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center hidden opacity-0 transition-opacity duration-300 ease-in-out">
+                <div class="bg-white w-1/3 rounded-lg shadow-lg p-6 relative">
+                    <button onclick="closeEditModal()" class="absolute top-3 right-3 text-gray-600 font-bold text-xl">&times;</button>
+                    <h2 class="text-2xl font-bold mb-4">Edit Wali</h2>
+                    <form id="editForm" action="" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="mb-4">
+                            <label for="edit_nik" class="block text-gray-700">NIK:</label>
+                            <input type="text" id="edit_nik" class="w-full border rounded p-2" name="nik" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="edit_id_user" class="block text-gray-700">ID User:</label>
+                            <input type="text" id="edit_id_user" class="w-full border rounded p-2" name="id_user" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="edit_jenis_kelamin" class="block text-gray-700">Jenis Kelamin:</label>
+                            <select id="edit_jenis_kelamin" name="jenis_kelamin" class="w-full border rounded p-2">
+                                <option value="L">Laki-laki</option>
+                                <option value="P">Perempuan</option>
+                            </select>
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="button" onclick="closeEditModal()" class="mr-3 bg-gray-500 text-white px-4 py-2 rounded">Batal</button>
+                            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
-            <!-- Tambahkan script Leaflet dan script peta di bagian bawah body atau di bagian scripts Anda -->
-            <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    var koordinat = "{{ $lok_sekolah->titik_koordinat ?? '-6.2088,106.8456' }}"; // Default ke Jakarta jika tidak ada koordinat
-                    var [lat, lng] = koordinat.split(',').map(parseFloat);
-                    var radius = {{ $lok_sekolah->radius ?? 100 }}; // Default radius 100m jika tidak ada
 
-                    var map = L.map('map').setView([lat, lng], 15);
+        <script>
+            function openAddModal() {
+                const modal = document.getElementById('addModal');
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                    modal.classList.add('opacity-100');
+                }, 10);
+            }
 
-                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        attribution: '© OpenStreetMap contributors'
-                    }).addTo(map);
+            function closeAddModal() {
+                const modal = document.getElementById('addModal');
+                modal.classList.remove('opacity-100');
+                modal.classList.add('opacity-0');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
 
-                    var marker = L.marker([lat, lng]).addTo(map);
-                    var circle = L.circle([lat, lng], {
-                        color: 'red',
-                        fillColor: '#f03',
-                        fillOpacity: 0.5,
-                        radius: radius
-                    }).addTo(map);
+            function openEditModal(id, nik, jenis_kelamin) {
+                const modal = document.getElementById('editModal');
+                const form = document.getElementById('editForm');
+                form.action = `/walis/${id}`;
+                document.getElementById('edit_nik').value = nik;
+                document.getElementById('edit_id_user').value = id;
+                document.getElementById('edit_jenis_kelamin').value = jenis_kelamin;
 
-                    marker.bindPopup("Lokasi Sekolah").openPopup();
-                });
-            </script>
-          </div>
-        </main>
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                    modal.classList.add('opacity-100');
+                }, 10);
+            }
+
+            function closeEditModal() {
+                const modal = document.getElementById('editModal');
+                modal.classList.remove('opacity-100');
+                modal.classList.add('opacity-0');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+        </script>
+
       </div>
     </div>
   </body>

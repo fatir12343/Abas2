@@ -5,104 +5,97 @@
         <!-- Desktop sidebar -->
         <aside class="z-20 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0">
             <div class="py-4 text-gray-500 dark:text-gray-400">
-                <a class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="#">
-                    ABAS
+                <a
+                  class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
+                  href="#"
+                >
+                  ABAS
                 </a>
                 <ul class="mt-6">
-                    <li class="relative px-6 py-3">
-                        <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
-                            aria-hidden="true"></span>
-                        <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                            href="/operator">
-                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                <path
-                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
-                                </path>
-                            </svg>
-                            <span class="ml-4">Dashboard</span>
-                        </a>
-                    </li>
-                </ul>
-                <ul>
+                  <li class="relative px-6 py-3">
+                    <span
+                      class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                      aria-hidden="true"
+                    ></span>
+                    <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                                  href="/operator">
+                                  <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                                      stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path
+                                          d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                                      </path>
+                                  </svg>
+                                  <span class="ml-4">Dashboard</span>
+                              </a>
+                          </li>
+                      </ul>
+                      <ul>
 
-                    <li class="relative px-6 py-3">
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="">
-                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                <path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
-                                <path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
-                            </svg>
-                            <span class="ml-4">Setting Koordinat dan Waktu</span>
-                        </a>
-                    </li>
-                    <li class="relative px-6 py-3">
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="/oo">
-                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                <path
-                                    d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122">
-                                </path>
-                            </svg>
-                            <span class="ml-4">Jurusan</span>
-                        </a>
-                    </li>
-                    <li class="relative px-6 py-3">
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="/pp">
-                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                <path
-                                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
-                                </path>
-                            </svg>
-                            <span class="ml-4">Wali Kelas</span>
-                        </a>
-                    </li>
-                    <li class="relative px-6 py-3">
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="/qq">
-                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
-                            </svg>
-                            <span class="ml-4">Kelas</span>
-                        </a>
-                    </li>
+                          <li class="relative px-6 py-3">
+                              <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                               href="{{route('walisiswa')}}">
+                                  <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                                      stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
+                                      <path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
+                                  </svg>
+                                  <span class="ml-4">Wali Siswa</span>
+                              </a>
+                          </li>
+                          <li class="relative px-6 py-3">
+                              <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                                  href="/oo">
+                                  <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                                      stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path
+                                          d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122">
+                                      </path>
+                                  </svg>
+                                  <span class="ml-4">Jurusan</span>
+                              </a>
+                          </li>
+                          <li class="relative px-6 py-3">
+                              <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                                  href="/pp">
+                                  <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                                      stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path
+                                          d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                                      </path>
+                                  </svg>
+                                  <span class="ml-4">Wali Kelas</span>
+                              </a>
+                          </li>
+                          <li class="relative px-6 py-3">
+                              <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                                  href="/qq">
+                                  <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                                      stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                                  </svg>
+                                  <span class="ml-4">Kelas</span>
+                              </a>
+                          </li>
 
-                    <li class="relative px-6 py-3">
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="/kesiswaan">
-                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
-                            </svg>
-                            <span class="ml-4">Kesiswaan</span>
-                        </a>
-                    </li>
-                    <li class="relative px-6 py-3">
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="buttons.html">
-                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                <path
-                                    d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122">
-                                </path>
-                            </svg>
-                            <span class="ml-4">Logout</span>
-                        </a>
-                    </li>
-                </ul>
+                          <li class="relative px-6 py-3">
+                              <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                                  href="/kesiswaan">
+                                  <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                                      stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                                  </svg>
+                                  <span class="ml-4">Kesiswaan</span>
+                              </a>
+                          </li>
                 <div class="px-6 my-6">
-                    <button
-                        class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                        Create account
-                        <span class="ml-2" aria-hidden="true">+</span>
-                    </button>
+                  <button
+                    class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                  >
+                    Create account
+                    <span class="ml-2" aria-hidden="true">+</span>
+                  </button>
                 </div>
-            </div>
+              </div>
         </aside>
         <!-- Mobile sidebar -->
         <!-- Backdrop -->
@@ -118,159 +111,97 @@
             x-transition:leave-end="opacity-0 transform -translate-x-20" @click.away="closeSideMenu"
             @keydown.escape="closeSideMenu">
             <div class="py-4 text-gray-500 dark:text-gray-400">
-                <a class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="#">
-                    Windmill
+                <a
+                  class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
+                  href="#"
+                >
+                  ABAS
                 </a>
                 <ul class="mt-6">
-                    <li class="relative px-6 py-3">
-                        <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
-                            aria-hidden="true"></span>
-                        <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                            href="index.html">
-                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                <path
-                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
-                                </path>
-                            </svg>
-                            <span class="ml-4">Dashboard</span>
-                        </a>
-                    </li>
-                </ul>
-                <ul>
-                    <li class="relative px-6 py-3">
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="forms.html">
-                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                <path
-                                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
-                                </path>
-                            </svg>
-                            <h3>Navigation</h3>
-                            <span class="ml-4">Forms</span>
-                        </a>
-                    </li>
-                    <li class="relative px-6 py-3">
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="cards.html">
-                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                <path
-                                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
-                                </path>
-                            </svg>
-                            <span class="ml-4">Cards</span>
-                        </a>
-                    </li>
-                    <li class="relative px-6 py-3">
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="charts.html">
-                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                <path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
-                                <path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
-                            </svg>
-                            <span class="ml-4">Charts</span>
-                        </a>
-                    </li>
-                    <li class="relative px-6 py-3">
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="buttons.html">
-                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                <path
-                                    d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122">
-                                </path>
-                            </svg>
-                            <span class="ml-4">Buttons</span>
-                        </a>
-                    </li>
-                    <li class="relative px-6 py-3">
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="modals.html">
-                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                <path
-                                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
-                                </path>
-                            </svg>
-                            <span class="ml-4">Modals</span>
-                        </a>
-                    </li>
-                    <li class="relative px-6 py-3">
-                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="tables.html">
-                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
-                            </svg>
-                            <span class="ml-4">Tables</span>
-                        </a>
-                    </li>
-                    <li class="relative px-6 py-3">
-                        <button
-                            class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            @click="togglePagesMenu" aria-haspopup="true">
-                            <span class="inline-flex items-center">
-                                <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                    stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path
-                                        d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z">
-                                    </path>
-                                </svg>
-                                <span class="ml-4">Pages</span>
-                            </span>
-                            <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd"
-                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
-                        </button>
-                        <template x-if="isPagesMenuOpen">
-                            <ul x-transition:enter="transition-all ease-in-out duration-300"
-                                x-transition:enter-start="opacity-25 max-h-0"
-                                x-transition:enter-end="opacity-100 max-h-xl"
-                                x-transition:leave="transition-all ease-in-out duration-300"
-                                x-transition:leave-start="opacity-100 max-h-xl" x-transition:leave-end="opacity-0 max-h-0"
-                                class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900"
-                                aria-label="submenu">
-                                <li
-                                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                                    <a class="w-full" href="pages/login.html">Login</a>
-                                </li>
-                                <li
-                                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                                    <a class="w-full" href="pages/create-account.html">
-                                        Create account
-                                    </a>
-                                </li>
-                                <li
-                                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                                    <a class="w-full" href="pages/forgot-password.html">
-                                        Forgot password
-                                    </a>
-                                </li>
-                                <li
-                                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                                    <a class="w-full" href="pages/404.html">404</a>
-                                </li>
-                                <li
-                                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                                    <a class="w-full" href="pages/blank.html">Blank</a>
-                                </li>
-                            </ul>
-                        </template>
-                    </li>
-                </ul>
+                  <li class="relative px-6 py-3">
+                    <span
+                      class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                      aria-hidden="true"
+                    ></span>
+                    <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                                  href="/operator">
+                                  <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                                      stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path
+                                          d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                                      </path>
+                                  </svg>
+                                  <span class="ml-4">Dashboard</span>
+                              </a>
+                          </li>
+                      </ul>
+                      <ul>
+
+                          <li class="relative px-6 py-3">
+                              <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                                 href="{{route('walisiswa')}}">
+                                  <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                                      stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
+                                      <path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
+                                  </svg>
+                                  <span class="ml-4">Wali Siswa</span>
+                              </a>
+                          </li>
+                          <li class="relative px-6 py-3">
+                              <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                                  href="/oo">
+                                  <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                                      stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path
+                                          d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122">
+                                      </path>
+                                  </svg>
+                                  <span class="ml-4">Jurusan</span>
+                              </a>
+                          </li>
+                          <li class="relative px-6 py-3">
+                              <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                                  href="/pp">
+                                  <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                                      stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path
+                                          d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                                      </path>
+                                  </svg>
+                                  <span class="ml-4">Wali Kelas</span>
+                              </a>
+                          </li>
+                          <li class="relative px-6 py-3">
+                              <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                                  href="/qq">
+                                  <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                                      stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                                  </svg>
+                                  <span class="ml-4">Kelas</span>
+                              </a>
+                          </li>
+
+                          <li class="relative px-6 py-3">
+                              <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                                  href="/kesiswaan">
+                                  <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                                      stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                                  </svg>
+                                  <span class="ml-4">Kesiswaan</span>
+                              </a>
+                          </li>
                 <div class="px-6 my-6">
-                    <button
-                        class="flex items-center justify-between px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                        Create account
-                        <span class="ml-2" aria-hidden="true">+</span>
-                    </button>
+                  <button
+                    class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                  >
+                    Create account
+                    <span class="ml-2" aria-hidden="true">+</span>
+                  </button>
                 </div>
-            </div>
+              </div>
         </aside>
         <div class="flex flex-col flex-1 w-full">
             <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
@@ -471,6 +402,10 @@
                     <div class="container mx-auto mt-8">
                         <div class="flex justify-end mb-4">
                             <button id="open-modal-btn" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Tambah Kelas</button>
+
+                            <button class="bg-red-500 text-white font-bold py-2 px-4 rounded" onclick="openModal()">
+                                Import
+                            </button>
                             {{-- <button id="add-kelas-btn" class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-700">Tambah Kelas</button> --}}
                         </div>
                         <!-- New Table -->
@@ -492,14 +427,66 @@
                                         <tr class="text-gray-700 dark:text-gray-400">
                                             <td class="px-4 py-3 text-sm">{{ $item->id_kelas }}</td>
                                             <td class="px-4 py-3 text-sm">{{ $item->jurusan->id_jurusan }}</td>
-                                            {{-- <td class="px-4 py-3 text-sm">{{ isset($item->walikelas->id_user)}}</td> --}}
                                             <td class="px-4 py-3 text-sm">{{ $item->nomor_kelas }}</td>
                                             <td class="px-4 py-3 text-sm">{{ $item->nuptk }}</td>
                                             <td class="px-4 py-3 text-sm">{{ $item->tingkat }}</td>
                                             <td class="px-4 py-3 text-sm">
-                                                <button class="bg-gray-500 text-white px-4 py-2 rounded" onclick="toggleDeleteModal('{{ $item->id_kelas }}')">Delete</button>
-                                                <button class="bg-blue-600 text-white px-4 py-2 rounded" onclick="toggleEditModal('{{ $item->id_kelas }}')">Edit</button>
-                                             <a href="{{route('siswa', $item->id_kelas)}}" class="bg-yellow-500 text-white px-4 py-2 rounded">Detail</a>
+                                                <div class="flex items-center space-x-4 text-sm">
+                                                    <button
+                                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                                        aria-label="Edit"
+                                                        onclick="toggleEditModal('{{ $item->id_kelas }}')"
+                                                    >
+                                                        <svg
+                                                            class="w-5 h-5"
+                                                            aria-hidden="true"
+                                                            fill="currentColor"
+                                                            viewBox="0 0 20 20"
+                                                        >
+                                                            <path
+                                                                d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
+                                                            ></path>
+                                                        </svg>
+                                                    </button>
+                                                    <button
+                                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                                        aria-label="Delete"
+                                                        onclick="toggleDeleteModal('{{ $item->id_kelas }}')"
+                                                    >
+                                                        <svg
+                                                            class="w-5 h-5"
+                                                            aria-hidden="true"
+                                                            fill="currentColor"
+                                                            viewBox="0 0 20 20"
+                                                        >
+                                                            <path
+                                                                fill-rule="evenodd"
+                                                                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                                                clip-rule="evenodd"
+                                                            ></path>
+                                                        </svg>
+                                                    </button>
+
+                                                       <a href="{{ route('siswa', $item->id_kelas) }}"
+                                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-gray-500 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                                        aria-label="Detail"
+                                                    >
+                                                        <svg
+                                                            class="w-5 h-5"
+                                                            viewBox="0 0 24 24"
+                                                            stroke-width="2"
+                                                            stroke="currentColor"
+                                                            fill="none"
+                                                            stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                        >
+                                                            <path stroke="none" d="M0 0h24v24H0z" />
+                                                            <circle cx="12" cy="12" r="2" />
+                                                            <path d="M2 12l1.5 2a11 11 0 0 0 17 0l1.5 -2" />
+                                                            <path d="M2 12l1.5 -2a11 11 0 0 1 17 0l1.5 2" />
+                                                        </svg>
+                                                    </a>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -530,6 +517,8 @@
                                 </div>
                             </div>
                         </div>
+
+
 
                         <!-- Modal -->
                         <!-- Modal Structure -->
@@ -646,7 +635,52 @@
                                 </div>
                             </div>
                         </div>
+                      <div id="importModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
 
+                            <!-- Modal Content -->
+                            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                <div class="sm:flex sm:items-start">
+                                <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
+                                    <!-- Icon Import -->
+                                    <svg class="h-6 w-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                    </svg>
+                                </div>
+                                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                    <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Import Data Kelas</h3>
+                                    <div class="mt-2">
+                                    <form action="{{ route('kelas.import') }}" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="mb-4">
+                                        <label class="block text-sm font-medium text-gray-700">Pilih File (.xlsx atau .csv)</label>
+                                        <input type="file" name="importFile" accept=".xlsx, .csv" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                        </div>
+                                        <div class="flex justify-end">
+                                        <button type="button" class="mr-3 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" onclick="closeModal()">Batal</button>
+                                        <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Import</button>
+                                        </div>
+                                    </form>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+
+                        <!-- Tailwind Script for Modal Interaction -->
+                        <script>
+                        function openModal() {
+                            document.getElementById('importModal').classList.remove('hidden');
+                        }
+
+                        function closeModal() {
+                            document.getElementById('importModal').classList.add('hidden');
+                        }
+                        </script>
                         <script>
                             function closeEditModal(id) {
                                 document.getElementById('edit-kelas-' + id).classList.add('hidden');
@@ -657,46 +691,46 @@
 
 
 
-<script>
-    function toggleDeleteModal(id) {
-        const modal = document.getElementById(`delete-modal-${id}`);
-        modal.classList.toggle('hidden');
-    }
-        // Function to show the modal
-    function showModal() {
-        document.getElementById('kelas-modal').classList.remove('hidden');
-    }
+                        <script>
+                            function toggleDeleteModal(id) {
+                                const modal = document.getElementById(`delete-modal-${id}`);
+                                modal.classList.toggle('hidden');
+                            }
+                                // Function to show the modal
+                            function showModal() {
+                                document.getElementById('kelas-modal').classList.remove('hidden');
+                            }
 
-       function toggleEditModal(id) {
-        const modal = document.getElementById(`edit-kelas-${id}`);
-        modal.classList.toggle('hidden');
-    }
+                            function toggleEditModal(id) {
+                                const modal = document.getElementById(`edit-kelas-${id}`);
+                                modal.classList.toggle('hidden');
+                            }
 
 
-    // Function to hide the modal
-    function hideModal() {
-        document.getElementById('kelas-modal').classList.add('hidden');
-    }
+                            // Function to hide the modal
+                            function hideModal() {
+                                document.getElementById('kelas-modal').classList.add('hidden');
+                            }
 
-    // Event listener for the cancel button
-    document.getElementById('cancel-btn').addEventListener('click', hideModal);
+                            // Event listener for the cancel button
+                            document.getElementById('cancel-btn').addEventListener('click', hideModal);
 
-    // Example usage: Show the modal when a button is clicked
-    document.getElementById('open-modal-btn').addEventListener('click', showModal);
+                            // Example usage: Show the modal when a button is clicked
+                            document.getElementById('open-modal-btn').addEventListener('click', showModal);
 
-    // function editKelas(id, jurusan, wali, nomor, tingkat) {
-    //     document.getElementById('edit-kelas-form').action = `/kelas/${id}`;
-    //     document.getElementById('edit-form-id').value = id;
-    //     document.getElementById('edit_id_jurusan').value = jurusan;
-    //     document.getElementById('edit_NUPTK').value = wali;
-    //     document.getElementById('edit_nomor_kelas').value = nomor;
-    //     document.getElementById('edit_tingkat').value = tingkat;
-    //     showModal('edit-kelas-modal');
-    // }
+                            // function editKelas(id, jurusan, wali, nomor, tingkat) {
+                            //     document.getElementById('edit-kelas-form').action = `/kelas/${id}`;
+                            //     document.getElementById('edit-form-id').value = id;
+                            //     document.getElementById('edit_id_jurusan').value = jurusan;
+                            //     document.getElementById('edit_NUPTK').value = wali;
+                            //     document.getElementById('edit_nomor_kelas').value = nomor;
+                            //     document.getElementById('edit_tingkat').value = tingkat;
+                            //     showModal('edit-kelas-modal');
+                            // }
 
-    document.getElementById('add-cancel-btn').addEventListener('click', () => hideModal('add-kelas-modal'));
-    document.getElementById('edit-cancel-btn').addEventListener('click', () => hideModal('edit-kelas-modal'));
-</script>
+                            document.getElementById('add-cancel-btn').addEventListener('click', () => hideModal('add-kelas-modal'));
+                            document.getElementById('edit-cancel-btn').addEventListener('click', () => hideModal('edit-kelas-modal'));
+                        </script>
                     </div>
                     <div
                         class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">

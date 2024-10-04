@@ -373,20 +373,21 @@ class siswacontroller extends Controller
         if ($request->hasFile('foto')) {
             $foto = $request->file('foto');
             $fileName = $user->nis . '.' . $foto->getClientOriginalExtension();
-            $folderPath = 'public/user_avatar/';
+            $folderPath = 'user_avatar/';  // Tanpa 'public/' di depan
 
-            // Simpan foto di storage
-            Storage::put($folderPath . $fileName, file_get_contents($foto));
+            // Simpan foto di storage/public/user_avatar/
+            $foto->storeAs($folderPath, $fileName, 'public');
 
-            // Jika sudah ada foto sebelumnya, hapus dulu
-            if ($user->foto) {
-                Storage::delete($folderPath . $user->foto);
+            // Hapus foto lama jika ada
+            if ($user->foto && Storage::disk('public')->exists($folderPath . $user->foto)) {
+                Storage::disk('public')->delete($folderPath . $user->foto);
             }
 
+            // Update nama file foto baru ke database
             $updateFields['foto'] = $fileName;
         }
 
-        // Update data di database
+        // Update data di database jika ada perubahan
         if (!empty($updateFields)) {
             User::where('id', $user->id)->update($updateFields);
         }

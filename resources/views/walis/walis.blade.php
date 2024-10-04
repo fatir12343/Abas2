@@ -24,7 +24,7 @@
               ></span>
               <a
                 class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                href="index.html"
+                href="{{route('walis')}}"
               >
                 <svg
                   class="w-5 h-5"
@@ -93,7 +93,7 @@
               ></span>
               <a
                 class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                href="index.html"
+                href="{{route('walis')}}"
               >
                 <svg
                   class="w-5 h-5"
@@ -310,7 +310,7 @@
                     <li class="flex">
                       <a
                         class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                        href="#"
+                        href="{{route('profile')}}"
                       >
                         <svg
                           class="w-4 h-4 mr-3"
@@ -394,121 +394,128 @@
             <div class="section mt-4" id="attendance-dashboard">
                 <div class="container mx-auto">
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                        <!-- Card Riwayat Kehadiran Minggu Ini -->
-                        <div class="lg:col-span-2">
-                            <div class="bg-white shadow-lg rounded-lg mb-4">
-                                <div class="bg-blue-500 text-white text-center p-4 rounded-t-lg">
-                                    <h3 class="font-bold mb-0">Riwayat Kehadiran Anda <strong>Minggu Ini</strong></h3>
-                                </div>
-                                <div class="p-4">
-                                    <div class="overflow-x-auto">
-                                        <table class="min-w-full text-left text-sm border">
-                                            <thead class="bg-gray-100">
-                                                <tr>
-                                                    <th class="py-2 px-4">Tanggal</th>
-                                                    <th class="py-2 px-4">Status</th>
-                                                    <th class="py-2 px-4">Absen Masuk</th>
-                                                    <th class="py-2 px-4">Absen Pulang</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($riwayatmingguini as $riwayatM)
-                                                    <tr class="border-b">
-                                                        <td class="py-2 px-4">{{ $riwayatM->date }}</td>
-                                                        <td class="py-2 px-4">
-                                                            @if ($riwayatM->status == 'Hadir')
-                                                                <span class="text-green-600 font-semibold">✔ {{ $riwayatM->status }}</span>
-                                                            @elseif ($riwayatM->status == 'Terlambat')
-                                                                <span class="text-yellow-500 font-semibold">⏰ {{ $riwayatM->status }}</span>
-                                                            @elseif ($riwayatM->status == 'TAP')
-                                                                <span class="text-blue-600 font-semibold">🔔 {{ $riwayatM->status }}</span>
-                                                            @elseif ($riwayatM->status == 'Sakit' || $riwayatM->status == 'Izin')
-                                                                <span class="text-teal-500 font-semibold">👨‍⚕️ {{ $riwayatM->status }}</span>
-                                                            @elseif ($riwayatM->status == 'Alfa')
-                                                                <span class="text-red-600 font-semibold">❌ {{ $riwayatM->status }}</span>
-                                                            @endif
-                                                        </td>
-                                                        <td class="py-2 px-4">{{ $riwayatM->jam_masuk }}</td>
-                                                        <td class="py-2 px-4">{{ $riwayatM->jam_pulang }}</td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card Jumlah Kehadiran Anda -->
                         <div>
                             <div class="bg-white shadow-lg rounded-lg">
                                 <div class="bg-teal-500 text-white text-center p-4 rounded-t-lg">
-                                    <h3 class="font-bold mb-0">Jumlah Kehadiran Anda</h3>
+                                    <h3 class="font-bold mb-0">Jumlah Kehadiran Satria Galam Pratama</h3>
                                 </div>
                                 <div class="p-4">
                                     <div>
                                         <ul class="flex border-b mb-4">
                                             <li class="mr-2">
-                                                <a href="#bulan-ini" class="inline-block p-2 text-teal-600 font-bold" id="tab-bulan-ini">Bulan Ini</a>
+                                                <a href="#bulan-ini" class="inline-block p-2 text-teal-600 font-bold tab-link" id="tab-bulan-ini">Bulan Ini</a>
                                             </li>
                                             <li>
-                                                <a href="#bulan-sebelumnya" class="inline-block p-2 text-gray-600" id="tab-bulan-sebelumnya">Bulan Sebelumnya</a>
+                                                <a href="#bulan-sebelumnya" class="inline-block p-2 text-gray-600 tab-link" id="tab-bulan-sebelumnya">Bulan Sebelumnya</a>
                                             </li>
                                         </ul>
                                     </div>
-                                    <div id="bulan-ini" class="mb-4">
+
+                                    <!-- Bulan Ini -->
+                                  <!-- Bulan Ini -->
+                                        <div id="bulan-ini" class="tab-content">
+                                            <div class="w-full bg-gray-200 rounded-full h-4 mb-3">
+                                                <div class="bg-green-500 h-4 rounded-full" style="width: {{ $persentaseHadirBulanIni }}%"></div>
+                                            </div>
+                                            <ul class="space-y-2">
+                                                <li class="flex justify-between">
+                                                    <span class="flex items-center">Hadir</span>
+                                                    <span class="bg-green-100 text-green-600 px-2 py-1 rounded">{{ $dataBulanIni->Hadir }}</span>
+                                                </li>
+                                                <li class="flex justify-between">
+                                                    <span class="flex items-center">Sakit/Izin</span>
+                                                    <span class="bg-teal-100 text-teal-600 px-2 py-1 rounded">{{ $dataBulanIni->{'Sakit/Izin'} }}</span>
+                                                </li>
+                                                <li class="flex justify-between">
+                                                    <span class="flex items-center">Terlambat</span>
+                                                    <span class="bg-yellow-100 text-yellow-600 px-2 py-1 rounded">{{ $dataBulanIni->Terlambat }}</span>
+                                                </li>
+                                                <!-- Total keterlambatan -->
+                                                <li class="list-group-item flex justify-between items-center px-6 py-3 border-b border-gray-300">
+                                                    <i class="fas fa-user-clock text-gray-600"></i>
+                                                    <span class="font-medium">Total Keterlambatan</span>
+                                                    <span>{{ $totalKeterlambatan }} Menit</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+
+                                    <!-- Bulan Sebelumnya -->
+                                    <div id="bulan-sebelumnya" class="hidden tab-content">
                                         <div class="w-full bg-gray-200 rounded-full h-4 mb-3">
-                                            <div class="bg-green-500 h-4 rounded-full" style="width: {{ $persentaseHadirBulanIni }}%"></div>
+                                            <div class="bg-green-500 h-4 rounded-full" style="width: {{ $persentaseHadirBulanSebelumnya }}%"></div>
                                         </div>
                                         <ul class="space-y-2">
                                             <li class="flex justify-between">
                                                 <span class="flex items-center">
                                                     <svg class="w-4 h-4 text-green-500" fill="currentColor"><path d="..."/></svg> Hadir
                                                 </span>
-                                                <span class="bg-green-100 text-green-600 px-2 py-1 rounded">{{ $dataBulanIni['Hadir'] ?? 0 }}</span>
+                                                <span class="bg-green-100 text-green-600 px-2 py-1 rounded">{{ $dataBulanSebelumnya->Hadir ?? 0 }}</span>
                                             </li>
                                             <li class="flex justify-between">
                                                 <span class="flex items-center">
                                                     <svg class="w-4 h-4 text-teal-500" fill="currentColor"><path d="..."/></svg> Sakit/Izin
                                                 </span>
-                                                <span class="bg-teal-100 text-teal-600 px-2 py-1 rounded">{{ $dataBulanIni['Sakit/Izin'] ?? 0 }}</span>
+                                                <span class="bg-teal-100 text-teal-600 px-2 py-1 rounded">{{ $dataBulanSebelumnya->{'Sakit/Izin'} ?? 0 }}</span>
                                             </li>
                                             <li class="flex justify-between">
                                                 <span class="flex items-center">
                                                     <svg class="w-4 h-4 text-yellow-500" fill="currentColor"><path d="..."/></svg> Terlambat
                                                 </span>
-                                                <span class="bg-yellow-100 text-yellow-600 px-2 py-1 rounded">{{ $dataBulanIni['Terlambat'] ?? 0 }}</span>
+                                                <span class="bg-yellow-100 text-yellow-600 px-2 py-1 rounded">{{ $dataBulanSebelumnya->Terlambat ?? 0 }}</span>
                                             </li>
                                             <li class="flex justify-between">
                                                 <span class="flex items-center">
                                                     <svg class="w-4 h-4 text-blue-500" fill="currentColor"><path d="..."/></svg> TAP
                                                 </span>
-                                                <span class="bg-blue-100 text-blue-600 px-2 py-1 rounded">{{ $dataBulanIni['TAP'] ?? 0 }}</span>
+                                                <span class="bg-blue-100 text-blue-600 px-2 py-1 rounded">{{ $dataBulanSebelumnya->TAP ?? 0 }}</span>
                                             </li>
                                             <li class="flex justify-between">
                                                 <span class="flex items-center">
                                                     <svg class="w-4 h-4 text-red-500" fill="currentColor"><path d="..."/></svg> Alfa
                                                 </span>
-                                                <span class="bg-red-100 text-red-600 px-2 py-1 rounded">{{ $dataBulanIni['Alfa'] ?? 0 }}</span>
+                                                <span class="bg-red-100 text-red-600 px-2 py-1 rounded">{{ $dataBulanSebelumnya->Alfa ?? 0 }}</span>
                                             </li>
                                             <li class="list-group-item flex justify-between items-center px-6 py-3 border-b border-gray-300">
                                                 <i class="fas fa-user-clock text-gray-600"></i>
                                                 <span class="font-medium">Total Keterlambatan</span>
-                                                <span>{{ $menitketerlambatan }} Menit</span>
+                                                <span>{{ $totalKeterlambatanBulanSebelumnya ?? 0 }} Menit</span>
                                             </li>
                                         </ul>
                                     </div>
 
-                                    <!-- Bulan Sebelumnya -->
-                                    <div id="bulan-sebelumnya" class="hidden">
-                                        <!-- Konten serupa dengan bulan ini -->
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- JavaScript -->
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const tabs = document.querySelectorAll('.tab-link');
+                    const tabContents = document.querySelectorAll('.tab-content');
+
+                    tabs.forEach(tab => {
+                        tab.addEventListener('click', function (event) {
+                            event.preventDefault();
+
+                            // Remove 'active' class from all tabs and hide all content
+                            tabs.forEach(t => t.classList.remove('text-teal-600', 'font-bold'));
+                            tabContents.forEach(content => content.classList.add('hidden'));
+
+                            // Add 'active' class to the clicked tab and show corresponding content
+                            this.classList.add('text-teal-600', 'font-bold');
+                            const contentId = this.getAttribute('href').replace('#', '');
+                            document.getElementById(contentId).classList.remove('hidden');
+                        });
+                    });
+                });
+            </script>
+
+
+
               </div>
             </div>
           </div>

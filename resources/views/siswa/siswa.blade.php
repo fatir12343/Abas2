@@ -31,7 +31,7 @@
                     <ion-icon name="chevron-down-outline" role="img" class="md hydrated" aria-label="chevron down" style="margin-left: 5px; font-size: 15px;"></ion-icon>
                 </button>
                 <div id="dropdownMenu" style="display: none; position: absolute; right: 0; background: white; border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); width: 200px; z-index: 1000;">
-                    <a href="/profile" class="item" style="display: flex; align-items: center; text-decoration: none; padding: 10px 20px; color: #6c757d;">
+                    <a href="{{route('profile')}}" class="item" style="display: flex; align-items: center; text-decoration: none; padding: 10px 20px; color: #6c757d;">
                         <ion-icon name="person-outline" role="img" class="md hydrated" aria-label="profile outline" style="font-size: 18px;"></ion-icon>
                         <span style="margin-left: 10px; font-size: 10px;">Profile</span>
                     </a>
@@ -111,8 +111,9 @@
                                     <div class="card card-hover h-100 text-center {{ $statusAbsen == 'Sudah Absen Masuk' ? ($statusAbsen == 'Sudah Absen Pulang' ? 'gradasigrey' : 'gradasired') : 'gradasigreen' }} shadow-sm">
                                         <div class="card-body d-flex flex-column justify-content-center align-items-center p-3">
                                             <div class="iconpresence mb-2">
-                                                <!-- Tombol absen masuk/pulang: disable jika sudah absen pulang atau sedang izin -->
-                                                <button type="submit" class="btn btn-link" {{ $statusAbsen == 'Sudah Absen Pulang' || $izin ? 'disabled' : '' }}>
+                                                <!-- Tombol absen masuk/pulang: disable jika sudah absen pulang, terlambat, atau sedang izin -->
+                                                <button type="submit" class="btn btn-link"
+                                                    {{ $statusAbsen == 'Sudah Absen Pulang' || $statusAbsen == 'terlambat' || $izin ? 'disabled' : '' }}>
                                                     <ion-icon name="camera" size="large"></ion-icon>
                                                 </button>
                                             </div>
@@ -128,9 +129,9 @@
 
                             <!-- Form Izin/Sakit -->
                             <div class="col-md-6 col-sm-12 mb-2">
-                                <div class="card card-hover h-100 text-center {{ $statusAbsen == 'Sudah Absen Masuk' || $statusAbsen == 'Sudah Absen Pulang' || $izin ? 'gradasigrey' : 'gradasiblue' }} shadow-sm"
+                                <div class="card card-hover h-100 text-center {{ $statusAbsen == 'Sudah Absen Masuk' || $statusAbsen == 'Sudah Absen Pulang' || $izin || $statusAbsen == 'terlambat' ? 'gradasigrey' : 'gradasiblue' }} shadow-sm"
                                      data-toggle="modal" data-target="#FormulirModal" data-status="izin"
-                                     style="{{ $statusAbsen == 'Sudah Absen Masuk' || $statusAbsen == 'Sudah Absen Pulang' || $izin ? 'pointer-events: none;' : '' }}">
+                                     style="{{ $statusAbsen == 'Sudah Absen Masuk' || $statusAbsen == 'Sudah Absen Pulang' || $izin || $statusAbsen == 'terlambat' ? 'pointer-events: none;' : '' }}">
                                     <div class="card-body d-flex flex-column justify-content-center align-items-center p-3">
                                         <div class="iconpresence mb-2">
                                             <ion-icon name="paper-plane-outline" size="large"></ion-icon>
@@ -145,60 +146,73 @@
                         </div>
                     </div>
                 </div>
+
     <!-- * App Capsule -->
 
-    <!-- Popup Formulir Izin -->
-    <div class="modal fade" id="FormulirModal" tabindex="-1" role="dialog" aria-labelledby="FormulirModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content shadow-lg" style="border-radius: 15px; overflow: hidden;">
-                <div class="modal-header bg-secondary text-white">
-                    <h5 class="modal-title fw-bold d-flex align-items-center" id="FormulirModalLabel">
-                        <ion-icon name="document-text-outline" class="mr-2"></ion-icon>
-                        <strong>Formulir Keterangan</strong>
-                        <small class="ml-2">Izin/Sakit</small>
-                    </h5>
-                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="{{ route('upload-file') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="modal-body p-4">
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label">Status Kehadiran</label>
-                            <div class="col-md-9">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="status" id="statusSakit" value="sakit" required>
-                                    <label class="form-check-label" for="statusSakit">Sakit</label>
+                    <!-- Popup Formulir Izin -->
+                    <div class="modal fade" id="FormulirModal" tabindex="-1" role="dialog"
+                            aria-labelledby="FormulirModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content shadow-lg" style="border-radius: 15px; overflow: hidden;">
+                                    <div class="modal-header bg-secondary text-white">
+                                        <h5 class="modal-title fw-bold d-flex align-items-center" id="FormulirModalLabel">
+                                            <ion-icon name="document-text-outline" class="mr-2"></ion-icon>
+                                            <strong>Formulir Keterangan</strong>
+                                            <small class="ml-2">Izin/Sakit</small>
+                                        </h5>
+                                        <button type="button" class="close text-white" data-dismiss="modal"
+                                            aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form action="{{ route('upload-file') }}" method="POST"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="modal-body p-4">
+                                            <!-- Status Kehadiran -->
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label">Status Kehadiran</label>
+                                                <div class="col-md-9">
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="status"
+                                                            id="statusSakit" value="sakit" required>
+                                                        <label class="form-check-label" for="statusSakit">Sakit</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="status"
+                                                            id="statusIzin" value="izin" required>
+                                                        <label class="form-check-label" for="statusIzin">Izin</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Keterangan -->
+                                            <div class="form-group row mt-3">
+                                                <label class="col-md-3 col-form-label">Keterangan</label>
+                                                <div class="col-md-9">
+                                                    <input type="text" id="keterangan" name="keterangan"
+                                                        placeholder="Tuliskan keterangan Anda" class="form-control"
+                                                        required>
+                                                </div>
+                                            </div>
+                                            <!-- Upload File -->
+                                            <div class="form-group row mt-3">
+                                                <label class="col-md-3 col-form-label">Upload File</label>
+                                                <div class="col-md-9">
+                                                    <input type="file" class="form-control" name="photo_in" required>
+                                                    <small class="form-text text-muted">Upload surat keterangan atau bukti
+                                                        pendukung.</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer bg-light">
+                                            <button type="button" class="btn btn-outline-secondary"
+                                                data-dismiss="modal">Batal</button>
+                                            <button type="submit" class="btn btn-primary">Kirim</button>
+                                        </div>
+                                    </form>
                                 </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="status" id="statusIzin" value="izin" required>
-                                    <label class="form-check-label" for="statusIzin">Izin</label>
-                                </div>
                             </div>
                         </div>
-                        <div class="form-group row mt-3">
-                            <label class="col-md-3 col-form-label">Keterangan</label>
-                            <div class="col-md-9">
-                                <input type="text" id="keterangan" name="keterangan" placeholder="Tuliskan keterangan Anda" class="form-control" required>
-                            </div>
-                        </div>
-                        <div class="form-group row mt-3">
-                            <label class="col-md-3 col-form-label">Upload File</label>
-                            <div class="col-md-9">
-                                <input type="file" class="form-control" name="photo_in" required>
-                                <small class="form-text text-muted">Upload surat keterangan atau bukti pendukung.</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer bg-light">
-                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Kirim</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
 
     <div class="section mt-4" id="attendance-dashboard">
@@ -366,10 +380,14 @@
      <script src="{{asset ('assets/template2/js/lib/jquery-3.4.1.min.js')}}"></script>
      <!-- Bootstrap-->
      <script src="{{asset ('assets/template2/js/lib/popper.min.js')}}"></script>
-     <script src="{{asset ('assets/template2/js/lib/bootstrap.min.js')}}"></script>
+
      <!-- Ionicons -->
      <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
      <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+     <!-- jQuery dan Bootstrap JS -->
+     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
      <!-- Owl Carousel -->
      <script src="{{asset ('assets/template2/js/plugins/owl-carousel/owl.carousel.min.js')}}"></script>
      <!-- jQuery Circle Progress -->
