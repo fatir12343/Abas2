@@ -5,97 +5,91 @@
         <!-- Desktop sidebar -->
         <aside class="z-20 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0">
             <div class="py-4 text-gray-500 dark:text-gray-400">
-                <a
-                  class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
-                  href="#"
-                >
-                  ABAS
+                <a class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="#">
+                    ABAS
                 </a>
                 <ul class="mt-6">
-                  <li class="relative px-6 py-3">
-                    <span
-                      class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
-                      aria-hidden="true"
-                    ></span>
-                    <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                                  href="/operator">
-                                  <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                      stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                      <path
-                                          d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
-                                      </path>
-                                  </svg>
-                                  <span class="ml-4">Dashboard</span>
-                              </a>
-                          </li>
-                      </ul>
-                      <ul>
+                    <li class="relative px-6 py-3">
+                        <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                            aria-hidden="true"></span>
+                        <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                            href="/operator">
+                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                <path
+                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                                </path>
+                            </svg>
+                            <span class="ml-4">Dashboard</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul>
 
-                          <li class="relative px-6 py-3">
-                              <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                               href="{{route('walisiswa')}}">
-                                  <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                      stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                      <path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
-                                      <path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
-                                  </svg>
-                                  <span class="ml-4">Wali Siswa</span>
-                              </a>
-                          </li>
-                          <li class="relative px-6 py-3">
-                              <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                                  href="/oo">
-                                  <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                      stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                      <path
-                                          d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122">
-                                      </path>
-                                  </svg>
-                                  <span class="ml-4">Jurusan</span>
-                              </a>
-                          </li>
-                          <li class="relative px-6 py-3">
-                              <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                                  href="/pp">
-                                  <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                      stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                      <path
-                                          d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
-                                      </path>
-                                  </svg>
-                                  <span class="ml-4">Wali Kelas</span>
-                              </a>
-                          </li>
-                          <li class="relative px-6 py-3">
-                              <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                                  href="/qq">
-                                  <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                      stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                      <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
-                                  </svg>
-                                  <span class="ml-4">Kelas</span>
-                              </a>
-                          </li>
+                    <li class="relative px-6 py-3">
+                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                            href="{{ route('walisiswa') }}">
+                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
+                                <path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
+                            </svg>
+                            <span class="ml-4">Wali Siswa</span>
+                        </a>
+                    </li>
+                    <li class="relative px-6 py-3">
+                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                            href="/oo">
+                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                <path
+                                    d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122">
+                                </path>
+                            </svg>
+                            <span class="ml-4">Jurusan</span>
+                        </a>
+                    </li>
+                    <li class="relative px-6 py-3">
+                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                            href="/pp">
+                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                <path
+                                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                            <span class="ml-4">Wali Kelas</span>
+                        </a>
+                    </li>
+                    <li class="relative px-6 py-3">
+                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                            href="/qq">
+                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                            </svg>
+                            <span class="ml-4">Kelas</span>
+                        </a>
+                    </li>
 
-                          <li class="relative px-6 py-3">
-                              <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                                  href="/kesiswaan">
-                                  <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                      stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                      <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
-                                  </svg>
-                                  <span class="ml-4">Kesiswaan</span>
-                              </a>
-                          </li>
-                <div class="px-6 my-6">
-                  <button
-                    class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-                  >
-                    Create account
-                    <span class="ml-2" aria-hidden="true">+</span>
-                  </button>
-                </div>
-              </div>
+                    <li class="relative px-6 py-3">
+                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                            href="/kesiswaan">
+                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                            </svg>
+                            <span class="ml-4">Kesiswaan</span>
+                        </a>
+                    </li>
+                    <div class="px-6 my-6">
+                        <button
+                            class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                            Create account
+                            <span class="ml-2" aria-hidden="true">+</span>
+                        </button>
+                    </div>
+            </div>
         </aside>
         <!-- Mobile sidebar -->
         <!-- Backdrop -->
@@ -111,97 +105,91 @@
             x-transition:leave-end="opacity-0 transform -translate-x-20" @click.away="closeSideMenu"
             @keydown.escape="closeSideMenu">
             <div class="py-4 text-gray-500 dark:text-gray-400">
-                <a
-                  class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
-                  href="#"
-                >
-                  ABAS
+                <a class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="#">
+                    ABAS
                 </a>
                 <ul class="mt-6">
-                  <li class="relative px-6 py-3">
-                    <span
-                      class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
-                      aria-hidden="true"
-                    ></span>
-                    <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                                  href="/operator">
-                                  <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                      stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                      <path
-                                          d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
-                                      </path>
-                                  </svg>
-                                  <span class="ml-4">Dashboard</span>
-                              </a>
-                          </li>
-                      </ul>
-                      <ul>
+                    <li class="relative px-6 py-3">
+                        <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                            aria-hidden="true"></span>
+                        <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                            href="/operator">
+                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                <path
+                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                                </path>
+                            </svg>
+                            <span class="ml-4">Dashboard</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul>
 
-                          <li class="relative px-6 py-3">
-                              <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                               href="{{route('walisiswa')}}">
-                                  <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                      stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                      <path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
-                                      <path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
-                                  </svg>
-                                  <span class="ml-4">Wali Siswa</span>
-                              </a>
-                          </li>
-                          <li class="relative px-6 py-3">
-                              <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                                  href="/oo">
-                                  <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                      stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                      <path
-                                          d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122">
-                                      </path>
-                                  </svg>
-                                  <span class="ml-4">Jurusan</span>
-                              </a>
-                          </li>
-                          <li class="relative px-6 py-3">
-                              <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                                  href="/pp">
-                                  <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                      stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                      <path
-                                          d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
-                                      </path>
-                                  </svg>
-                                  <span class="ml-4">Wali Kelas</span>
-                              </a>
-                          </li>
-                          <li class="relative px-6 py-3">
-                              <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                                  href="/qq">
-                                  <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                      stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                      <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
-                                  </svg>
-                                  <span class="ml-4">Kelas</span>
-                              </a>
-                          </li>
+                    <li class="relative px-6 py-3">
+                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                            href="{{ route('walisiswa') }}">
+                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
+                                <path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
+                            </svg>
+                            <span class="ml-4">Wali Siswa</span>
+                        </a>
+                    </li>
+                    <li class="relative px-6 py-3">
+                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                            href="/oo">
+                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                <path
+                                    d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122">
+                                </path>
+                            </svg>
+                            <span class="ml-4">Jurusan</span>
+                        </a>
+                    </li>
+                    <li class="relative px-6 py-3">
+                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                            href="/pp">
+                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                <path
+                                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                            <span class="ml-4">Wali Kelas</span>
+                        </a>
+                    </li>
+                    <li class="relative px-6 py-3">
+                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                            href="/qq">
+                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                            </svg>
+                            <span class="ml-4">Kelas</span>
+                        </a>
+                    </li>
 
-                          <li class="relative px-6 py-3">
-                              <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                                  href="/kesiswaan">
-                                  <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                                      stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                      <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
-                                  </svg>
-                                  <span class="ml-4">Kesiswaan</span>
-                              </a>
-                          </li>
-                <div class="px-6 my-6">
-                  <button
-                    class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-                  >
-                    Create account
-                    <span class="ml-2" aria-hidden="true">+</span>
-                  </button>
-                </div>
-              </div>
+                    <li class="relative px-6 py-3">
+                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                            href="/kesiswaan">
+                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                            </svg>
+                            <span class="ml-4">Kesiswaan</span>
+                        </a>
+                    </li>
+                    <div class="px-6 my-6">
+                        <button
+                            class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                            Create account
+                            <span class="ml-2" aria-hidden="true">+</span>
+                        </button>
+                    </div>
+            </div>
         </aside>
         <div class="flex flex-col flex-1 w-full">
             <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
@@ -367,7 +355,7 @@
             <main class="h-full overflow-y-auto">
                 <div class="container px-6 mx-auto grid">
                     <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                      List WaliKelas
+                        List WaliKelas
                     </h2>
                     <!-- CTA -->
                     {{-- <a
@@ -393,414 +381,528 @@
 
 
 
-                      <!-- New Table -->
+                    <!-- New Table -->
 
-                      <div class="container mx-auto mt-2">
-                        <div class="flex justify-end mb-2">
-                            <button id="add-wali-btn" class="mt-4 px-4  py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 m-2">Add</button>
-
-
+                    <div class="container mx-auto mt-2">
+                        <!-- Search Bar -->
+                        <div class="flex justify-between mb-4">
+                            <input type="text" id="search-wali" placeholder="Cari Wali Kelas..."
+                                class="px-4 py-2 w-1/3 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                                onkeyup="searchWali()" />
+                            <div class="flex justify-end">
+                                <button id="add-wali-btn"
+                                    class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 m-2 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path
+                                            d="M10 5a1 1 0 00-1 1v3H6a1 1 0 100 2h3v3a1 1 0 102 0v-3h3a1 1 0 100-2h-3V6a1 1 0 00-1-1z" />
+                                    </svg>
+                                    Tambah
+                                </button>
+                                <button
+                                    class="mt-4 px-4 py-2 bg-green-400 text-white rounded-md hover:bg-green-600 m-2 flex items-center"
+                                    onclick="openWaliModal()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                                    </svg>
+                                    Import
+                                </button>
+                            </div>
                         </div>
-                      <!-- New Table -->
-                      <div class="w-full overflow-hidden rounded-lg shadow-xs">
-                          <div class="w-full overflow-x-auto">
-                              <table class="w-full whitespace-no-wrap">
-                                  <thead>
-                                      <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                                          <th class="px-4 py-3">NUPTK</th>
-                                          <th class="px-4 py-3">ID_user</th>
-                                          <th class="px-4 py-3">Jenis Kelamin</th>
-                                          <th class="px-4 py-3">NIP</th>
-                                          <th class="px-4 py-3">Actions</th>
-                                      </tr>
-                                  </thead>
-                                  <tbody id="wali-tbody" class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                                      @foreach ($waliKelas as $wali)
-                                          <tr class="text-gray-700 dark:text-gray-400">
-                                              <td class="px-4 py-3 text-sm">{{ $wali->nuptk }}</td>
-                                              <td class="px-4 py-3 text-sm">{{ $wali->id_user }}</td>
-                                              <td class="px-4 py-3 text-sm">{{ $wali->jenis_kelamin }}</td>
-                                              <td class="px-4 py-3 text-sm">{{ $wali->nip }}</td>
-                                              <td class="px-4 py-3 text-sm">
-                                                <div class="flex items-center space-x-1">
-                                                    <button
-                                                        class="flex items-center px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                                        aria-label="Edit"
-                                                        onclick="toggleModalEdit('{{ $wali->id_user }}')"
-                                                    >
-                                                        <svg
-                                                            class="w-5 h-5"
-                                                            aria-hidden="true"
-                                                            fill="currentColor"
-                                                            viewBox="0 0 20 20"
-                                                        >
-                                                            <path
-                                                                d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
-                                                            ></path>
-                                                        </svg>
-                                                    </button>
+                        <!-- New Table -->
+                        <div class="w-full overflow-hidden rounded-lg shadow-xs">
+                            <div class="w-full overflow-x-auto">
+                                <table class="w-full whitespace-no-wrap">
+                                    <thead>
+                                        <tr
+                                            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                            <th class="px-4 py-3">NIP</th>
+                                            <th class="px-4 py-3">ID_user</th>
+                                            <th class="px-4 py-3">Jenis Kelamin</th>
+                                            <th class="px-4 py-3">NUPTK</th>
+                                            <th class="px-4 py-3">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="wali-tbody"
+                                        class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                                        @foreach ($wali as $wali)
+                                            <tr class="text-gray-700 dark:text-gray-400">
+                                                <td class="px-4 py-3 text-sm">{{ $wali->nip }}</td>
+                                                <td class="px-4 py-3 text-sm">{{ $wali->id_user }}</td>
+                                                <td class="px-4 py-3 text-sm">{{ $wali->jenis_kelamin }}</td>
+                                                <td class="px-4 py-3 text-sm">{{ $wali->nuptk }}</td>
+                                                <td class="px-4 py-3 text-sm">
+                                                    <div class="flex items-center space-x-1">
+                                                        <button
+                                                            class="flex items-center px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                                            aria-label="Edit"
+                                                            onclick="toggleModalEdit('{{ $wali->id_user }}')">
+                                                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
+                                                                viewBox="0 0 20 20">
+                                                                <path
+                                                                    d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
+                                                                </path>
+                                                            </svg>
+                                                        </button>
 
-                                                    <button
-                                                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                                    aria-label="Delete"
-                                                    onclick="toggleModal('{{ $wali->id_user }}')"
-                                                  >
-                                                    <svg
-                                                      class="w-5 h-5"
-                                                      aria-hidden="true"
-                                                      fill="currentColor"
-                                                      viewBox="0 0 20 20"
-                                                    >
-                                                      <path
-                                                        fill-rule="evenodd"
-                                                        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                                        clip-rule="evenodd"
-                                                      ></path>
-                                                    </svg>
-                                                  </button>
-
-                                                </div>
-                                                </td>
-                                          </tr>
-                                          <div id="modal-edit-{{ $wali->id_user }}" class="fixed inset-0 z-50 hidden overflow-y-auto">
-                                            <div class="flex items-center justify-center min-h-screen px-4">
-                                                <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
-                                                    <div class="bg-gray-100 px-4 py-2 flex justify-between items-center">
-                                                        <h5 class="text-lg font-bold">Edit Wali Kelas</h5>
-                                                        <button class="text-gray-500" onclick="toggleModal('edit-{{ $wali->id_user }}')">&times;</button>
+                                                        <button
+                                                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                                            aria-label="Delete"
+                                                            onclick="toggleModal('{{ $wali->id_user }}')">
+                                                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
+                                                                viewBox="0 0 20 20">
+                                                                <path fill-rule="evenodd"
+                                                                    d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                                                    clip-rule="evenodd"></path>
+                                                            </svg>
+                                                        </button>
                                                     </div>
-                                                    <form action="{{ route('operator.wali.update', $wali->id_user) }}" method="POST">
-                                                        @csrf
-                                                        @method('PUT')
+                                                </td>
+                                            </tr>
+                                            <div id="modal-edit-{{ $wali->id_user }}"
+                                                class="fixed inset-0 z-50 hidden overflow-y-auto">
+                                                <div class="flex items-center justify-center min-h-screen px-4">
+                                                    <div
+                                                        class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
+                                                        <div
+                                                            class="bg-gray-100 px-4 py-2 flex justify-between items-center">
+                                                            <h5 class="text-lg font-bold">Edit Wali Kelas</h5>
+                                                            <button class="text-gray-500"
+                                                                onclick="toggleModal('edit-{{ $wali->id_user }}')">&times;</button>
+                                                        </div>
+                                                        <form action="{{ route('operator.wali.update', $wali->id_user) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <div class="px-4 py-6">
+                                                                <div class="mb-4">
+                                                                    <label for="nip"
+                                                                        class="block text-sm font-medium text-gray-700">NIP</label>
+                                                                    <input type="text" id="nip" name="nip"
+                                                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                                                                        required value="{{ $wali->nip }}">
+                                                                </div>
+                                                                <div class="mb-4">
+                                                                    <label for="email"
+                                                                        class="block text-sm font-medium text-gray-700">Email</label>
+                                                                    <input type="email" id="email" name="email"
+                                                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                                                                        required value="{{ $wali->user }}">
+                                                                </div>
+                                                                <div class="mb-4">
+                                                                    <label for="password"
+                                                                        class="block text-sm font-medium text-gray-700">Password</label>
+                                                                    <input type="password" id="password" name="password"
+                                                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                                                                        placeholder="Leave blank to keep current password">
+                                                                </div>
+                                                                <div class="mb-4">
+                                                                    <label for="jenis_kelamin"
+                                                                        class="block text-sm font-medium text-gray-700">Jenis
+                                                                        Kelamin</label>
+                                                                    <select id="jenis_kelamin" name="jenis_kelamin"
+                                                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                                                                        required>
+                                                                        <option value="laki laki"
+                                                                            {{ $wali->jenis_kelamin == 'laki laki' ? 'selected' : '' }}>
+                                                                            Laki Laki</option>
+                                                                        <option value="perempuan"
+                                                                            {{ $wali->jenis_kelamin == 'perempuan' ? 'selected' : '' }}>
+                                                                            Perempuan</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="mb-4">
+                                                                    <label for="nip"
+                                                                        class="block text-sm font-medium text-gray-700">NIP</label>
+                                                                    <input type="text" id="nip" name="nip"
+                                                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                                                                        required value="{{ $wali->nip }}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="bg-gray-100 px-4 py-3 flex justify-end space-x-2">
+                                                                <button type="button"
+                                                                    class="bg-gray-500 text-white px-4 py-2 rounded"
+                                                                    onclick="toggleModal('edit-{{ $wali->id_user }}')">Batal</button>
+                                                                <button type="submit"
+                                                                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Simpan</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div id="modal-{{ $wali->id_user }}"
+                                                class="fixed inset-0 z-50 hidden overflow-y-auto">
+                                                <div class="flex items-center justify-center min-h-screen px-4">
+                                                    <div
+                                                        class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
+                                                        <div
+                                                            class="bg-gray-100 px-4 py-2 flex justify-between items-center">
+                                                            <h5 class="text-lg font-bold">Peringatan!!</h5>
+                                                            <button class="text-gray-500"
+                                                                onclick="toggleModal('{{ $wali->id_user }}')">&times;</button>
+                                                        </div>
                                                         <div class="px-4 py-6">
-                                                            <div class="mb-4">
-                                                                <label for="nuptk" class="block text-sm font-medium text-gray-700">NUPTK</label>
-                                                                <input type="text" id="nuptk" name="nuptk" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required value="{{ $wali->nuptk }}">
-                                                            </div>
-                                                            <div class="mb-4">
-                                                                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                                                                <input type="email" id="email" name="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required value="{{ $wali->user}}">
-                                                            </div>
-                                                            <div class="mb-4">
-                                                                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                                                                <input type="password" id="password" name="password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" placeholder="Leave blank to keep current password">
-                                                            </div>
-                                                            <div class="mb-4">
-                                                                <label for="jenis_kelamin" class="block text-sm font-medium text-gray-700">Jenis Kelamin</label>
-                                                                <select id="jenis_kelamin" name="jenis_kelamin" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
-                                                                    <option value="laki laki" {{ $wali->jenis_kelamin == 'laki laki' ? 'selected' : '' }}>Laki Laki</option>
-                                                                    <option value="perempuan" {{ $wali->jenis_kelamin == 'perempuan' ? 'selected' : '' }}>Perempuan</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="mb-4">
-                                                                <label for="nip" class="block text-sm font-medium text-gray-700">NIP</label>
-                                                                <input type="text" id="nip" name="nip" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required value="{{ $wali->nip }}">
-                                                            </div>
+                                                            Apakah anda yakin ingin menghapus ini?
                                                         </div>
                                                         <div class="bg-gray-100 px-4 py-3 flex justify-end space-x-2">
-                                                            <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded" onclick="toggleModal('edit-{{ $wali->id_user }}')">Batal</button>
-                                                            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Simpan</button>
+                                                            <button class="bg-gray-500 text-white px-4 py-2 rounded"
+                                                                onclick="toggleModal('{{ $wali->id_user }}')">Tidak</button>
+                                                            <button class="bg-red-500 text-white px-4 py-2 rounded"
+                                                                onclick="event.preventDefault(); document.getElementById('destroy-form{{ $wali->id_user }}').submit();">Yakin</button>
                                                         </div>
-                                                    </form>
+                                                        <form id="destroy-form{{ $wali->id_user }}"
+                                                            action="{{ route('operator.wali.destroy', $wali->id_user) }}"
+                                                            method="POST" class="hidden">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-
-                                          <div id="modal-{{ $wali->id_user }}" class="fixed inset-0 z-50 hidden overflow-y-auto">
-                                            <div class="flex items-center justify-center min-h-screen px-4">
-                                                <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
-                                                    <div class="bg-gray-100 px-4 py-2 flex justify-between items-center">
-                                                        <h5 class="text-lg font-bold">Peringatan!!</h5>
-                                                        <button class="text-gray-500" onclick="toggleModal('{{ $wali->id_user }}')">&times;</button>
-                                                    </div>
-                                                    <div class="px-4 py-6">
-                                                        Apakah anda yakin ingin menghapus ini?
-                                                    </div>
-                                                    <div class="bg-gray-100 px-4 py-3 flex justify-end space-x-2">
-                                                        <button class="bg-gray-500 text-white px-4 py-2 rounded" onclick="toggleModal('{{ $wali->id_user }}')">Tidak</button>
-                                                        <button class="bg-red-500 text-white px-4 py-2 rounded" onclick="event.preventDefault(); document.getElementById('destroy-form{{ $wali->id_user }}').submit();">Yakin</button>
-                                                    </div>
-                                                    <form id="destroy-form{{ $wali->id_user }}" action="{{ route('operator.wali.destroy', $wali->id_user) }}" method="POST" class="hidden">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                      @endforeach
-                                  </tbody>
-                              </table>
-                          </div>
-                      </div>
-
-                      <!-- Modal Form -->
-                      <div id="wali-modal" class="hidden fixed z-10 inset-0 overflow-y-auto">
-                          <div class="flex items-center justify-center min-h-screen">
-                              <div class="fixed inset-0 transition-opacity">
-                                  <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-                              </div>
-                              <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
-                                  <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                      <h3 id="modal-title" class="text-lg leading-6 font-medium text-gray-900"></h3>
-                                      <div class="mt-2">
-                                          <form action="{{route ('operator.wali.store')}}" method="POST">
-                                              @csrf
-                                              <input type="hidden" id="form-mode">
-                                              <input type="hidden" id="form-nuptk">
-                                              <div class="mb-4">
-                                                  <label for="nuptk" class="block text-sm font-medium text-gray-700">NUPTK</label>
-                                                  <input type="text" id="nuptk" name="nuptk" class="mt-1 block w-full" required>
-                                              </div>
-                                              <div class="mb-4">
-                                                <label for="nuptk" class="block text-sm font-medium text-gray-700">Email</label>
-                                                <input type="text" id="email" name="email" class="mt-1 block w-full" required>
-                                            </div>
-                                            <div class="mb-4">
-                                                <label for="nuptk" class="block text-sm font-medium text-gray-700">Password</label>
-                                                <input type="password" id="password" name="password" class="mt-1 block w-full" required>
-                                            </div>
-
-                                              <div class="mb-4">
-                                                  <label for="jenis_kelamin" class="block text-sm font-medium text-gray-700">Jenis Kelamin</label>
-                                                  <select id="jenis_kelamin" name="jenis_kelamin" class="mt-1 block w-full" required>
-                                                      <option value="laki laki">Laki Laki</option>
-                                                      <option value="perempuan">Perempuan</option>
-                                                  </select>
-                                              </div>
-                                              <div class="mb-4">
-                                                  <label for="nip" class="block text-sm font-medium text-gray-700">NIP</label>
-                                                  <input type="text" id="nip" name="nip" class="mt-1 block w-full" required>
-                                              </div>
-                                              <div>
-                                                  <button type="submit" id="submit-btn" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Submit</button>
-                                                  <button type="button" id="cancel-btn" class="px-4 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-400 ml-2">Cancel</button>
-                                              </div>
-                                          </form>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-
-                      <div id="wali-modal" class="hidden fixed z-10 inset-0 overflow-y-auto">
-                        <div class="flex items-center justify-center min-h-screen">
-                            <div class="fixed inset-0 transition-opacity">
-                                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
-                            <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
-                                <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                    <h3 id="modal-title" class="text-lg leading-6 font-medium text-gray-900"></h3>
-                                    <div class="mt-2">
-                                        <form action="{{route('operator.wali.update', $wali->nuptk)}}" method="POST">
-                                            @csrf
-                                            <input type="hidden" id="form-mode">
-                                            <input type="hidden" id="form-nuptk">
-                                            <div class="mb-4">
-                                                <label for="nuptk" class="block text-sm font-medium text-gray-700">NUPTK</label>
-                                                <input type="text" id="nuptk" name="nuptk" class="mt-1 block w-full" required>
-                                            </div>
-                                            <div class="mb-4">
-                                                <label for="nama" class="block text-sm font-medium text-gray-700">Nama</label>
-                                                <input type="text" id="nama" name="nama" class="mt-1 block w-full" required>
-                                            </div>
-                                            <div class="mb-4">
-                                                <label for="jenis_kelamin" class="block text-sm font-medium text-gray-700">Jenis Kelamin</label>
-                                                <select id="jenis_kelamin" name="jenis_kelamin" class="mt-1 block w-full" required>
-                                                    <option value="laki laki">Laki Laki</option>
-                                                    <option value="perempuan">Perempuan</option>
-                                                </select>
-                                            </div>
-                                            <div class="mb-4">
-                                                <label for="nip" class="block text-sm font-medium text-gray-700">NIP</label>
-                                                <input type="text" id="nip" name="nip" class="mt-1 block w-full" required>
-                                            </div>
-                                            <div>
-                                                <button type="submit" id="submit-btn" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Submit</button>
-                                                <button type="button" id="cancel-btn" class="px-4 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-400 ml-2">Cancel</button>
-                                            </div>
-                                        </form>
+                        </div>
+
+                        <!-- Modal Form -->
+                        <div id="wali-modal" class="hidden fixed z-10 inset-0 overflow-y-auto">
+                            <div class="flex items-center justify-center min-h-screen">
+                                <div class="fixed inset-0 transition-opacity">
+                                    <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                                </div>
+                                <div
+                                    class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
+                                    <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                        <h3 id="modal-title" class="text-lg leading-6 font-medium text-gray-900"></h3>
+                                        <div class="mt-2">
+                                            <form action="{{ route('operator.wali.store') }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" id="form-mode">
+                                                <input type="hidden" id="form-nip">
+                                                <div class="mb-4">
+                                                    <label for="nip"
+                                                        class="block text-sm font-medium text-gray-700">NIP</label>
+                                                    <input type="text" id="nip" name="nip"
+                                                        class="mt-1 block w-full" required>
+                                                </div>
+                                                <div class="mb-4">
+                                                    <label for="name"
+                                                        class="block text-sm font-medium text-gray-700">Name</label>
+                                                    <input type="text" id="name" name="name"
+                                                        class="mt-1 block w-full" required>
+                                                </div>
+                                                <div class="mb-4">
+                                                    <label for="nip"
+                                                        class="block text-sm font-medium text-gray-700">Email</label>
+                                                    <input type="text" id="email" name="email"
+                                                        class="mt-1 block w-full" required>
+                                                </div>
+                                                <div class="mb-4">
+                                                    <label for="nip"
+                                                        class="block text-sm font-medium text-gray-700">Password</label>
+                                                    <input type="password" id="password" name="password"
+                                                        class="mt-1 block w-full" required>
+                                                </div>
+
+                                                <div class="mb-4">
+                                                    <label for="jenis_kelamin"
+                                                        class="block text-sm font-medium text-gray-700">Jenis
+                                                        Kelamin</label>
+                                                    <select id="jenis_kelamin" name="jenis_kelamin"
+                                                        class="mt-1 block w-full" required>
+                                                        <option value="laki laki">Laki Laki</option>
+                                                        <option value="perempuan">Perempuan</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-4">
+                                                    <label for="nip"
+                                                        class="block text-sm font-medium text-gray-700">NIP</label>
+                                                    <input type="text" id="nip" name="nip"
+                                                        class="mt-1 block w-full" required>
+                                                </div>
+                                                <div>
+                                                    <button type="submit" id="submit-btn"
+                                                        class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Submit</button>
+                                                    <button type="button" id="cancel-btn"
+                                                        class="px-4 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-400 ml-2">Cancel</button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+                        <div id="importWaliModal" class="fixed z-10 inset-0 overflow-y-auto hidden"
+                            aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                            <div
+                                class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+                                    aria-hidden="true"></div>
+
+                                <!-- Modal Content -->
+                                <div
+                                    class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                        <div class="sm:flex sm:items-start">
+                                            <div
+                                                class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
+                                                <!-- Icon Import -->
+                                                <svg class="h-6 w-6 text-blue-600" xmlns="http://www.w3.org/2000/svg"
+                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M12 4v16m8-8H4" />
+                                                </svg>
+                                            </div>
+                                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                                    Import Data Wali Kelas</h3>
+                                                <div class="mt-2">
+                                                    <form action="{{ route('wali.import') }}" method="POST"
+                                                        enctype="multipart/form-data">
+                                                        @csrf
+                                                        <div class="mb-4">
+                                                            <label class="block text-sm font-medium text-gray-700">Pilih
+                                                                File (.xlsx atau .csv)</label>
+                                                            <input type="file" name="importFile" accept=".xlsx, .csv"
+                                                                required
+                                                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                                        </div>
+                                                        <div class="flex justify-end">
+                                                            <button type="button"
+                                                                class="mr-3 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
+                                                                onclick="closeWaliModal()">Batal</button>
+                                                            <button type="submit"
+                                                                class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Import</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <script>
+                            //script by davi
+                            function toggleModal(nip) {
+                                const modal = document.getElementById('modal-' + nip);
+                                modal.classList.toggle('hidden');
+                            }
+
+                            function toggleModalEdit(nip) {
+                                const modal = document.getElementById('modal-edit-' + nip);
+                                modal.classList.toggle('hidden');
+                            }
+                        </script>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const waliModal = document.getElementById('wali-modal');
+                                const waliFormElement = document.getElementById('wali-form-element');
+                                const addWaliBtn = document.getElementById('add-wali-btn');
+                                const cancelBtn = document.getElementById('cancel-btn');
+                                const submitBtn = document.getElementById('submit-btn');
+                                const formMode = document.getElementById('form-mode');
+                                const formNuptk = document.getElementById('form-nip');
+                                const modalTitle = document.getElementById('modal-title');
+
+                                function showModal(mode, nip = null) {
+                                    formMode.value = mode;
+                                    formNuptk.value = nip;
+                                    waliModal.classList.remove('hidden');
+                                    if (mode === 'edit') {
+                                        document.getElementById('nip').disabled = true;
+                                        submitBtn.textContent = 'Update';
+                                        modalTitle.textContent = 'Edit Wali Kelas';
+                                        fetch(`/operator/wali/${nip}/edit`)
+                                            .then(response => response.json())
+                                            .then(wali => {
+                                                document.getElementById('nip').value = wali.nip;
+                                                document.getElementById('nama').value = wali.nama;
+                                                document.getElementById('jenis_kelamin').value = wali.jenis_kelamin;
+                                                document.getElementById('nuptk').value = wali.nuptk;
+                                            })
+                                            .catch(error => console.error('Error fetching wali kelas details:', error));
+                                    } else {
+                                        document.getElementById('nip').disabled = false;
+                                        submitBtn.textContent = 'Create';
+                                        modalTitle.textContent = 'Add New Wali Kelas';
+                                        waliFormElement.reset();
+                                    }
+                                }
+
+                                function hideModal() {
+                                    waliModal.classList.add('hidden');
+                                    waliFormElement.reset();
+                                }
+
+                                addWaliBtn.addEventListener('click', () => showModal('create'));
+                                cancelBtn.addEventListener('click', hideModal);
+
+                                waliFormElement.addEventListener('submit', function(e) {
+                                    e.preventDefault();
+                                    const formData = new FormData(waliFormElement);
+                                    const url = formMode.value === 'create' ? '/operator/wali' :
+                                        `/operator/wali/${formNuptk.value}`;
+                                    const method = formMode.value === 'create' ? 'POST' : 'PUT';
+
+                                    fetch(url, {
+                                            method: method,
+                                            body: formData,
+                                            headers: {
+                                                'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                                            }
+                                        })
+                                        .then(response => response.json())
+                                        .then(() => {
+                                            hideModal();
+                                            location.reload();
+                                        })
+                                        .catch(error => console.error('Error:', error));
+                                });
+
+                                window.editWali = function(nip) {
+                                    showModal('edit', nip);
+                                }
+
+                                window.deleteWali = function(nip) {
+                                    if (confirm('Are you sure you want to delete this Wali Kelas?')) {
+                                        fetch(`/operator/wali/${nip}`, {
+                                                method: 'DELETE',
+                                                headers: {
+                                                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                                                }
+                                            })
+                                            .then(() => location.reload())
+                                            .catch(error => console.error('Error deleting wali kelas:', error));
+                                    }
+                                }
+
+                                // Close modal when clicking outside
+                                waliModal.addEventListener('click', function(e) {
+                                    if (e.target === waliModal) {
+                                        hideModal();
+                                    }
+                                });
+                            });
+
+                            function openWaliModal() {
+                                document.getElementById('importWaliModal').classList.remove('hidden');
+                            }
+
+                            function closeWaliModal() {
+                                document.getElementById('importWaliModal').classList.add('hidden');
+                            }
+
+                            function searchWali() {
+                                const searchInput = document.getElementById('search-wali').value.toLowerCase();
+                                const waliRows = document.querySelectorAll('.wali-row');
+
+                                waliRows.forEach(row => {
+                                    const nip = row.cells[0].textContent.toLowerCase();
+                                    const idUser = row.cells[1].textContent.toLowerCase();
+
+                                    if (nip.includes(searchInput) || idUser.includes(searchInput)) {
+                                        row.style.display = '';
+                                    } else {
+                                        row.style.display = 'none';
+                                    }
+                                });
+                            }
+                        </script>
+
+                        {{-- <div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+                            <div class="flex flex-1 justify-between sm:hidden">
+                                @if ($wali->previousPageUrl())
+                                    <a href="{{ $wali->previousPageUrl() }}"
+                                        class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Previous</a>
+                                @endif
+                                @if ($wali->nextPageUrl())
+                                    <a href="{{ $wali->nextPageUrl() }}"
+                                        class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Next</a>
+                                @endif
+                            </div>
+
+                            <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-700">
+                                        Showing
+                                        <span class="font-medium">{{ $wali->firstItem() }}</span>
+                                        to
+                                        <span class="font-medium">{{ $wali->lastItem() }}</span>
+                                        of
+                                        <span class="font-medium">{{ $wali->total() }}</span>
+                                        results
+                                    </p>
+                                </div>
+                                <div>
+                                    <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm"
+                                        aria-label="Pagination">
+                                        @if ($wali->onFirstPage())
+                                            <span
+                                                class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300">
+                                                <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd"
+                                                        d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z"
+                                                        clip-rule="evenodd" />
+                                                </svg>
+                                            </span>
+                                        @else
+                                            <a href="{{ $wali->previousPageUrl() }}"
+                                                class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20">
+                                                <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd"
+                                                        d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z"
+                                                        clip-rule="evenodd" />
+                                                </svg>
+                                            </a>
+                                        @endif
+
+                                        @foreach ($wali->links()->elements as $element)
+                                            @if (is_string($element))
+                                                <span
+                                                    class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300">{{ $element }}</span>
+                                            @endif
+
+                                            @if (is_array($element))
+                                                @foreach ($element as $page => $url)
+                                                    @if ($page == $wali->currentPage())
+                                                        <span aria-current="page"
+                                                            class="relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white">{{ $page }}</span>
+                                                    @else
+                                                        <a href="{{ $url }}"
+                                                            class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">{{ $page }}</a>
+                                                    @endif
+                                                @endforeach
+                                            @endif
+                                        @endforeach
+
+                                        @if ($wali->hasMorePages())
+                                            <a href="{{ $wali->nextPageUrl() }}"
+                                                class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                                                <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd"
+                                                        d="M8.22 14.78a.75.75 0 0 1 0-1.06L11.94 10 8.22 6.28a.75.75 0 1 1 1.06-1.06l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0Z"
+                                                        clip-rule="evenodd" />
+                                                </svg>
+                                            </a>
+                                        @endif
+                                    </nav>
+                                </div>
+                            </div>
+                        </div> --}}
+                        {{-- <div class="pagination">
+                            {{ $wali->links() }}
+                        </div> --}}
                     </div>
-
-                    <script>
-                        //script by davi
-                        function toggleModal(nuptk) {
-        const modal = document.getElementById('modal-' + nuptk);
-        modal.classList.toggle('hidden');
-    }
-                        function toggleModalEdit(nuptk) {
-        const modal = document.getElementById('modal-edit-' + nuptk);
-        modal.classList.toggle('hidden');
-    }
-                    </script>
-                      <script>
-                      document.addEventListener('DOMContentLoaded', function() {
-                          const waliModal = document.getElementById('wali-modal');
-                          const waliFormElement = document.getElementById('wali-form-element');
-                          const addWaliBtn = document.getElementById('add-wali-btn');
-                          const cancelBtn = document.getElementById('cancel-btn');
-                          const submitBtn = document.getElementById('submit-btn');
-                          const formMode = document.getElementById('form-mode');
-                          const formNuptk = document.getElementById('form-nuptk');
-                          const modalTitle = document.getElementById('modal-title');
-
-                          function showModal(mode, nuptk = null) {
-                              formMode.value = mode;
-                              formNuptk.value = nuptk;
-                              waliModal.classList.remove('hidden');
-                              if (mode === 'edit') {
-                                  document.getElementById('nuptk').disabled = true;
-                                  submitBtn.textContent = 'Update';
-                                  modalTitle.textContent = 'Edit Wali Kelas';
-                                  fetch(`/operator/wali/${nuptk}/edit`)
-                                      .then(response => response.json())
-                                      .then(wali => {
-                                          document.getElementById('nuptk').value = wali.nuptk;
-                                          document.getElementById('nama').value = wali.nama;
-                                          document.getElementById('jenis_kelamin').value = wali.jenis_kelamin;
-                                          document.getElementById('nip').value = wali.nip;
-                                      })
-                                      .catch(error => console.error('Error fetching wali kelas details:', error));
-                              } else {
-                                  document.getElementById('nuptk').disabled = false;
-                                  submitBtn.textContent = 'Create';
-                                  modalTitle.textContent = 'Add New Wali Kelas';
-                                  waliFormElement.reset();
-                              }
-                          }
-
-                          function hideModal() {
-                              waliModal.classList.add('hidden');
-                              waliFormElement.reset();
-                          }
-
-                          addWaliBtn.addEventListener('click', () => showModal('create'));
-                          cancelBtn.addEventListener('click', hideModal);
-
-                          waliFormElement.addEventListener('submit', function(e) {
-                              e.preventDefault();
-                              const formData = new FormData(waliFormElement);
-                              const url = formMode.value === 'create' ? '/operator/wali' : `/operator/wali/${formNuptk.value}`;
-                              const method = formMode.value === 'create' ? 'POST' : 'PUT';
-
-                              fetch(url, {
-                                  method: method,
-                                  body: formData,
-                                  headers: {
-                                      'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
-                                  }
-                              })
-                              .then(response => response.json())
-                              .then(() => {
-                                  hideModal();
-                                  location.reload();
-                              })
-                              .catch(error => console.error('Error:', error));
-                          });
-
-                          window.editWali = function(nuptk) {
-                              showModal('edit', nuptk);
-                          }
-
-                          window.deleteWali = function(nuptk) {
-                              if (confirm('Are you sure you want to delete this Wali Kelas?')) {
-                                  fetch(`/operator/wali/${nuptk}`, {
-                                      method: 'DELETE',
-                                      headers: {
-                                          'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
-                                      }
-                                  })
-                                  .then(() => location.reload())
-                                  .catch(error => console.error('Error deleting wali kelas:', error));
-                              }
-                          }
-
-                          // Close modal when clicking outside
-                          waliModal.addEventListener('click', function(e) {
-                              if (e.target === waliModal) {
-                                  hideModal();
-                              }
-                          });
-                      });
-                      </script>
-
-                <div
-                    class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
-                    <span class="flex items-center col-span-3">
-                        Showing 21-30 of 100
-                    </span>
-                    <span class="col-span-2"></span>
-                    <!-- Pagination -->
-                    <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
-                        <nav aria-label="Table navigation">
-                            <ul class="inline-flex items-center">
-                                <li>
-                                    <button
-                                        class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple"
-                                        aria-label="Previous">
-                                        <svg aria-hidden="true" class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                                                clip-rule="evenodd" fill-rule="evenodd"></path>
-                                        </svg>
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
-                                        1
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
-                                        2
-                                    </button>
-                                </li>
-                                <li>
-                                    <button
-                                        class="px-3 py-1 text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600 rounded-md focus:outline-none focus:shadow-outline-purple">
-                                        3
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
-                                        4
-                                    </button>
-                                </li>
-                                <li>
-                                    <span class="px-3 py-1">...</span>
-                                </li>
-                                <li>
-                                    <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
-                                        8
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
-                                        9
-                                    </button>
-                                </li>
-                                <li>
-                                    <button
-                                        class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple"
-                                        aria-label="Next">
-                                        <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
-                                            <path
-                                                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                                clip-rule="evenodd" fill-rule="evenodd"></path>
-                                        </svg>
-                                    </button>
-                                </li>
-                            </ul>
-                        </nav>
-                    </span>
                 </div>
+            </main>
         </div>
-    </div>
-    </main>
-    </div>
     </div>
     </body>
 @endsection

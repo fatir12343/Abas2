@@ -31,7 +31,7 @@
                     <ion-icon name="chevron-down-outline" role="img" class="md hydrated" aria-label="chevron down" style="margin-left: 5px; font-size: 15px;"></ion-icon>
                 </button>
                 <div id="dropdownMenu" style="display: none; position: absolute; right: 0; background: white; border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); width: 200px; z-index: 1000;">
-                    <a href="{{route('profile')}}" class="item" style="display: flex; align-items: center; text-decoration: none; padding: 10px 20px; color: #6c757d;">
+                    <a href="{{route('profile-siswa')}}" class="item" style="display: flex; align-items: center; text-decoration: none; padding: 10px 20px; color: #6c757d;">
                         <ion-icon name="person-outline" role="img" class="md hydrated" aria-label="profile outline" style="font-size: 18px;"></ion-icon>
                         <span style="margin-left: 10px; font-size: 10px;">Profile</span>
                     </a>
@@ -108,19 +108,20 @@
                                     <input type="hidden" name="jenis_absen" value="{{ $statusAbsen == 'Sudah Absen Masuk' ? 'pulang' : 'masuk' }}">
 
                                     <!-- Kondisi card warna berdasarkan status absen -->
-                                    <div class="card card-hover h-100 text-center {{ $statusAbsen == 'Sudah Absen Masuk' ? ($statusAbsen == 'Sudah Absen Pulang' ? 'gradasigrey' : 'gradasired') : 'gradasigreen' }} shadow-sm">
+                                    <div class="card card-hover h-100 text-center
+                                        {{ $statusAbsen == 'Sudah Absen Pulang' ? 'gradasigrey' : ($statusAbsen == 'Sudah Absen Masuk' ? 'gradasired' : 'gradasigreen') }} shadow-sm">
                                         <div class="card-body d-flex flex-column justify-content-center align-items-center p-3">
                                             <div class="iconpresence mb-2">
-                                                <!-- Tombol absen masuk/pulang: disable jika sudah absen pulang, terlambat, atau sedang izin -->
+                                                <!-- Tombol absen masuk/pulang: disable jika sudah absen pulang, terlambat, izin, sudah absen kemarin, atau absen di akun lain -->
                                                 <button type="submit" class="btn btn-link"
-                                                    {{ $statusAbsen == 'Sudah Absen Pulang' || $statusAbsen == 'terlambat' || $izin ? 'disabled' : '' }}>
+                                                    {{ $statusAbsen == 'Sudah Absen Pulang' || $izin ? 'disabled' : '' }}>
                                                     <ion-icon name="camera" size="large"></ion-icon>
                                                 </button>
                                             </div>
                                             <div class="presencedetail">
                                                 <!-- Tampilkan status absen (Masuk/Pulang) -->
                                                 <h5 class="presencetitle">{{ $statusAbsen == 'Sudah Absen Masuk' ? 'Pulang' : 'Masuk' }}</h5>
-                                                <span>{{ $statusAbsen == 'Sudah Absen Masuk' ? $jam_pulang : $jam_masuk }}</span>
+                                                <span>{{ $statusAbsen == 'Sudah Absen Masuk' ? $mulai_pulang : $mulai_absen }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -129,9 +130,10 @@
 
                             <!-- Form Izin/Sakit -->
                             <div class="col-md-6 col-sm-12 mb-2">
-                                <div class="card card-hover h-100 text-center {{ $statusAbsen == 'Sudah Absen Masuk' || $statusAbsen == 'Sudah Absen Pulang' || $izin || $statusAbsen == 'terlambat' ? 'gradasigrey' : 'gradasiblue' }} shadow-sm"
-                                     data-toggle="modal" data-target="#FormulirModal" data-status="izin"
-                                     style="{{ $statusAbsen == 'Sudah Absen Masuk' || $statusAbsen == 'Sudah Absen Pulang' || $izin || $statusAbsen == 'terlambat' ? 'pointer-events: none;' : '' }}">
+                                <div class="card card-hover h-100 text-center
+                                    {{ $statusAbsen == 'Sudah Absen Pulang' || $izin ? 'gradasigrey' : 'gradasiblue' }} shadow-sm"
+                                    data-toggle="modal" data-target="#FormulirModal"
+                                    style="{{ $statusAbsen == 'Sudah Absen Pulang' || $izin ? 'pointer-events: none;' : '' }}">
                                     <div class="card-body d-flex flex-column justify-content-center align-items-center p-3">
                                         <div class="iconpresence mb-2">
                                             <ion-icon name="paper-plane-outline" size="large"></ion-icon>
@@ -150,69 +152,67 @@
     <!-- * App Capsule -->
 
                     <!-- Popup Formulir Izin -->
-                    <div class="modal fade" id="FormulirModal" tabindex="-1" role="dialog"
-                            aria-labelledby="FormulirModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg" role="document">
-                                <div class="modal-content shadow-lg" style="border-radius: 15px; overflow: hidden;">
-                                    <div class="modal-header bg-secondary text-white">
-                                        <h5 class="modal-title fw-bold d-flex align-items-center" id="FormulirModalLabel">
-                                            <ion-icon name="document-text-outline" class="mr-2"></ion-icon>
-                                            <strong>Formulir Keterangan</strong>
-                                            <small class="ml-2">Izin/Sakit</small>
-                                        </h5>
-                                        <button type="button" class="close text-white" data-dismiss="modal"
-                                            aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <form action="{{ route('upload-file') }}" method="POST"
-                                        enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="modal-body p-4">
-                                            <!-- Status Kehadiran -->
-                                            <div class="form-group row">
-                                                <label class="col-md-3 col-form-label">Status Kehadiran</label>
-                                                <div class="col-md-9">
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="status"
-                                                            id="statusSakit" value="sakit" required>
-                                                        <label class="form-check-label" for="statusSakit">Sakit</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="status"
-                                                            id="statusIzin" value="izin" required>
-                                                        <label class="form-check-label" for="statusIzin">Izin</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- Keterangan -->
-                                            <div class="form-group row mt-3">
-                                                <label class="col-md-3 col-form-label">Keterangan</label>
-                                                <div class="col-md-9">
-                                                    <input type="text" id="keterangan" name="keterangan"
-                                                        placeholder="Tuliskan keterangan Anda" class="form-control"
-                                                        required>
-                                                </div>
-                                            </div>
-                                            <!-- Upload File -->
-                                            <div class="form-group row mt-3">
-                                                <label class="col-md-3 col-form-label">Upload File</label>
-                                                <div class="col-md-9">
-                                                    <input type="file" class="form-control" name="photo_in" required>
-                                                    <small class="form-text text-muted">Upload surat keterangan atau bukti
-                                                        pendukung.</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer bg-light">
-                                            <button type="button" class="btn btn-outline-secondary"
-                                                data-dismiss="modal">Batal</button>
-                                            <button type="submit" class="btn btn-primary">Kirim</button>
-                                        </div>
-                                    </form>
+                    <div class="modal fade" id="FormulirModal" tabindex="-1" role="dialog" aria-labelledby="FormulirModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content shadow-lg" style="border-radius: 15px; overflow: hidden;">
+                                <div class="modal-header bg-secondary text-white">
+                                    <h5 class="modal-title fw-bold d-flex align-items-center" id="FormulirModalLabel">
+                                        <ion-icon name="document-text-outline" class="mr-2"></ion-icon>
+                                        <strong>Formulir Keterangan</strong>
+                                        <small class="ml-2">Izin/Sakit</small>
+                                    </h5>
+                                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
                                 </div>
+                                <form id="uploadForm" action="{{ route('upload-file') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="modal-body p-4">
+                                        <!-- Status Kehadiran -->
+                                        <div class="form-group row">
+                                            <label class="col-md-3 col-form-label">Status Kehadiran</label>
+                                            <div class="col-md-9">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="status" id="statusSakit" value="sakit" required>
+                                                    <label class="form-check-label" for="statusSakit">Sakit</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="status" id="statusIzin" value="izin" required>
+                                                    <label class="form-check-label" for="statusIzin">Izin</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                    
+                                        <!-- Keterangan -->
+                                        <div class="form-group row mt-3">
+                                            <label class="col-md-3 col-form-label">Keterangan</label>
+                                            <div class="col-md-9">
+                                                <input type="text" id="keterangan" name="keterangan" placeholder="Tuliskan keterangan Anda" class="form-control" required>
+                                            </div>
+                                        </div>
+                    
+                                        <!-- Kamera -->
+                                        <div class="form-group row mt-3">
+                                            <label class="col-md-3 col-form-label">Ambil Foto</label>
+                                            <div class="col-md-9">
+                                                <div id="my_camera" class="mb-2"></div>
+                                                <div id="results" style="display:none;" class="mb-2"></div>
+                                                <input type="hidden" name="photo_in" id="photo_in">
+                                                <button type="button" class="btn btn-primary me-2" id="takePhotoBtn" onclick="takePhoto()">Ambil Foto</button>
+                                                <button type="button" class="btn btn-warning" id="retakePhotoBtn" onclick="retakePhoto()" style="display:none;">Ambil Ulang</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer bg-light">
+                                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Batal</button>
+                                        <button type="submit" class="btn btn-primary">Kirim</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
+                    </div>
+
+
 
 
     <div class="section mt-4" id="attendance-dashboard">
@@ -251,8 +251,8 @@
                                                         <span class="badge badge-danger"><i class="fas fa-times-circle"></i> {{ $riwayatM->status }}</span>
                                                     @endif
                                                 </td>
-                                                <td>{{ $riwayatM->jam_masuk }}</td>
-                                                <td>{{ $riwayatM->jam_pulang }}</td>
+                                                <td>{{ $riwayatM->mulai_absen }}</td>
+                                                <td>{{ $riwayatM->mulai_pulang }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -392,6 +392,7 @@
      <script src="{{asset ('assets/template2/js/plugins/owl-carousel/owl.carousel.min.js')}}"></script>
      <!-- jQuery Circle Progress -->
      <script src="{{asset ('assets/template2/js/plugins/jquery-circle-progress/circle-progress.min.js')}}"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"></script>
      <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
      <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
      <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
@@ -453,3 +454,72 @@
          }); // end am4core.ready()
      </script>
 @endsection
+
+@push('myscript')
+<script src="{{ asset('assets/template2/js/digitalclock.js') }}"></script>
+<script>
+    // Inisialisasi kamera saat modal dibuka
+    $('#FormulirModal').on('shown.bs.modal', function() {
+        Webcam.set({
+            width: 320,
+            height: 240,
+            image_format: 'jpeg',
+            jpeg_quality: 90,
+            flip_horiz: false
+        });
+        Webcam.attach('#my_camera');
+    });
+
+    // Reset kamera saat modal ditutup
+    $('#FormulirModal').on('hidden.bs.modal', function() {
+        Webcam.reset();
+        document.getElementById('results').style.display = 'none';
+        document.getElementById('my_camera').style.display = 'block';
+        document.getElementById('takePhotoBtn').style.display = 'inline-block';
+        document.getElementById('retakePhotoBtn').style.display = 'none';
+    });
+
+    // Fungsi mengambil foto
+    function takePhoto() {
+        Webcam.snap(function(data_uri) {
+            document.getElementById('results').innerHTML = 
+                '<img src="' + data_uri + '" class="img-fluid"/>';
+            document.getElementById('photo_in').value = data_uri;
+            document.getElementById('my_camera').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('takePhotoBtn').style.display = 'none';
+            document.getElementById('retakePhotoBtn').style.display = 'inline-block';
+        });
+    }
+
+    // Fungsi mengambil ulang foto
+    function retakePhoto() {
+        document.getElementById('my_camera').style.display = 'block';
+        document.getElementById('results').style.display = 'none';
+        document.getElementById('takePhotoBtn').style.display = 'inline-block';
+        document.getElementById('retakePhotoBtn').style.display = 'none';
+        document.getElementById('photo_in').value = '';
+    }
+
+    // Handle form submission
+    document.getElementById('uploadForm').onsubmit = function(e) {
+        e.preventDefault();
+        
+        // Validasi form
+        if (!this.status.value) {
+            alert('Pilih status kehadiran');
+            return false;
+        }
+        if (!this.keterangan.value.trim()) {
+            alert('Isi keterangan');
+            return false;
+        }
+        if (!this.photo_in.value) {
+            alert('Ambil foto terlebih dahulu');
+            return false;
+        }
+
+        this.submit();
+    };
+</script>
+@endpush

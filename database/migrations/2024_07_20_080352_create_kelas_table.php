@@ -18,8 +18,8 @@ return new class extends Migration
             $table->foreign('id_jurusan')->references('id_jurusan')->on('jurusan');
 
             $table->integer('nomor_kelas')->nullable();
-            $table->string('nuptk')->nullable();
-            $table->foreign('nuptk')->references('nuptk')->on('wali_kelas')->onUpdate('cascade')->onDelete('set null');
+            $table->string('nip')->nullable();
+            $table->foreign('nip')->references('nip')->on('wali_kelas')->onUpdate('cascade')->onDelete('set null');
             $table->enum('tingkat', ['10', '11', '12']);
         });
     }

@@ -527,7 +527,19 @@
                         {{ session('error') }}
                     </div>
                 @endif
-
+                
+                 <!-- Add New Student Button -->
+                 <div class="mt-4">
+                    <button
+                        class="px-4 py-2 bg-blue-600 text-white rounded-lg"
+                        onclick="toggleModalAdd()"
+                    >
+                        Tambah Siswa Baru
+                    </button>
+                    <button class="px-4 py-2 bg-green-600 text-white rounded-lg" onclick="openSiswaModal()">
+                        Import
+                    </button>
+                </div> 
                 <!-- List of Students -->
                 <div class="w-full overflow-hidden rounded-lg shadow-xs">
                     <div class="w-full overflow-x-auto">
@@ -573,7 +585,7 @@
                                             </button>
 
                                             <!-- Delete Button -->
-                                            <form action="{{ route('siswa.destroy', $s->id) }}" method="POST" class="inline">
+                                            <form action="{{ route('siswa.destroy', ['id' => $s->id_user]) }}" method="POST" class="inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button
@@ -662,7 +674,7 @@
                                                 Apakah anda yakin ingin menghapus siswa <strong>{{ $s->nis }}</strong> ?
                                             </div>
                                             <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                                                <form action="{{ route('siswa.destroy', $s->id) }}" method="POST" class="inline">
+                                                <form action="{{ route('siswa.destroy',['id' => $s->id_user]) }}" method="POST" class="inline">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
@@ -683,15 +695,7 @@
                     </div>
                 </div>
 
-                <!-- Add New Student Button -->
-                <div class="mt-4">
-                    <button
-                        class="px-4 py-2 bg-green-600 text-white rounded-lg"
-                        onclick="toggleModalAdd()"
-                    >
-                        Tambah Siswa Baru
-                    </button>
-                </div>
+               
 
                 <!-- Add Siswa Modal -->
                 <div id="add-siswa-modal" class="fixed inset-0 z-50 hidden overflow-y-auto">
@@ -743,6 +747,42 @@
                         </div>
                     </div>
                 </div>
+
+                <div id="importSiswaModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+                
+                        <!-- Modal Content -->
+                        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                <div class="sm:flex sm:items-start">
+                                    <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
+                                        <!-- Icon Import -->
+                                        <svg class="h-6 w-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                        </svg>
+                                    </div>
+                                    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                        <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Import Data Siswa</h3>
+                                        <div class="mt-2">
+                                            <form action="{{ route('siswa.import') }}" method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                <div class="mb-4">
+                                                    <label class="block text-sm font-medium text-gray-700">Pilih File (.xlsx atau .csv)</label>
+                                                    <input type="file" name="importFile" accept=".xlsx, .csv" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                                </div>
+                                                <div class="flex justify-end">
+                                                    <button type="button" class="mr-3 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" onclick="closeSiswaModal()">Batal</button>
+                                                    <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Import</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- JavaScript for Modal Toggle -->
@@ -761,6 +801,13 @@
                     const modal = document.getElementById('add-siswa-modal');
                     modal.classList.toggle('hidden');
                 }
+                function openSiswaModal() {
+                document.getElementById('importSiswaModal').classList.remove('hidden');
+                }
+
+            function closeSiswaModal() {
+                document.getElementById('importSiswaModal').classList.add('hidden');
+            }
             </script>
 
         </main>

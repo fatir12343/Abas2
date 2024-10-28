@@ -8505,3 +8505,43 @@ bg-gradient-success {
 .bg-gradient-light {
     background: linear-gradient(135deg, #f8f9fa, #e9ecef);
 }
+
+.camera-container {
+    position: relative;
+    background-color: #000;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.camera-container video {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+}
+
+.image-preview-container {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #f8f9fa;
+}
+
+.gap-2 {
+    gap: 0.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .modal-dialog {
+        margin: 0.5rem;
+    }
+    
+    .col-form-label {
+        margin-bottom: 0.5rem;
+    }
+    
+    .camera-container,
+    .image-preview-container {
+        max-height: 250px;
+    }
+}

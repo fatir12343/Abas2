@@ -18,7 +18,7 @@
             <ion-icon name="chevron-down-outline" style="margin-left: 5px; font-size: 16px;"></ion-icon>
         </button>
         <div id="dropdownMenu" style="display: none; position: absolute; right: 0; background: white; border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); width: 200px;">
-            <a href="/profile" class="item" style="display: flex; align-items: center; text-decoration: none; padding: 10px 20px; color: #6c757d;">
+            <a href="{{route('profile')}}" class="item" style="display: flex; align-items: center; text-decoration: none; padding: 10px 20px; color: #6c757d;">
                 <ion-icon name="person-outline" style="font-size: 18px;"></ion-icon>
                 <span style="margin-left: 10px; font-size: 16px;">Profile</span>
             </a>

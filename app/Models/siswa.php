@@ -11,22 +11,24 @@ class siswa extends Model
 
     protected $table = 'siswa';
     // protected $primaryKey = 'nis';
-    // public $incrementing = false;
-    // protected $keyType = 'string';
-    public $primaryKey = 'nis';
+    public $incrementing = false;
+    protected $keyType = 'string';
+    protected $primaryKey = 'nis';
 
     protected $fillable = [
         'nis',
         'id_user',
         'id_kelas',
-        'nik',
+        'nik_ayah',
+        'nik_ibu',
+        'nik_wali',
         'jenis_kelamin',
         'nisn',
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id', 'id_user');
+        return $this->belongsTo(User::class, 'id_user', 'id');
     }
 
     public function kelas()
@@ -36,12 +38,12 @@ class siswa extends Model
 
     public function absensi()
     {
-        return $this->hasMany(Absensi::class, 'nis');
+        return $this->hasMany(Absensi::class, 'nis', 'nis');
     }
 
     public function ortu()
     {
-        return $this->hasOne(Wali_Siswa::class, 'nik', 'nik');
+        return $this->belongsTo(Wali_Siswa::class, 'nik','nik');
     }
 
     public $timestamps = false;

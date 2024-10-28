@@ -35,17 +35,17 @@ class AuthController extends Controller
             $user = User::find($waliSiswa->id_user); // Pastikan ada relasi antara Wali Siswa dan User
             if ($user && Hash::check($request->password, $user->password)) {
                 Auth::login($user);
-                return redirect()->intended($this->redirectTo('wali'));
+                return redirect()->intended($this->redirectTo('walis'));
             }
         }
 
         // Mencari pengguna di tabel User berdasarkan NUPTK
-        $waliKelas = Wali_kelas::where('nuptk', $request->identifier)->first();
+        $waliKelas = Wali_kelas::where('nip', $request->identifier)->first();
         if ($waliKelas) {
             $user = User::find($waliKelas->id_user); // Pastikan ada relasi antara Wali Kelas dan User
             if ($user && Hash::check($request->password, $user->password)) {
                 Auth::login($user);
-                return redirect()->intended($this->redirectTo('ortu'));
+                return redirect()->intended($this->redirectTo('wali'));
             }
         }
 
@@ -78,6 +78,6 @@ class AuthController extends Controller
             default:
                 return '/';
         }
-    
+
     }
 }

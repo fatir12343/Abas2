@@ -24,7 +24,7 @@
               ></span>
               <a
                 class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                href="{{route('walis')}}"
+                href="{{route('kesiswaan')}}"
               >
                 <svg
                   class="w-5 h-5"
@@ -45,7 +45,6 @@
             </li>
           </ul>
           <ul>
-
             <li class="relative px-6 py-3">
               <button
                 class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
@@ -67,7 +66,7 @@
                       d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"
                     ></path>
                   </svg>
-                  <span class="ml-4">Laporan</span>
+                  <span class="ml-4">Laporan Absensi</span>
                 </span>
                 <svg
                   class="w-4 h-4"
@@ -96,7 +95,7 @@
                   <li
                     class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                   >
-                    <a class="w-full" href="{{route('laporan-walsis')}}">Laporan siswa</a>
+                    <a class="w-full" href="{{route('kesiswaan.laporankelas')}}">Laporan Kelas</a>
                   </li>
                 </ul>
               </template>
@@ -141,7 +140,7 @@
             class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
             href="#"
           >
-           ABAS
+            Windmill
           </a>
           <ul class="mt-6">
             <li class="relative px-6 py-3">
@@ -151,7 +150,7 @@
               ></span>
               <a
                 class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                href="{{route('walis')}}"
+                href="{{route('kesiswaan')}}"
               >
                 <svg
                   class="w-5 h-5"
@@ -194,7 +193,7 @@
                       d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"
                     ></path>
                   </svg>
-                  <span class="ml-4">Laporan</span>
+                  <span class="ml-4">Laporan Absensi</span>
                 </span>
                 <svg
                   class="w-4 h-4"
@@ -223,7 +222,7 @@
                   <li
                     class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                   >
-                    <a class="w-full" href="{{route('laporan-walsis')}}">Laporan siswa</a>
+                    <a class="w-full" href="{{route('kesiswaan.laporankelas')}}">Laporan Kelas</a>
                   </li>
                 </ul>
               </template>
@@ -426,7 +425,7 @@
                     <li class="flex">
                       <a
                         class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                        href="{{route('profile')}}"
+                        href="#"
                       >
                         <svg
                           class="w-4 h-4 mr-3"
@@ -502,173 +501,304 @@
         </header>
         <main class="h-full overflow-y-auto">
           <div class="container px-6 mx-auto grid">
-            <section class="bg-gradient-to-r from-blue-500 to-purple-500 py-10 text-white">
-                <div class="max-w-7xl mx-auto text-center">
-                    <h1 class="text-4xl font-bold">Selamat Datang, {{Auth::user()->name}}</h1>
-                    <p class="mt-4 text-lg">Lihat statistik kehadiran anak anda</p>
-                </div>
-            </section>
-            <section class="attendance py-4">
-                <div class="container mx-auto">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        @foreach ($dataAbsensiAnak as $data)
-                            <div class="bg-white rounded-lg shadow-lg">
-                                <div class="bg-blue-600 text-white rounded-t-lg p-4">
-                                    <h4 class="mb-0">Rekap Kehadiran {{ $data['nama'] }}</h4>
-                                </div>
-                                <div class="p-4">
-                                    <ul class="flex space-x-2 mb-3" role="tablist">
-                                        <li role="presentation">
-                                            <button class="tab-button active" data-target="#current-year{{ $data['nis'] }}" type="button">Tahun Ini</button>
-                                        </li>
-                                        <li role="presentation">
-                                            <button class="tab-button" data-target="#current-month{{ $data['nis'] }}" type="button">Bulan Ini</button>
-                                        </li>
-                                        <li role="presentation">
-                                            <button class="tab-button" data-target="#previous-month{{ $data['nis'] }}" type="button">Bulan Sebelumnya</button>
-                                        </li>
-                                    </ul>
-                                    <div class="tab-content">
-                                        <div class="tab-pane active" id="current-month{{ $data['nis'] }}">
-                                            <div class="progress mb-3 bg-gray-200 rounded">
-                                                <div class="progress-bar bg-green-500" role="progressbar"
-                                                    style="width: {{ $data['PersentaseBulanIni'] }}%"
-                                                    aria-valuenow="{{ $data['PersentaseBulanIni'] }}" aria-valuemin="0"
-                                                    aria-valuemax="100">
-                                                    {{ $data['PersentaseBulanIni'] }}%
-                                                </div>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-check-circle text-green-600 mr-2"></i>
-                                                <span>Hadir: {{ $data['BulanIni']['Hadir'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-user-md text-blue-500 mr-2"></i>
-                                                <span>Sakit/Izin: {{ $data['BulanIni']['Sakit/Izin'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-clock text-yellow-500 mr-2"></i>
-                                                <span>Terlambat: {{ $data['BulanIni']['Terlambat'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-times-circle text-red-500 mr-2"></i>
-                                                <span>Alfa: {{ $data['BulanIni']['Alfa'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-bell text-blue-600 mr-2"></i>
-                                                <span>TAP: {{ $data['BulanIni']['TAP'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-user-clock text-gray-500 mr-2"></i>
-                                                <span>Total Keterlambatan: {{ $data['BulanIni']['late'] }} Menit</span>
-                                            </div>
-                                        </div>
-            
-                                        <!-- Konten untuk Bulan Lalu -->
-                                        <div class="tab-pane hidden" id="previous-month{{ $data['nis'] }}">
-                                            <div class="progress mb-3 bg-gray-200 rounded">
-                                                <div class="progress-bar bg-yellow-500" role="progressbar"
-                                                    style="width: {{ $data['PersentaseBulanLalu'] }}%"
-                                                    aria-valuenow="{{ $data['PersentaseBulanLalu'] }}" aria-valuemin="0"
-                                                    aria-valuemax="100">
-                                                    {{ $data['PersentaseBulanLalu'] }}%
-                                                </div>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-check-circle text-green-600 mr-2"></i>
-                                                <span>Hadir: {{ $data['BulanLalu']['Hadir'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-user-md text-blue-500 mr-2"></i>
-                                                <span>Sakit/Izin: {{ $data['BulanLalu']['Sakit/Izin'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-clock text-yellow-500 mr-2"></i>
-                                                <span>Terlambat: {{ $data['BulanLalu']['Terlambat'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-times-circle text-red-500 mr-2"></i>
-                                                <span>Alfa: {{ $data['BulanLalu']['Alfa'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-bell text-blue-600 mr-2"></i>
-                                                <span>TAP: {{ $data['BulanLalu']['TAP'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-user-clock text-gray-500 mr-2"></i>
-                                                <span>Total Keterlambatan: {{ $data['BulanLalu']['late'] }} Menit</span>
-                                            </div>
-                                        </div>
-            
-                                        <!-- Konten untuk Tahun Ini -->
-                                        <div class="tab-pane hidden" id="current-year{{ $data['nis'] }}">
-                                            <div class="progress mb-3 bg-gray-200 rounded">
-                                                <div class="progress-bar bg-blue-500" role="progressbar"
-                                                    style="width: {{ $data['PersentaseTahunIni'] }}%"
-                                                    aria-valuenow="{{ $data['PersentaseTahunIni'] }}" aria-valuemin="0"
-                                                    aria-valuemax="100">
-                                                    {{ $data['PersentaseTahunIni'] }}%
-                                                </div>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-check-circle text-green-600 mr-2"></i>
-                                                <span>Hadir: {{ $data['TahunIni']['Hadir'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-user-md text-blue-500 mr-2"></i>
-                                                <span>Sakit/Izin: {{ $data['TahunIni']['Sakit/Izin'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-clock text-yellow-500 mr-2"></i>
-                                                <span>Terlambat: {{ $data['TahunIni']['Terlambat'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-times-circle text-red-500 mr-2"></i>
-                                                <span>Alfa: {{ $data['TahunIni']['Alfa'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-bell text-blue-600 mr-2"></i>
-                                                <span>TAP: {{ $data['TahunIni']['TAP'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-user-clock text-gray-500 mr-2"></i>
-                                                <span>Total Keterlambatan: {{ $data['TahunIni']['late'] }} Menit</span>
-                                            </div>
-                                        </div>
+            <h2
+              class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
+            >
+              Dashboard
+            </h2>
+            <!-- CTA -->
+            {{-- <a
+              class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
+              href="https://github.com/estevanmaito/windmill-dashboard"
+            >
+              <div class="flex items-center">
+                <svg
+                  class="w-5 h-5 mr-2"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                  ></path>
+                </svg>
+                <span>Star this project on GitHub</span>
+              </div>
+              <span>View more &RightArrow;</span>
+            </a> --}}
+            <!-- Cards -->
+            <div class="min-h-full">
+                <header class="bg-white shadow">
+                    <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                        <h1 class="text-3xl font-bold tracking-tight text-gray-900">Detail Siswa</h1>
+                    </div>
+                </header>
+                <main>
+                    <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+                        <!-- Student Info Card -->
+                        <div class="bg-white overflow-hidden shadow rounded-lg mb-6">
+                            <div class="px-4 py-5 sm:p-6">
+                                <div class="flex items-center">
+                                    <img src={{ asset('storage/defaultuser/' . Auth::user()->foto) }} style="height: 35px; width: auto;" class="h-20 w-20 rounded-full mr-4">
+                                    <div>
+                                        <h2 class="text-2xl font-semibold text-gray-900">Name:{{ $studentData['name'] }}</h2>
+                                        <p class="mt-1 max-w-2xl text-sm text-gray-500">NIS: {{ $studentData['nis'] }}</p>
+                                        <p class="mt-1 max-w-2xl text-sm text-gray-500">Kelas: {{ $studentData['kelas'] }}</p>
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                        </div>
+
+                        <!-- Date Range Picker -->
+                        <div class="bg-white overflow-hidden shadow rounded-lg mb-6">
+                            <div class="px-4 py-5 sm:p-6">
+                                <h3 class="text-lg font-medium leading-6 text-gray-900 mb-4">Pilih Rentang Tanggal</h3>
+                                <form action="{{ route('kesiswaan.detailsiswa', $studentData['nis']) }}" method="GET" class="mt-5 sm:flex sm:items-center">
+                                    <div class="w-full sm:max-w-xs mr-2">
+                                        <label for="start" class="sr-only">Tanggal Mulai</label>
+                                        <input type="date" name="start" id="start" value="{{ $startDate }}" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                    </div>
+                                    <div class="w-full sm:max-w-xs mr-2">
+                                        <label for="end" class="sr-only">Tanggal Akhir</label>
+                                        <input type="date" name="end" id="end" value="{{ $endDate }}" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                    </div>
+                                    <button type="submit" class="mt-3 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                                        Terapkan
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Attendance Summary -->
+                        <div class="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                            @foreach ($attendanceCounts as $status => $count)
+                            <div class="bg-white overflow-hidden shadow rounded-lg">
+                                <div class="px-4 py-5 sm:p-6">
+                                    <dt class="text-sm font-medium text-gray-500 truncate">{{ $status }}</dt>
+                                    <dd class="mt-1 text-3xl font-semibold text-gray-900">{{ $count }}</dd>
+                                    <dd class="mt-1 text-sm text-gray-600">{{ number_format($attendancePercentage["percentage".str_replace(['/', ' '], '', $status)], 2) }}%</dd>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+
+                        {{-- <!-- Attendance Chart -->
+                        <div class="mt-8 bg-white overflow-hidden shadow rounded-lg">
+                            <div class="px-4 py-5 sm:p-6">
+                                <h3 class="text-lg font-medium leading-6 text-gray-900 mb-4">Grafik Kehadiran</h3>
+                                <canvas id="attendanceChart" class="w-full h-64"></canvas>
+                            </div>
+                        </div> --}}
+
+                        <!-- Attendance Table -->
+                        <div class="w-full overflow-hidden rounded-lg shadow-xs">
+                            <div class="w-full overflow-x-auto">
+                                <table class="w-full whitespace-no-wrap">
+                                    <thead>
+                                        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                            <th class="px-6 py-4">Tanggal</th>
+                                            <th class="px-6 py-4">Status</th>
+                                            <th class="px-6 py-4">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                                        @foreach ($present as $absensi)
+                                        <tr class="text-gray-700 dark:text-gray-400 text-center">
+                                            <td class="px-4 py-3 text-sm">{{ $absensi->date }}</td>
+                                            <td class="px-4 py-3 text-sm">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                                                {{ $absensi->status == 'Hadir' ? 'bg-green-100 text-green-800' :
+                                                ($absensi->status == 'Sakit' || $absensi->status == 'Izin' ? 'bg-yellow-100 text-yellow-800' :
+                                                ($absensi->status == 'Alfa' ? 'bg-red-100 text-red-800' :
+                                                ($absensi->status == 'Terlambat' ? 'bg-orange-100 text-orange-800' : 'bg-blue-100 text-blue-800'))) }}">
+                                                    {{ $absensi->status }}
+                                                </span>
+                                            </td>
+                                            <td class="px-4 py-3">
+                                                <button data-modal-target="default-modal-{{ $absensi->id_absensi }}"
+                                                    data-modal-toggle="default-modal-{{ $absensi->id_absensi }}"
+                                                    class="bg-slate-700 text-white p-2 rounded-md">
+                                                    Detail
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <!-- Modal -->
+                                        <div id="default-modal-{{ $absensi->id_absensi }}" tabindex="-1" aria-hidden="true"
+                                            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                                            <div class="relative p-4 w-full max-w-md max-h-full">
+                                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700 px-7 pb-7">
+                                                    <div
+                                                        class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                                                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Detail Absen</h3>
+                                                        <button type="button"
+                                                            data-modal-hide="default-modal-{{ $absensi->id_absensi }}"
+                                                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                                fill="none" viewBox="0 0 14 14">
+                                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                                    stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                                            </svg>
+                                                            <span class="sr-only">Close modal</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="pt-3">
+                                                        <p><strong>Keterangan:</strong> {{ $absensi->status }}</p>
+                                                        <p><strong>Tanggal Absen:</strong> {{ $absensi->date }}</p>
+                                                        <p><strong>Jam Masuk:</strong> {{ $absensi->jam_masuk }}</p>
+                                                        <p><strong>Jam Pulang:</strong> {{ $absensi->jam_pulang }}</p>
+                                                        @if ($absensi->menit_keterlambatan > 0)
+                                                        <p><strong>Keterlambatan:</strong> {{ $absensi->menit_keterlambatan }} Menit</p>
+                                                        @endif
+                                                        @if ($absensi->status == 'Hadir' || $absensi->status == 'Terlambat' || $absensi->status == 'TAP')
+                                                        <div class="grid grid-cols-2 gap-2">
+                                                            <p><strong>Foto Masuk:</strong>
+                                                                @if ($absensi->photo_in > 0)
+                                                                <img src="{{ asset('storage/uploads/absensi/' . $absensi->photo_in) }}" alt="">
+                                                                @else
+                                                                Data Tidak Tersedia
+                                                                @endif
+                                                            </p>
+                                                            <p><strong>Foto Pulang:</strong>
+                                                                @if ($absensi->photo_out > 0)
+                                                                <img src="{{ asset('storage/uploads/absensi/' . $absensi->photo_out) }}" alt="">
+                                                                @else
+                                                                Data Tidak Tersedia
+                                                                @endif
+                                                            </p>
+                                                        </div>
+                                                        @endif
+                                                        @if ($absensi->status == 'Sakit' || $absensi->status == 'Izin')
+                                                        <p><strong>Foto Keterangan:</strong>
+                                                            @if ($absensi->photo_in > 0)
+                                                            <img src="{{ asset('storage/uploads/absensi/' . $absensi->photo_in) }}" alt="">
+                                                            @else
+                                                            Data Tidak Tersedia
+                                                            @endif
+                                                        </p>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+                        <!-- Custom Pagination -->
+                        <div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+                            <div class="flex flex-1 justify-between sm:hidden">
+                                {{ $present->previousPageUrl() ? '<a href="' . $present->previousPageUrl() . '" class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Previous</a>' : '' }}
+                                {{ $present->nextPageUrl() ? '<a href="' . $present->nextPageUrl() . '" class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Next</a>' : '' }}
+                            </div>
+                            <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-700">
+                                        Showing
+                                        <span class="font-medium">{{ $present->firstItem() }}</span>
+                                        to
+                                        <span class="font-medium">{{ $present->lastItem() }}</span>
+                                        of
+                                        <span clasds="font-medium">{{ $present->total() }}</span>
+                                        results
+                                    </p>
+                                </div>
+                                <div>
+                                    <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+                                        @if ($present->onFirstPage())
+                                        <span class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300">
+                                            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd" />
+                                            </svg>
+                                        </span>
+                                        @else
+                                        <a href="{{ $present->previousPageUrl() }}" class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20">
+                                            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd" />
+                                            </svg>
+                                        </a>
+                                        @endif
+                                        <!-- Show numbered pages -->
+                                        @foreach ($present->links()->elements as $element)
+                                            @if (is_string($element))
+                                                <span class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300">{{ $element }}</span>
+                                            @endif
+
+                                            @if (is_array($element))
+                                                @foreach ($element as $page => $url)
+                                                    @if ($page == $present->currentPage())
+                                                        <span aria-current="page" class="relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white">{{ $page }}</span>
+                                                    @else
+                                                        <a href="{{ $url }}" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">{{ $page }}</a>
+                                                    @endif
+                                                @endforeach
+                                            @endif
+                                        @endforeach
+                                        @if ($present->hasMorePages())
+                                        <a href="{{ $present->nextPageUrl() }}" class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                                            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                                            </svg>
+                                        </a>
+                                        @else
+                                        <span class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300">
+                                            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                                            </svg>
+                                        </span>
+                                        @endif
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- <div>
+                            {{ $present->links() }} <!-- Pagination links with the date filters -->
+                        </div>                         --}}
                     </div>
-                </div>
-            </section>
-            
+                </main>
+            </div>
+
             <script>
-                document.querySelectorAll('.tab-button').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const target = this.dataset.target;
-            
-                        // Menghapus kelas 'active' dari semua tab button
-                        document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-                        // Menambahkan kelas 'active' ke tab button yang dipilih
-                        this.classList.add('active');
-            
-                        // Menyembunyikan semua tab pane
-                        document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.add('hidden'));
-                        // Menampilkan tab pane yang sesuai
-                        document.querySelector(target).classList.remove('hidden');
-                    });
+                var ctx = document.getElementById('attendanceChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: {!! json_encode(array_keys($attendanceCounts)) !!},
+                        datasets: [{
+                            data: {!! json_encode(array_values($attendanceCounts)) !!},
+                            backgroundColor: [
+                                'rgba(59, 130, 246, 0.8)', // blue-500
+                                'rgba(16, 185, 129, 0.8)', // green-500
+                                'rgba(245, 158, 11, 0.8)', // yellow-500
+                                'rgba(239, 68, 68, 0.8)',  // red-500
+                                'rgba(139, 92, 246, 0.8)'  // purple-500
+                            ],
+                            borderColor: [
+                                'rgba(59, 130, 246, 1)',
+                                'rgba(16, 185, 129, 1)',
+                                'rgba(245, 158, 11, 1)',
+                                'rgba(239, 68, 68, 1)',
+                                'rgba(139, 92, 246, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                                text: 'Distribusi Kehadiran'
+                            }
+                        }
+                    }
                 });
             </script>
-            
-            
 
-
-
-              </div>
-            </div>
-          </div>
-        </main>
       </div>
     </div>
   </body>

@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('waktu_absen', function (Blueprint $table) {
             $table->increments('id_waktu_absen');
-            $table->time('jam_masuk');
-            $table->time('batas_jam_masuk');
-            $table->time('jam_pulang');
-            $table->time('batas_jam_pulang');
-            $table->integer('toleransi_waktu');
+            $table->time('mulai_absen');
+            $table->time('batas_absen');
+            $table->time('mulai_pulang');
+            $table->time('batas_pulang');
+            $table->time('toleransi');
         });
     }
 

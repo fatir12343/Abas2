@@ -483,111 +483,93 @@
           </div>
         </header>
         <main class="h-full overflow-y-auto">
-          <div class="container px-6 mx-auto grid">
-            <h2
-              class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
-            >
-            <strong style="margin-left: 5px; font-size: 30px;">Selamat Datang {{ Auth::user()->name }}!!</strong>
-            </h2>
-            <!-- CTA -->
-            {{-- <a
-              class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
-              href="https://github.com/estevanmaito/windmill-dashboard"
-            >
-              <div class="flex items-center">
-                <svg
-                  class="w-5 h-5 mr-2"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                  ></path>
-                </svg>
-                <span>Star this project on GitHub</span>
-              </div>
-              <span>View more &RightArrow;</span>
-            </a> --}}
-            <!-- Cards -->
+            <div class="container px-6 mx-auto grid">
+                <section class="bg-gradient-to-r from-blue-500 to-purple-500 py-10 text-white">
+                    <div class="max-w-7xl mx-auto text-center">
+                        <h1 class="text-4xl font-bold">Selamat Datang, {{Auth::user()->name}}</h1>
+                        <p class="mt-4 text-lg">Lihat statistik kehadiran siswa di kelas Anda</p>
+                    </div>
+                </section>
 
-            <!-- New Table -->
-            <div class="container mx-auto p-6">
-                <h2 class="text-2xl font-bold mb-6">Settings</h2>
+                <!-- Settings Section -->
+                <div class="container mx-auto p-6">
+                    {{-- <h2 class="text-2xl font-bold mb-6">Settings</h2> --}}
 
-                <!-- School Location Settings -->
-                <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                    <h3 class="text-xl font-semibold mb-4">Lokasi Sekolah</h3>
+                    <!-- School Location Settings -->
+                    <div class="bg-white dark:bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-200">Lokasi Sekolah</h3>
 
-                    <!-- Peta -->
-                    <div id="map" class="w-full h-64 mb-4"></div>
+                        <!-- Peta -->
+                        <div id="map" class="w-full h-64 mb-4"></div>
 
-                    <form action="{{ route('updatelokasi') }}" method="POST">
-                        @csrf
-                        <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="titik_koordinat">
-                                Koordinat Sekolah
-                            </label>
-                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                   id="titik_koordinat" type="text" name="titik_koordinat" value="{{ $lok_sekolah->titik_koordinat ?? '' }}"
-                                   placeholder="Latitude, Longitude">
-                        </div>
-                        <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="radius">
-                                Radius (meters)
-                            </label>
-                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                   id="radius" type="number" name="radius" value="{{ $lok_sekolah->radius ?? '' }}"
-                                   placeholder="Radius in meters">
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        <form action="{{ route('updatelokasi') }}" method="POST">
+                            @csrf
+                            <div class="mb-4">
+                                <label class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2" for="titik_koordinat">
+                                    Koordinat Sekolah
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                                    id="titik_koordinat" type="text" name="titik_koordinat" value="{{ $lok_sekolah->titik_koordinat ?? '' }}"
+                                    placeholder="Latitude, Longitude">
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2" for="radius">
+                                    Radius (meters)
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                                    id="radius" type="number" name="radius" value="{{ $lok_sekolah->radius ?? '' }}"
+                                    placeholder="Radius in meters">
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                                     type="submit">
-                                Update Location
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                                    Update Location
+                                </button>
+                            </div>
+                        </form>
+                    </div>
 
-                <!-- Time Settings -->
-                <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                    <h3 class="text-xl font-semibold mb-4">Attendance Time</h3>
-                    <form action="{{ route('updatewaktu') }}" method="POST">
-                        @csrf
-                        <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="jam_masuk">
-                                Jam Masuk
-                            </label>
-                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                   id="jam_masuk" type="time" name="jam_masuk" value="{{ $waktu->jam_masuk ?? '' }}">
-                        </div>
-                        <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="jam_pulang">
-                               Jam Pulang
-                            </label>
-                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                   id="jam_pulang" type="time" name="jam_pulang" value="{{ $waktu->jam_pulang ?? '' }}">
-                        </div>
-                        <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="batas_jam_masuk">
-                                Batas Masuk
-                            </label>
-                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                   id="batas_jam_masuk" type="time" name="batas_jam_masuk" value="{{ $waktu->batas_jam_masuk ?? '' }}">
-                        </div>
-                        <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="batas_jam_pulang">
-                                Batas Pulang
-                            </label>
-                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                   id="batas_jam_pulang" type="time" name="batas_jam_pulang" value="{{ $waktu->batas_jam_pulang ?? '' }}">
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    <!-- Time Settings -->
+                    <div class="bg-white dark:bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-200">Attendance Time</h3>
+                        <form action="{{ route('updatewaktu') }}" method="POST">
+                            @csrf
+                            <div class="mb-4">
+                                <label class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2" for="mulai_absen">
+                                    Mulai Absen
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                                    id="mulai_absen" type="time" name="mulai_absen" value="{{ $waktu->mulai_absen ?? '' }}">
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2" for="mulai_pulang">
+                                    Mulai Pulang
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                                    id="mulai_pulang" type="time" name="mulai_pulang" value="{{ $waktu->mulai_pulang ?? '' }}">
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2" for="batas_absen">
+                                    Batas Absen
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                                    id="batas_absen" type="time" name="batas_absen" value="{{ $waktu->batas_absen ?? '' }}">
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2" for="batas_pulang">
+                                    Batas Pulang
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                                    id="batas_pulang" type="time" name="batas_pulang" value="{{ $waktu->batas_pulang ?? '' }}">
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                                     type="submit">
-                                Update Time
-                            </button>
-                        </div>
-                    </form>
+                                    Update Time
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
 
@@ -619,8 +601,8 @@
                     marker.bindPopup("Lokasi Sekolah").openPopup();
                 });
             </script>
-          </div>
         </main>
+
       </div>
     </div>
   </body>

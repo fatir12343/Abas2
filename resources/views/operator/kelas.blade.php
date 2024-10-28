@@ -417,7 +417,7 @@
                                             <th class="px-4 py-3">ID</th>
                                             <th class="px-4 py-3">Jurusan</th>
                                             <th class="px-4 py-3">Nomor Kelas</th>
-                                            <th class="px-4 py-3">NUPTK</th>
+                                            <th class="px-4 py-3">NIP</th>
                                             <th class="px-4 py-3">Tingkat</th>
                                             <th class="px-4 py-3">Aksi</th>
                                         </tr>
@@ -428,7 +428,7 @@
                                             <td class="px-4 py-3 text-sm">{{ $item->id_kelas }}</td>
                                             <td class="px-4 py-3 text-sm">{{ $item->jurusan->id_jurusan }}</td>
                                             <td class="px-4 py-3 text-sm">{{ $item->nomor_kelas }}</td>
-                                            <td class="px-4 py-3 text-sm">{{ $item->nuptk }}</td>
+                                            <td class="px-4 py-3 text-sm">{{ $item->nip }}</td>
                                             <td class="px-4 py-3 text-sm">{{ $item->tingkat }}</td>
                                             <td class="px-4 py-3 text-sm">
                                                 <div class="flex items-center space-x-4 text-sm">
@@ -553,10 +553,10 @@
                                                 </div>
 
                                                 <div class="mb-4">
-                                                    <label for="NUPTK" class="block text-sm font-medium text-gray-700">NUPTK</label>
-                                                    <select id="NUPTK" name="nuptk" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
+                                                    <label for="nip" class="block text-sm font-medium text-gray-700">NUPTK</label>
+                                                    <select id="nip" name="nip" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
                                                         @foreach ($walikelas as $wali)
-                                                            <option value="{{ $wali->nuptk }}">{{ $wali->nuptk}}</option>
+                                                            <option value="{{ $wali->nip }}">{{ $wali->nip}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -610,10 +610,10 @@
 
                                                 <!-- NUPTK -->
                                                 <div class="mb-4">
-                                                    <label for="edit_NUPTK_{{$item->id_kelas}}" class="block text-sm font-medium text-gray-700">NUPTK</label>
-                                                    <select id="NUPTK" name="nuptk" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
+                                                    <label for="edit_nip_{{$item->id_kelas}}" class="block text-sm font-medium text-gray-700">NUPTK</label>
+                                                    <select id="nip" name="nip" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
                                                         @foreach ($walikelas as $wali)
-                                                            <option value="{{ $wali->nuptk }}">{{ $wali->nuptk}}</option>
+                                                            <option value="{{ $wali->nip }}">{{ $wali->nip}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -732,8 +732,7 @@
                             document.getElementById('edit-cancel-btn').addEventListener('click', () => hideModal('edit-kelas-modal'));
                         </script>
                     </div>
-                    <div
-                        class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
+                    <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
                         <span class="flex items-center col-span-3">
                             Showing 21-30 of 100
                         </span>

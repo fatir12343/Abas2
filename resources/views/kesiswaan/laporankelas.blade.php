@@ -24,7 +24,7 @@
               ></span>
               <a
                 class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                href="{{route('walis')}}"
+                href="{{route('kesiswaan')}}"
               >
                 <svg
                   class="w-5 h-5"
@@ -45,7 +45,6 @@
             </li>
           </ul>
           <ul>
-
             <li class="relative px-6 py-3">
               <button
                 class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
@@ -67,7 +66,7 @@
                       d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"
                     ></path>
                   </svg>
-                  <span class="ml-4">Laporan</span>
+                  <span class="ml-4">Laporan Absensi</span>
                 </span>
                 <svg
                   class="w-4 h-4"
@@ -96,7 +95,7 @@
                   <li
                     class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                   >
-                    <a class="w-full" href="{{route('laporan-walsis')}}">Laporan siswa</a>
+                    <a class="w-full" href="{{route('kesiswaan.laporankelas')}}">Laporan Kelas</a>
                   </li>
                 </ul>
               </template>
@@ -141,7 +140,7 @@
             class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
             href="#"
           >
-           ABAS
+            ABAS
           </a>
           <ul class="mt-6">
             <li class="relative px-6 py-3">
@@ -151,7 +150,7 @@
               ></span>
               <a
                 class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                href="{{route('walis')}}"
+                href="{{route('kesiswaan')}}"
               >
                 <svg
                   class="w-5 h-5"
@@ -194,7 +193,7 @@
                       d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"
                     ></path>
                   </svg>
-                  <span class="ml-4">Laporan</span>
+                  <span class="ml-4">Laporan Absensi</span>
                 </span>
                 <svg
                   class="w-4 h-4"
@@ -223,9 +222,9 @@
                   <li
                     class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                   >
-                    <a class="w-full" href="{{route('laporan-walsis')}}">Laporan siswa</a>
+                    <a class="w-full" href="{{route('kesiswaan.laporankelas')}}">Laporan Kelas</a>
                   </li>
-                </ul>
+
               </template>
             </li>
           </ul>
@@ -426,7 +425,7 @@
                     <li class="flex">
                       <a
                         class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                        href="{{route('profile')}}"
+                        href="#"
                       >
                         <svg
                           class="w-4 h-4 mr-3"
@@ -502,172 +501,148 @@
         </header>
         <main class="h-full overflow-y-auto">
           <div class="container px-6 mx-auto grid">
-            <section class="bg-gradient-to-r from-blue-500 to-purple-500 py-10 text-white">
-                <div class="max-w-7xl mx-auto text-center">
-                    <h1 class="text-4xl font-bold">Selamat Datang, {{Auth::user()->name}}</h1>
-                    <p class="mt-4 text-lg">Lihat statistik kehadiran anak anda</p>
-                </div>
-            </section>
-            <section class="attendance py-4">
-                <div class="container mx-auto">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        @foreach ($dataAbsensiAnak as $data)
-                            <div class="bg-white rounded-lg shadow-lg">
-                                <div class="bg-blue-600 text-white rounded-t-lg p-4">
-                                    <h4 class="mb-0">Rekap Kehadiran {{ $data['nama'] }}</h4>
-                                </div>
-                                <div class="p-4">
-                                    <ul class="flex space-x-2 mb-3" role="tablist">
-                                        <li role="presentation">
-                                            <button class="tab-button active" data-target="#current-year{{ $data['nis'] }}" type="button">Tahun Ini</button>
-                                        </li>
-                                        <li role="presentation">
-                                            <button class="tab-button" data-target="#current-month{{ $data['nis'] }}" type="button">Bulan Ini</button>
-                                        </li>
-                                        <li role="presentation">
-                                            <button class="tab-button" data-target="#previous-month{{ $data['nis'] }}" type="button">Bulan Sebelumnya</button>
-                                        </li>
-                                    </ul>
-                                    <div class="tab-content">
-                                        <div class="tab-pane active" id="current-month{{ $data['nis'] }}">
-                                            <div class="progress mb-3 bg-gray-200 rounded">
-                                                <div class="progress-bar bg-green-500" role="progressbar"
-                                                    style="width: {{ $data['PersentaseBulanIni'] }}%"
-                                                    aria-valuenow="{{ $data['PersentaseBulanIni'] }}" aria-valuemin="0"
-                                                    aria-valuemax="100">
-                                                    {{ $data['PersentaseBulanIni'] }}%
-                                                </div>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-check-circle text-green-600 mr-2"></i>
-                                                <span>Hadir: {{ $data['BulanIni']['Hadir'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-user-md text-blue-500 mr-2"></i>
-                                                <span>Sakit/Izin: {{ $data['BulanIni']['Sakit/Izin'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-clock text-yellow-500 mr-2"></i>
-                                                <span>Terlambat: {{ $data['BulanIni']['Terlambat'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-times-circle text-red-500 mr-2"></i>
-                                                <span>Alfa: {{ $data['BulanIni']['Alfa'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-bell text-blue-600 mr-2"></i>
-                                                <span>TAP: {{ $data['BulanIni']['TAP'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-user-clock text-gray-500 mr-2"></i>
-                                                <span>Total Keterlambatan: {{ $data['BulanIni']['late'] }} Menit</span>
-                                            </div>
-                                        </div>
-            
-                                        <!-- Konten untuk Bulan Lalu -->
-                                        <div class="tab-pane hidden" id="previous-month{{ $data['nis'] }}">
-                                            <div class="progress mb-3 bg-gray-200 rounded">
-                                                <div class="progress-bar bg-yellow-500" role="progressbar"
-                                                    style="width: {{ $data['PersentaseBulanLalu'] }}%"
-                                                    aria-valuenow="{{ $data['PersentaseBulanLalu'] }}" aria-valuemin="0"
-                                                    aria-valuemax="100">
-                                                    {{ $data['PersentaseBulanLalu'] }}%
-                                                </div>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-check-circle text-green-600 mr-2"></i>
-                                                <span>Hadir: {{ $data['BulanLalu']['Hadir'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-user-md text-blue-500 mr-2"></i>
-                                                <span>Sakit/Izin: {{ $data['BulanLalu']['Sakit/Izin'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-clock text-yellow-500 mr-2"></i>
-                                                <span>Terlambat: {{ $data['BulanLalu']['Terlambat'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-times-circle text-red-500 mr-2"></i>
-                                                <span>Alfa: {{ $data['BulanLalu']['Alfa'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-bell text-blue-600 mr-2"></i>
-                                                <span>TAP: {{ $data['BulanLalu']['TAP'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-user-clock text-gray-500 mr-2"></i>
-                                                <span>Total Keterlambatan: {{ $data['BulanLalu']['late'] }} Menit</span>
-                                            </div>
-                                        </div>
-            
-                                        <!-- Konten untuk Tahun Ini -->
-                                        <div class="tab-pane hidden" id="current-year{{ $data['nis'] }}">
-                                            <div class="progress mb-3 bg-gray-200 rounded">
-                                                <div class="progress-bar bg-blue-500" role="progressbar"
-                                                    style="width: {{ $data['PersentaseTahunIni'] }}%"
-                                                    aria-valuenow="{{ $data['PersentaseTahunIni'] }}" aria-valuemin="0"
-                                                    aria-valuemax="100">
-                                                    {{ $data['PersentaseTahunIni'] }}%
-                                                </div>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-check-circle text-green-600 mr-2"></i>
-                                                <span>Hadir: {{ $data['TahunIni']['Hadir'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-user-md text-blue-500 mr-2"></i>
-                                                <span>Sakit/Izin: {{ $data['TahunIni']['Sakit/Izin'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-clock text-yellow-500 mr-2"></i>
-                                                <span>Terlambat: {{ $data['TahunIni']['Terlambat'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-times-circle text-red-500 mr-2"></i>
-                                                <span>Alfa: {{ $data['TahunIni']['Alfa'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-bell text-blue-600 mr-2"></i>
-                                                <span>TAP: {{ $data['TahunIni']['TAP'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-user-clock text-gray-500 mr-2"></i>
-                                                <span>Total Keterlambatan: {{ $data['TahunIni']['late'] }} Menit</span>
-                                            </div>
-                                        </div>
+            <h2
+              class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
+            >
+              Laporan Absensi Kelas
+            </h2>
+            <!-- CTA -->
+            {{-- <a
+              class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
+              href="https://github.com/estevanmaito/windmill-dashboard"
+            >
+              <div class="flex items-center">
+                <svg
+                  class="w-5 h-5 mr-2"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                  ></path>
+                </svg>
+                <span>Star this project on GitHub</span>
+              </div>
+              <span>View more &RightArrow;</span>
+            </a> --}}
+            <!-- Cards -->
+            <div class="min-h-full">
+                <main>
+                    <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+                        <!-- Filter Kelas dan Tanggal -->
+                        <form action="{{ url('laporan-kelas') }}" method="GET" class="mb-8 bg-white shadow sm:rounded-lg">
+                            <div class="px-4 py-5 sm:p-6">
+                                <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-4">
+                                    {{-- <div class="form-group">
+                                        <label for="kelas">Pilih Kelas</label>
+                                        <select name="kelas" id="kelas" class="form-control">
+                                            <option value="">Semua Kelas</option>
+                                            @foreach ($kelasList as $kelas)
+                                                <option value="{{ $kelas->id }}" {{ request('kelas') == $kelas->id ? 'selected' : '' }}>
+                                                    {{ $kelas->tingkat }} {{ $kelas->jurusan->nama_jurusan }} {{ $kelas->nomor_kelas }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div> --}}
+                                    <div>
+                                        <label for="start" class="block text-sm font-medium text-gray-700">Tanggal Mulai:</label>
+                                        <input type="date" id="start" name="start" value="{{ $startDate }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                    </div>
+                                    <div>
+                                        <label for="end" class="block text-sm font-medium text-gray-700">Tanggal Akhir:</label>
+                                        <input type="date" id="end" name="end" value="{{ $endDate }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                    </div>
+                                    <div class="flex items-end space-x-2">
+                                        <button type="submit" class="inline-flex justify-center rounded-md bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 w-full">Filter</button>
+                                        {{-- <a href="{{ url('laporan-kelas/export') }}" class="inline-flex justify-center rounded-md bg-green-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 w-full">Ekspor</a> --}}
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
-                    </div>
-                </div>
-            </section>
+                        </form>
             
-            <script>
-                document.querySelectorAll('.tab-button').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const target = this.dataset.target;
+                        <!-- Rata-rata Kehadiran -->
+                        <div class="bg-white shadow-md rounded-lg p-6 mb-8">
+                            <h2 class="text-2xl font-semibold mb-4 text-gray-800">Rata-Rata Kehadiran Per Kelas</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                @foreach ($kelasData as $kelas)
+                                    <div class="bg-gray-50 rounded-lg p-4">
+                                        <h3 class="text-lg font-semibold mb-2 text-gray-700">{{ $kelas['kelas'] }}</h3>
+                                        <div class="grid grid-cols-1 gap-2">
+                                            @foreach(['Hadir', 'Sakit/Izin', 'Alfa', 'Terlambat', 'TAP'] as $status)
+                                                <div>
+                                                    <div class="flex items-center mb-1">
+                                                        <span class="w-24 text-gray-600 font-medium">{{ $status }}:</span>
+                                                        <div class="w-full bg-gray-200 rounded-full h-2.5 mx-2">
+                                                            <div class="bg-blue-600 h-2.5 rounded-full" style="width: {{ $kelas['percentage' . ($status === 'Sakit/Izin' ? 'SakitIzin' : $status)] }}%"></div>
+                                                        </div>
+                                                        <span class="text-sm font-medium text-gray-500">{{ number_format($kelas['percentage' . ($status === 'Sakit/Izin' ? 'SakitIzin' : $status)], 1) }}%</span>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
             
-                        // Menghapus kelas 'active' dari semua tab button
-                        document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-                        // Menambahkan kelas 'active' ke tab button yang dipilih
-                        this.classList.add('active');
+                        <!-- Tabel Kelas -->
+                        <div class="bg-white shadow sm:rounded-lg overflow-hidden">
+                            <div class="px-4 py-5 sm:px-6">
+                                <h3 class="text-lg font-medium leading-6 text-gray-900">Rekap Kehadiran Kelas</h3>
+                            </div>
+                            <div class="px-4 py-5 sm:p-6">
+                                <div class="overflow-x-auto">
+                                    <table class="min-w-full divide-y divide-gray-200">
+                                        <thead class="bg-gray-50">
+                                            <tr>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kelas</th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Absensi</th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hadir</th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sakit/Izin</th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Alfa</th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Terlambat</th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TAP</th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">% Hadir</th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Detail</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-white divide-y divide-gray-200">
+                                            @foreach($kelasData as $kelas)
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $kelas['kelas'] }}</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $kelas['total'] }}</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $kelas['countHadir'] }}</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $kelas['countSakitIzin'] }}</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $kelas['countAlfa'] }}</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $kelas['countTerlambat'] }}</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $kelas['countTAP'] }}</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ number_format($kelas['percentageHadir'], 2) }}%</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                        <form action="{{ route('kesiswaan.laporansiswa', ['kelas_id' => $kelas['kelas_id']]) }}" method="GET">
+                                                            <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Lihat Detail</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
             
-                        // Menyembunyikan semua tab pane
-                        document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.add('hidden'));
-                        // Menampilkan tab pane yang sesuai
-                        document.querySelector(target).classList.remove('hidden');
-                    });
-                });
-            </script>
-            
-            
-
-
-
-              </div>
+                        <!-- Pagination -->
+                        <div class="mt-4 flex justify-center">
+                            {{ $kelasData->links() }}
+                        </div>
+                </main>
             </div>
-          </div>
+            
+
+
+
+
+        </div>
+    </div>
         </main>
       </div>
     </div>

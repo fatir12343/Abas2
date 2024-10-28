@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Imports\KelasImport;
+use App\Imports\SiswaImport;
+use App\Imports\WalikelasImport;
+use App\Imports\WalisiswaImport;
 use App\Models\koordinat_sekolah;
 use App\Models\waktu_absen;
 use App\Models\wali_siswa;
@@ -20,7 +23,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Maatwebsite\Excel\Facades\Excel;
 
-class operator extends Controller
+class OperatorController extends Controller
 {
     public function index()
     {
@@ -29,8 +32,10 @@ class operator extends Controller
     }
     public function wali(): View
     {
-        $waliKelas =wali_kelas::all();
-        return view('operator.wali', compact('waliKelas'));
+
+        $jenis_Kelamin = ['laki-laki','Perempuan'];
+        $wali = wali_kelas::all();
+        return view('operator.wali', compact('wali','jenis_Kelamin'));
     }
 
 
@@ -39,40 +44,73 @@ class operator extends Controller
         return view('operator.create_wali');
     }
 
+    public function importwalikelas(Request $request)
+    {
+        $request->validate([
+            'importFile' => 'required|mimes:xlsx,csv',
+        ]);
+
+        Excel::import(new WalikelasImport, $request->file('importFile'));
+
+        return redirect()->back()->with('success', 'Data Kelas Berhasil di import.');
+    }
+
     public function storeWali(Request $request)
     {
 
-        // Membuat entitas User baru
-        $user = user::create([
-            'name' => $request->user->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'wali',
-        ]);
+        // $request->validate([
+        //     'name' => 'required|string|max:255',
+        //     'email' => 'required|string|email|max:255|unique:users',
+        //     'password' => 'nullable|string|min:8', // Password bisa optional, tapi jika diisi minimal 8 karakter
+        //     'nuptk' => 'required|string|max:255|unique:wali_kelas',
+        //     'jenis_kelamin' => 'required|string|max:1',
+        //     'nip' => 'nullable|string|max:255',
+        // ]);
+        // dd($request->all());
+        if (strlen($request->password) > 0) {
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => password_hash($request->password, PASSWORD_DEFAULT),
+                'role' => 'wali'
+            ]);
 
-        // Membuat entitas WaliKelas baru yang terhubung dengan User
-        wali_kelas::create([
-            'nuptk' => $request->nuptk,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'nip' => $request->nip,
-            'id_user' => $user->id,
-        ]);
+            Wali_Kelas::insert([
+                'nip' => $request->nip,
+                'id_user' => $user->id,
+                'jenis_kelamin' => $request->jenis_kelamin,
+                'nuptk' => $request->nuptk,
+            ]);
+        } else {
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => password_hash($request->password, PASSWORD_DEFAULT),
+                'role' => 'wali'
+            ]);
 
+            Wali_Kelas::insert([
+                'nip' => $request->nip,
+                'id_user' => $user->id,
+                'jenis_kelamin' => $request->jenis_kelamin,
+                'nuptk' => $request->nuptk,
+            ]);
+        }
         return redirect()->back()->with('success', 'Wali Kelas berhasil ditambahkan.');
     }
 
-    public function editWali(string $nuptk): View
+    public function editWali(string $nip): View
     {
-        $waliKelas =wali_kelas::findOrFail($nuptk);
+        $waliKelas =wali_kelas::findOrFail(id: $nip);
         return view('operator.edit_wali', compact('waliKelas'));
     }
 
     public function updateWali(Request $request)
     {
         DB::table('wali_kelas')->where('id_user', $request->id_user)->update([
-            'nuptk' => $request->nuptk,
-            'jenis_kelamin' => $request->jenis_kelamin,
             'nip' => $request->nip,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'nuptk' => $request->nuptk,
         ]);
 
         DB::table('users')->where('id', $request->id)->update([
@@ -96,7 +134,7 @@ class operator extends Controller
 
     public function kelas()
     {
-        $kelas = Kelas::with('walikelas')->get();
+        $kelas = Kelas::with('walikelas')->paginate(10);
         $jurusan = Jurusan::all();
         $walikelas = Wali_Kelas::all();
         return view('Operator.kelas', compact('kelas', 'jurusan', 'walikelas'));
@@ -124,7 +162,7 @@ class operator extends Controller
         Kelas::create([
             'id_jurusan' => $request->input('id_jurusan'),
             'nomor_kelas' => $request->input('nomor_kelas'),
-            'nuptk' => $request->input('nuptk'),
+            'nip' => $request->input('nip'),
             'tingkat' => $request->input('tingkat'),
             // 'jumlah_siswa' => $request->jumlah_siswa,
         ]);
@@ -150,7 +188,7 @@ class operator extends Controller
         DB::table('kelas')->where('id_kelas', $id_kelas)->update([
             'id_jurusan' => $request->id_jurusan,
             'nomor_kelas' => $request->nomor_kelas,
-            'nuptk' => $request->nuptk,
+            'nip' => $request->nip,
             'tingkat' => $request->tingkat,
             // 'jumlah_siswa' => $request->jumlah_siswa,
         ]);
@@ -169,14 +207,15 @@ class operator extends Controller
 
     public function jurusan()
     {
-        $jurusan = Jurusan::all();
+        $jurusan = jurusan::paginate(5);
+        // $jurusan = Jurusan::all();
         return view('operator.jurusan', compact('jurusan'));
     }
 
     public function storejurusan(Request $request)
     {
         // dd($request->all());
-        Jurusan::create([
+        Jurusan::insert([
             'id_jurusan' => $request->id_jurusan,
             'nama_jurusan' => $request->nama_jurusan,
         ]);
@@ -216,6 +255,16 @@ class operator extends Controller
         return view('operator.siswa', compact( 'siswa'));
     }
 
+    public function importsiswa(Request $request)
+    {
+        $request->validate([
+            'importFile' => 'required|mimes:xlsx,csv',
+        ]);
+
+        Excel::import(new SiswaImport, $request->file('importFile'));
+
+        return redirect()->back()->with('success', 'Data Kelas Berhasil di import.');
+    }
 
     public function storesiswa(Request $request)
 {
@@ -309,65 +358,112 @@ class operator extends Controller
         return redirect()->back()->with('success', 'Data Berhasil Dihapus!');
     }
 
-    public function walis()
+    public function walis(Request $request)
     {
-        $walis = wali_siswa::all(); // Mengambil semua data wali
+        $search = $request->input('search');
+
+        // Query untuk mengambil data wali berdasarkan pencarian
+        $walis = wali_siswa::with('user')
+                    ->whereHas('user', function ($query) use ($search) {
+                        if ($search) {
+                            $query->where('name', 'like', '%' . $search . '%')
+                                  ->orWhere('email', 'like', '%' . $search . '%');
+                        }
+                    })
+                    ->orWhere('nik', 'like', '%' . $search . '%')
+                    ->orWhere('alamat', 'like', '%' . $search . '%')
+                    ->get();
+
+                    $walis = wali_siswa ::paginate(4);
         return view('operator.walis', compact('walis'));
     }
 
-    // Simpan data wali baru
-    public function storewalis(Request $request)
+    public function importwalisiswa(Request $request)
     {
-
-        $nik = $request->input('nik');
-        $id_user = $request->input('id_user');
-        $jenis_kelamin = $request->input('jenis_kelamin');
-
-        // Validasi manual untuk jenis_kelamin (harus 'L' atau 'P')
-        if (!in_array($jenis_kelamin, ['Laki-laki', 'Perempuan'])) {
-            return redirect()->back()->with('error', 'Jenis kelamin tidak valid. Harus L atau P.');
-        }
-
-        // Simpan data ke database jika valid
-        wali_siswa::create([
-            'nik' => $nik,
-            'id_user' => $id_user,
-            'jenis_kelamin' => $jenis_kelamin,
+        $request->validate([
+            'importFile' => 'required|mimes:xlsx,csv',
         ]);
 
+        Excel::import(new WalisiswaImport, $request->file('importFile'));
 
-        // Redirect dengan notifikasi
-        return redirect()->back()->with('success', 'Data wali berhasil ditambahkan');
+        return redirect()->back()->with('success', 'Data Kelas Berhasil di import.');
+    }
+
+    // Simpan data wali baru
+    public function storewalis(Request $r)
+    {
+        if(strlen($r->password) > 0)
+        {
+            $u = User::create([
+                'name' => $r->name,
+                'password' => password_hash($r->password, 'default_password'),
+                'email' => $r->email,
+                'role' => 'walis'
+            ]);
+        }
+        else
+        {
+            $u = User::create([
+                'name' => $r->name,
+                'email' => $r->email,
+                'password' => password_hash($r->password, PASSWORD_DEFAULT),
+                'role' => 'walis'
+            ]);
+        }
+
+
+        $w = wali_siswa::insert([
+            'nik' => $r->nik,
+            'id_user' => $u->id,
+            'jenis_kelamin' => $r->jenis_kelamin,
+            'alamat' => $r->alamat
+        ]);
+
+        if ($u && $w)
+        {
+        return redirect()->back()->with('success', 'Data Berhasil Ditambahkan');
+        } else {
+            return redirect()->back()->with('warning', 'Gagal Menambahkan Data');
+        }
     }
 
     // Update data wali
-    public function updatewalis(Request $request, $id)
-{
-    // Mencari data wali berdasarkan ID wali (misalnya id_wali)
-    $wali = wali_siswa::where('id_user', $id)->firstOrFail();
-
-    // Melakukan update data
-    $wali->update([
-        'nik' => $request->nik,
-        'id_user' => $request->id_user,
-        'jenis_kelamin' => $request->jenis_kelamin,
+    public function updatewalis(Request $r)
+    {
+       //DB wali
+       wali_siswa::where('id_user', $r->id)->update([
+        'nik' => $r->nik,
+        'jenis_kelamin' => $r->jenis_kelamin,
+        'alamat' => $r->alamat,
     ]);
 
-    // Redirect dengan notifikasi
-    return redirect()->back()->with('success', 'Data wali berhasil diupdate');
-}
 
+    //DB user
+    $user = user::where('id', $r->id)->first();
+
+    $user->update([
+        'name' => $r->name,
+        'email' => $r->email,
+        'password' => password_hash($r->password, PASSWORD_DEFAULT),
+    ]);
+
+    return redirect()->back()->with('success', 'walis ' . $user->name . ' Berhasil Diedit');
+    }
 
     // Hapus data wali
     public function destroywalis($id)
     {
-        // Mencari data wali berdasarkan ID dan menghapusnya
-        wali_siswa::findOrFail($id)->delete();
+        $u = user::findOrFail($id);
+        // $u = user::where('id', $id)->first();
+        $n = $u->name;
 
-        // Redirect dengan notifikasi
-        return redirect()->back()->with('success', 'Data wali berhasil dihapus');
+        wali_siswa::where('id_user', $id)->delete();
+        $u->delete();
+        // wali_siswa::where('id_user', $id)->delete();
+        // $u->delete();
+
+        return redirect()->back()->with('success', 'Wali Siswa ' . $n . ' Berhasil Dihapus');
     }
-
     public function lokasisekolah()
     {
         $koordinat_sekolah = DB::table('koordinat__sekolah')->where('id_koordinat_sekolah', 1)->first();
@@ -395,17 +491,17 @@ class operator extends Controller
 
         public function updatewaktu(Request $request)
     {
-        $jam_masuk = $request->input('jam_masuk');
-        $jam_pulang = $request->input('jam_pulang');
-        $batas_jam_masuk = $request->input('batas_jam_masuk');
-        $batas_jam_pulang = $request->input('batas_jam_pulang');
+        $mulai_absen = $request->input('mulai_absen');
+        $mulai_pulang = $request->input('mulai_pulang');
+        $batas_absen = $request->input('batas_absen');
+        $batas_pulang = $request->input('batas_pulang');
 
         $update = DB::table('waktu_absen')->where('id_waktu_absen', 1)
         ->update([
-            'jam_masuk' => $jam_masuk,
-            'jam_pulang' => $jam_pulang,
-            'batas_jam_masuk' => $batas_jam_masuk,
-            'batas_jam_pulang' => $batas_jam_pulang
+            'mulai_absen' => $mulai_absen,
+            'mulai_pulang' => $mulai_pulang,
+            'batas_absen' => $batas_absen,
+            'batas_pulang' => $batas_pulang
         ]);
 
         if ($update) {

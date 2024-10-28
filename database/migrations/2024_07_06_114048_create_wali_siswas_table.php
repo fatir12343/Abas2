@@ -8,7 +8,7 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     */
+     */ 
     public function up(): void
     {
         Schema::create('wali_siswa', function (Blueprint $table) {
@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreign('id_user')->references('id')->on('users');
 
             $table->enum('jenis_kelamin', ['laki laki', 'perempuan']);
+            $table->text('alamat');
         });
     }
 

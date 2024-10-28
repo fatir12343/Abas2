@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Wali_Siswa;
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
             KelasSeeder::class,
             SiswaSeeder::class,
             AbsensiSeeder::class,
-            KoordinatSeeder::class
+            KoordinatSeeder::class,
+            Waktu_AbsenSeeder::class
             // otherTable::class
         ]);
 

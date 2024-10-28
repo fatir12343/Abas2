@@ -24,7 +24,7 @@
               ></span>
               <a
                 class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                href="{{route('walis')}}"
+                href="index.html"
               >
                 <svg
                   class="w-5 h-5"
@@ -45,7 +45,6 @@
             </li>
           </ul>
           <ul>
-
             <li class="relative px-6 py-3">
               <button
                 class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
@@ -67,7 +66,7 @@
                       d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"
                     ></path>
                   </svg>
-                  <span class="ml-4">Laporan</span>
+                  <span class="ml-4">Laporan Absensi</span>
                 </span>
                 <svg
                   class="w-4 h-4"
@@ -96,7 +95,7 @@
                   <li
                     class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                   >
-                    <a class="w-full" href="{{route('laporan-walsis')}}">Laporan siswa</a>
+                    <a class="w-full" href="{{route('kesiswaan.laporankelas')}}">Laporan Kelas</a>
                   </li>
                 </ul>
               </template>
@@ -141,7 +140,7 @@
             class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
             href="#"
           >
-           ABAS
+            Windmill
           </a>
           <ul class="mt-6">
             <li class="relative px-6 py-3">
@@ -151,7 +150,7 @@
               ></span>
               <a
                 class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                href="{{route('walis')}}"
+                href="index.html"
               >
                 <svg
                   class="w-5 h-5"
@@ -194,7 +193,7 @@
                       d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"
                     ></path>
                   </svg>
-                  <span class="ml-4">Laporan</span>
+                  <span class="ml-4">Laporan Absensi</span>
                 </span>
                 <svg
                   class="w-4 h-4"
@@ -223,9 +222,9 @@
                   <li
                     class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                   >
-                    <a class="w-full" href="{{route('laporan-walsis')}}">Laporan siswa</a>
+                    <a class="w-full" href="{{route('kesiswaan.laporankelas')}}">Laporan Kelas</a>
                   </li>
-                </ul>
+                  
               </template>
             </li>
           </ul>
@@ -426,7 +425,7 @@
                     <li class="flex">
                       <a
                         class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                        href="{{route('profile')}}"
+                        href="#"
                       >
                         <svg
                           class="w-4 h-4 mr-3"
@@ -502,172 +501,128 @@
         </header>
         <main class="h-full overflow-y-auto">
           <div class="container px-6 mx-auto grid">
-            <section class="bg-gradient-to-r from-blue-500 to-purple-500 py-10 text-white">
-                <div class="max-w-7xl mx-auto text-center">
-                    <h1 class="text-4xl font-bold">Selamat Datang, {{Auth::user()->name}}</h1>
-                    <p class="mt-4 text-lg">Lihat statistik kehadiran anak anda</p>
+            <h2
+              class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
+            >
+              Dashboard
+            </h2>
+            <!-- CTA -->
+            {{-- <a
+              class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
+              href="https://github.com/estevanmaito/windmill-dashboard"
+            >
+              <div class="flex items-center">
+                <svg
+                  class="w-5 h-5 mr-2"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                  ></path>
+                </svg>
+                <span>Star this project on GitHub</span>
+              </div>
+              <span>View more &RightArrow;</span>
+            </a> --}}
+            <!-- Cards -->
+            <div class="container mx-auto px-4 py-8">
+                <h1 class="text-3xl font-bold mb-8 text-gray-800 dark:text-gray-200">Laporan Absensi</h1>
+        
+                <!-- Date Range Picker -->
+                <div class="mb-8">
+                    <form action="{{ route('kesiswaan.laporansiswa', ['kelas_id' => $kelas->id_kelas]) }}" method="GET" class="flex items-center space-x-4">
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+                            </div>
+                            <input name="start" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" placeholder="Start date" value="{{ $startDate }}">
+                        </div>
+                        <span class="text-gray-500">to</span>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+                            </div>
+                            <input name="end" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" placeholder="End date" value="{{ $endDate }}">
+                        </div>
+                        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Filter</button>
+                    </form>
                 </div>
-            </section>
-            <section class="attendance py-4">
-                <div class="container mx-auto">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        @foreach ($dataAbsensiAnak as $data)
-                            <div class="bg-white rounded-lg shadow-lg">
-                                <div class="bg-blue-600 text-white rounded-t-lg p-4">
-                                    <h4 class="mb-0">Rekap Kehadiran {{ $data['nama'] }}</h4>
-                                </div>
-                                <div class="p-4">
-                                    <ul class="flex space-x-2 mb-3" role="tablist">
-                                        <li role="presentation">
-                                            <button class="tab-button active" data-target="#current-year{{ $data['nis'] }}" type="button">Tahun Ini</button>
-                                        </li>
-                                        <li role="presentation">
-                                            <button class="tab-button" data-target="#current-month{{ $data['nis'] }}" type="button">Bulan Ini</button>
-                                        </li>
-                                        <li role="presentation">
-                                            <button class="tab-button" data-target="#previous-month{{ $data['nis'] }}" type="button">Bulan Sebelumnya</button>
-                                        </li>
-                                    </ul>
-                                    <div class="tab-content">
-                                        <div class="tab-pane active" id="current-month{{ $data['nis'] }}">
-                                            <div class="progress mb-3 bg-gray-200 rounded">
-                                                <div class="progress-bar bg-green-500" role="progressbar"
-                                                    style="width: {{ $data['PersentaseBulanIni'] }}%"
-                                                    aria-valuenow="{{ $data['PersentaseBulanIni'] }}" aria-valuemin="0"
-                                                    aria-valuemax="100">
-                                                    {{ $data['PersentaseBulanIni'] }}%
-                                                </div>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-check-circle text-green-600 mr-2"></i>
-                                                <span>Hadir: {{ $data['BulanIni']['Hadir'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-user-md text-blue-500 mr-2"></i>
-                                                <span>Sakit/Izin: {{ $data['BulanIni']['Sakit/Izin'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-clock text-yellow-500 mr-2"></i>
-                                                <span>Terlambat: {{ $data['BulanIni']['Terlambat'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-times-circle text-red-500 mr-2"></i>
-                                                <span>Alfa: {{ $data['BulanIni']['Alfa'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-bell text-blue-600 mr-2"></i>
-                                                <span>TAP: {{ $data['BulanIni']['TAP'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-user-clock text-gray-500 mr-2"></i>
-                                                <span>Total Keterlambatan: {{ $data['BulanIni']['late'] }} Menit</span>
-                                            </div>
-                                        </div>
-            
-                                        <!-- Konten untuk Bulan Lalu -->
-                                        <div class="tab-pane hidden" id="previous-month{{ $data['nis'] }}">
-                                            <div class="progress mb-3 bg-gray-200 rounded">
-                                                <div class="progress-bar bg-yellow-500" role="progressbar"
-                                                    style="width: {{ $data['PersentaseBulanLalu'] }}%"
-                                                    aria-valuenow="{{ $data['PersentaseBulanLalu'] }}" aria-valuemin="0"
-                                                    aria-valuemax="100">
-                                                    {{ $data['PersentaseBulanLalu'] }}%
-                                                </div>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-check-circle text-green-600 mr-2"></i>
-                                                <span>Hadir: {{ $data['BulanLalu']['Hadir'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-user-md text-blue-500 mr-2"></i>
-                                                <span>Sakit/Izin: {{ $data['BulanLalu']['Sakit/Izin'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-clock text-yellow-500 mr-2"></i>
-                                                <span>Terlambat: {{ $data['BulanLalu']['Terlambat'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-times-circle text-red-500 mr-2"></i>
-                                                <span>Alfa: {{ $data['BulanLalu']['Alfa'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-bell text-blue-600 mr-2"></i>
-                                                <span>TAP: {{ $data['BulanLalu']['TAP'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-user-clock text-gray-500 mr-2"></i>
-                                                <span>Total Keterlambatan: {{ $data['BulanLalu']['late'] }} Menit</span>
-                                            </div>
-                                        </div>
-            
-                                        <!-- Konten untuk Tahun Ini -->
-                                        <div class="tab-pane hidden" id="current-year{{ $data['nis'] }}">
-                                            <div class="progress mb-3 bg-gray-200 rounded">
-                                                <div class="progress-bar bg-blue-500" role="progressbar"
-                                                    style="width: {{ $data['PersentaseTahunIni'] }}%"
-                                                    aria-valuenow="{{ $data['PersentaseTahunIni'] }}" aria-valuemin="0"
-                                                    aria-valuemax="100">
-                                                    {{ $data['PersentaseTahunIni'] }}%
-                                                </div>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-check-circle text-green-600 mr-2"></i>
-                                                <span>Hadir: {{ $data['TahunIni']['Hadir'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-user-md text-blue-500 mr-2"></i>
-                                                <span>Sakit/Izin: {{ $data['TahunIni']['Sakit/Izin'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-clock text-yellow-500 mr-2"></i>
-                                                <span>Terlambat: {{ $data['TahunIni']['Terlambat'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-times-circle text-red-500 mr-2"></i>
-                                                <span>Alfa: {{ $data['TahunIni']['Alfa'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-bell text-blue-600 mr-2"></i>
-                                                <span>TAP: {{ $data['TahunIni']['TAP'] }} hari</span>
-                                            </div>
-                                            <div class="attendance-item flex items-center">
-                                                <i class="fas fa-user-clock text-gray-500 mr-2"></i>
-                                                <span>Total Keterlambatan: {{ $data['TahunIni']['late'] }} Menit</span>
-                                            </div>
-                                        </div>
+        
+                <!-- Average Attendance -->
+                <div class="bg-white shadow-md rounded-lg p-6 mb-8">
+                    <h2 class="text-2xl font-semibold mb-4 text-gray-800">Rata Rata Kehadiran</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                        @foreach(['Hadir', 'Sakit/Izin', 'Alfa', 'Terlambat', 'TAP'] as $status)
+                            <div class="bg-gray-50 rounded-lg p-4">
+                                <h3 class="text-lg font-semibold mb-2 text-gray-700">{{ $status }}</h3>
+                                <div class="flex items-center">
+                                    <div class="w-full bg-gray-200 rounded-full h-2.5 mr-2">
+                                        <div class="bg-blue-600 h-2.5 rounded-full" style="width: {{ $averageAttendancePercentages[$status] }}%"></div>
                                     </div>
+                                    <span class="text-sm font-medium text-gray-500">{{ number_format($averageAttendancePercentages[$status], 1) }}%</span>
                                 </div>
                             </div>
                         @endforeach
                     </div>
                 </div>
-            </section>
+        
+                <!-- Student List -->
+                <div class="bg-white shadow-md rounded-lg p-6">
+                    <h2 class="text-2xl font-semibold mb-4 text-gray-800">{{ $kelas->tingkat }} {{ $kelas->id_jurusan }} {{ $kelas->nomor_kelas }}</h2>
+                    
+                    <!-- Search Bar -->
+                    <div class="mb-4">
+                        <input type="text" id="search" placeholder="Search students..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+        
+                    <!-- Student Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        @foreach ($studentsData as $student)
+                            <div class="bg-gray-50 rounded-lg p-4 shadow student-card">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h3 class="text-lg font-semibold text-gray-800">{{ $student['name'] }}</h3>
+                                    <span class="text-sm font-medium text-gray-500">NIS: {{ $student['nis'] }}</span>
+                                </div>
+                                <div class="space-y-2">
+                                    @foreach ($student['attendancePercentages'] as $status => $percentage)
+                                        <div class="flex items-center">
+                                            <span class="w-20 text-sm font-medium text-gray-500">{{ $status }}</span>
+                                            <div class="flex-grow bg-gray-200 rounded-full h-2.5 ml-2">
+                                                <div class="bg-blue-600 h-2.5 rounded-full" style="width: {{ $percentage }}%"></div>
+                                            </div>
+                                            <span class="ml-2 text-sm font-medium text-gray-500">{{ number_format($percentage, 1) }}%</span>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <a href="{{ route('kesiswaan.detailsiswa', ['id' => $student['nis']]) }}" class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300">Detail</a>
+                            </div>
+                        @endforeach
+                    </div>
+        
+                    <!-- Pagination -->
+                    {{-- <div class="mt-4 flex justify-center">
+                        {{ $siswaData->links() }}
+                    </div> --}}
+                </div>
+            </div>
+        
             
             <script>
-                document.querySelectorAll('.tab-button').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const target = this.dataset.target;
-            
-                        // Menghapus kelas 'active' dari semua tab button
-                        document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-                        // Menambahkan kelas 'active' ke tab button yang dipilih
-                        this.classList.add('active');
-            
-                        // Menyembunyikan semua tab pane
-                        document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.add('hidden'));
-                        // Menampilkan tab pane yang sesuai
-                        document.querySelector(target).classList.remove('hidden');
+                // Simple search functionality
+                document.getElementById('search').addEventListener('keyup', function() {
+                    let searchQuery = this.value.toLowerCase();
+                    document.querySelectorAll('.student-card').forEach(function(card) {
+                        let studentName = card.querySelector('h3').textContent.toLowerCase();
+                        let studentNIS = card.querySelector('span').textContent.toLowerCase();
+                        if (studentName.includes(searchQuery) || studentNIS.includes(searchQuery)) {
+                            card.style.display = '';
+                        } else {
+                            card.style.display = 'none';
+                        }
                     });
                 });
             </script>
-            
-            
-
-
-
-              </div>
-            </div>
-          </div>
         </main>
       </div>
     </div>

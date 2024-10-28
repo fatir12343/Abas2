@@ -18,116 +18,122 @@ class siswacontroller extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-{
-    $user = Auth::user();
-    $nis = $user->siswa->nis; // Menggunakan relasi siswa untuk mendapatkan NIS
-    $hariini = date("Y-m-d");
+    {
+        $user = Auth::user();
+        $nis = $user->siswa->nis; // Menggunakan relasi siswa untuk mendapatkan NIS
+        $hariini = date("Y-m-d");
 
-    // Ambil data dari tabel koordinat_sekolah dan waktu_absen
-    $koordinatsekolah = Koordinat_Sekolah::first();
-    $jam = waktu_absen::first();
+        // Ambil data dari tabel koordinat_sekolah dan waktu_absen
+        $koordinatsekolah = Koordinat_Sekolah::first();
+        $jam = waktu_absen::first();
 
-    // Cek absensi hari ini
-    $cekabsen = Absensi::where('date', $hariini)
-        ->where('nis', $nis)
-        ->first();
+        // Cek absensi hari ini
+        $cekabsen = Absensi::where('date', $hariini)
+            ->where('nis', $nis)
+            ->first();
 
-    // Cek status izin atau sakit
-    $izin = Absensi::where('nis', $nis)
-        ->where('status', 'Izin')
-        ->orWhere('status', 'Sakit')
-        ->where('date', $hariini)
-        ->first();
+        // Cek status izin atau sakit
+        $izin = Absensi::where('nis', $nis)
+            ->where(function ($query) use ($hariini) {
+                $query->where('status', 'Izin')
+                      ->orWhere('status', 'Sakit');
+            })
+            ->where('date', $hariini)
+            ->first();
 
-    // Hitung keterlambatan bulan ini dan bulan sebelumnya
-    $late2 = Absensi::where('nis', $nis)
-        ->whereMonth('date', date('m', strtotime('first day of previous month')))
-        ->sum('menit_keterlambatan');
-    $late = Absensi::where('nis', $nis)
-        ->whereMonth('date', date('m'))
-        ->sum('menit_keterlambatan');
+        // Hitung keterlambatan bulan ini dan bulan sebelumnya
+        $late2 = Absensi::where('nis', $nis)
+            ->whereMonth('date', date('m', strtotime('first day of previous month')))
+            ->sum('menit_keterlambatan');
+        $late = Absensi::where('nis', $nis)
+            ->whereMonth('date', date('m'))
+            ->sum('menit_keterlambatan');
 
-    // Data absensi bulan ini dan bulan sebelumnya
-    $dataBulanIni = Absensi::whereYear('date', date('Y'))
-        ->where('nis', $nis)
-        ->whereMonth('date', date('m'))
-        ->select('status', DB::raw('count(*) as total'))
-        ->groupBy('status')
-        ->pluck('total', 'status')
-        ->toArray();
+        // Data absensi bulan ini dan bulan sebelumnya
+        $dataBulanIni = Absensi::whereYear('date', date('Y'))
+            ->where('nis', $nis)
+            ->whereMonth('date', date('m'))
+            ->select('status', DB::raw('count(*) as total'))
+            ->groupBy('status')
+            ->pluck('total', 'status')
+            ->toArray();
 
-    $dataBulanSebelumnya = Absensi::whereYear('date', date('Y'))
-        ->where('nis', $nis)
-        ->whereMonth('date', date('m', strtotime('first day of previous month')))
-        ->select('status', DB::raw('count(*) as total'))
-        ->groupBy('status')
-        ->pluck('total', 'status')
-        ->toArray();
+        $dataBulanSebelumnya = Absensi::whereYear('date', date('Y'))
+            ->where('nis', $nis)
+            ->whereMonth('date', date('m', strtotime('first day of previous month')))
+            ->select('status', DB::raw('count(*) as total'))
+            ->groupBy('status')
+            ->pluck('total', 'status')
+            ->toArray();
 
-    // Gabungkan 'Sakit' dan 'Izin' menjadi satu kategori
-    $dataBulanIni['Sakit/Izin'] = ($dataBulanIni['Sakit'] ?? 0) + ($dataBulanIni['Izin'] ?? 0);
-    unset($dataBulanIni['Sakit'], $dataBulanIni['Izin']);
+        // Gabungkan 'Sakit' dan 'Izin' menjadi satu kategori
+        $dataBulanIni['Sakit/Izin'] = ($dataBulanIni['Sakit'] ?? 0) + ($dataBulanIni['Izin'] ?? 0);
+        unset($dataBulanIni['Sakit'], $dataBulanIni['Izin']);
 
-    $dataBulanSebelumnya['Sakit/Izin'] = ($dataBulanSebelumnya['Sakit'] ?? 0) + ($dataBulanSebelumnya['Izin'] ?? 0);
-    unset($dataBulanSebelumnya['Sakit'], $dataBulanSebelumnya['Izin']);
+        $dataBulanSebelumnya['Sakit/Izin'] = ($dataBulanSebelumnya['Sakit'] ?? 0) + ($dataBulanSebelumnya['Izin'] ?? 0);
+        unset($dataBulanSebelumnya['Sakit'], $dataBulanSebelumnya['Izin']);
 
-    // Status yang tersisa
-    $statuses = ['Hadir', 'Sakit/Izin', 'Alfa', 'Terlambat', 'TAP'];
-    foreach ($statuses as $status) {
-        if (!array_key_exists($status, $dataBulanIni)) {
-            $dataBulanIni[$status] = 0;
+        // Status yang tersisa
+        $statuses = ['Hadir', 'Sakit/Izin', 'Alfa', 'Terlambat', 'TAP'];
+        foreach ($statuses as $status) {
+            if (!array_key_exists($status, $dataBulanIni)) {
+                $dataBulanIni[$status] = 0;
+            }
+            if (!array_key_exists($status, $dataBulanSebelumnya)) {
+                $dataBulanSebelumnya[$status] = 0;
+            }
         }
-        if (!array_key_exists($status, $dataBulanSebelumnya)) {
-            $dataBulanSebelumnya[$status] = 0;
-        }
+
+        $totalAbsenBulanIni = array_sum($dataBulanIni);
+        $persentaseHadirBulanIni = $totalAbsenBulanIni > 0 ? round(($dataBulanIni['Hadir'] / $totalAbsenBulanIni) * 100) : 0;
+
+        $totalAbsenBulanSebelumnya = array_sum($dataBulanSebelumnya);
+        $persentaseHadirBulanSebelumnya = $totalAbsenBulanSebelumnya > 0 ? round(($dataBulanSebelumnya['Hadir'] / $totalAbsenBulanSebelumnya) * 100) : 0;
+
+        // Riwayat absensi mingguan
+        $startOfWeek = date('Y-m-d', strtotime('monday this week'));
+        $endOfWeek = date('Y-m-d', strtotime('sunday this week'));
+
+        $riwayatmingguini = Absensi::whereBetween('date', [$startOfWeek, $endOfWeek])
+            ->where('nis', $nis)
+            ->get();
+
+        // Cek status absensi
+        $statusAbsen = $cekabsen ? $cekabsen->status : 'Belum Absen';
+        $absenMasuk = $cekabsen ? !empty($cekabsen->photo_in) : 'Hadir';
+        $absenPulang = $cekabsen ? !empty($cekabsen->photo_out) : 'Pulang';
+        $statusValidasi = $statusAbsen === "Izin" || $statusAbsen === "Sakit";
+
+        $jamskrg = date("H:i:s");
+        $validasijam = $jam ? (strtotime($jamskrg) > strtotime($jam->batas_pulang) || strtotime($jamskrg) < strtotime($jam->jam_absen)) : false;
+
+        return view('siswa.siswa', [
+            'waktu' => $jam,
+            'cekabsen' => $cekabsen ? 1 : 0,
+            'statusAbsen' => $statusAbsen,
+            'lok_sekolah' => $koordinatsekolah,
+            'siswa' => Siswa::with('user')->get(),
+            'jam' => $jamskrg,
+            'mulai_absen' => $jam ? $jam->mulai_absen : null,
+            'mulai_pulang' => $jam ? $jam->mulai_pulang : '15.00.00',
+            'batas_absen' => $jam ? $jam->batas_absen : null,
+            'batas_pulang' => $jam ? $jam->batas_jam_pulang : null,
+            'dataBulanIni' => $dataBulanIni,
+            'dataBulanSebelumnya' => $dataBulanSebelumnya,
+            'statusIzin' => $cekabsen ? ($cekabsen->status === 'Izin' || $cekabsen->status === 'Sakit' ? 'Sudah Mengisi Izin/Sakit' : 'Belum Mengisi Izin/Sakit') : 'Belum Mengisi Izin/Sakit',
+            'late' => $late,
+            'late2' => $late2,
+            'persentaseHadirBulanIni' => $persentaseHadirBulanIni,
+            'persentaseHadirBulanSebelumnya' => $persentaseHadirBulanSebelumnya,
+            'riwayatmingguini' => $riwayatmingguini,
+            'statusValidasi' => $statusValidasi,
+            'izin' => $izin ,
+            'absenMasuk' => $absenMasuk,
+            'absenPulang' => $absenPulang,
+            'validasijam' => $validasijam
+        ]);
     }
 
-    $totalAbsenBulanIni = array_sum($dataBulanIni);
-    $persentaseHadirBulanIni = $totalAbsenBulanIni > 0 ? round(($dataBulanIni['Hadir'] / $totalAbsenBulanIni) * 100) : 0;
-
-    $totalAbsenBulanSebelumnya = array_sum($dataBulanSebelumnya);
-    $persentaseHadirBulanSebelumnya = $totalAbsenBulanSebelumnya > 0 ? round(($dataBulanSebelumnya['Hadir'] / $totalAbsenBulanSebelumnya) * 100) : 0;
-
-    // Riwayat absensi mingguan
-    $startOfWeek = date('Y-m-d', strtotime('monday this week'));
-    $endOfWeek = date('Y-m-d', strtotime('sunday this week'));
-
-    $riwayatmingguini = Absensi::whereBetween('date', [$startOfWeek, $endOfWeek])
-        ->where('nis', $nis)
-        ->get();
-
-    // Cek status absensi
-    $statusAbsen = $cekabsen ? $cekabsen->status : 'Belum Absen';
-    $absenMasuk = $cekabsen ? !empty($cekabsen->photo_in) : 'Hadir';
-    $absenPulang = $cekabsen ? !empty($cekabsen->photo_out) : 'Pulang';
-    $statusValidasi = $statusAbsen === "Izin" || $statusAbsen === "Sakit";
-
-    $jamskrg = date("H:i:s");
-    $validasijam = $jam ? (strtotime($jamskrg) > strtotime($jam->batas_absen_pulang) || strtotime($jamskrg) < strtotime($jam->jam_absen)) : false;
-
-    return view('siswa.siswa', [
-        'waktu' => $jam,
-        'cekabsen' => $cekabsen ? 1 : 0,
-        'statusAbsen' => $statusAbsen,
-        'lok_sekolah' => $koordinatsekolah,
-        'siswa' => Siswa::with('user')->get(),
-        'jam' => $jamskrg,
-        'jam_masuk' => $jam ? $jam->jam_masuk : '06:00:00',
-        'jam_pulang' => $jam ? $jam->jam_pulang : '15:30:00',
-        'batas_jam_masuk' => $jam ? $jam->batas_jam_masuk : null,
-        'batas_jam_pulang' => $jam ? $jam->batas_jam_pulang : null,
-        'dataBulanIni' => $dataBulanIni,
-        'dataBulanSebelumnya' => $dataBulanSebelumnya,
-        'statusIzin' => $cekabsen ? ($cekabsen->status === 'Izin' || $cekabsen->status === 'Sakit' ? 'Sudah Mengisi Izin/Sakit' : 'Belum Mengisi Izin/Sakit') : 'Belum Mengisi Izin/Sakit',
-        'late' => $late,
-        'late2' => $late2,
-        'persentaseHadirBulanIni' => $persentaseHadirBulanIni,
-        'persentaseHadirBulanSebelumnya' => $persentaseHadirBulanSebelumnya,
-        'riwayatmingguini' => $riwayatmingguini,
-        'statusValidasi' => $statusValidasi,
-        'izin' => $izin // Mengirimkan data izin ke view
-    ]);
-}
 
 
 
@@ -221,11 +227,12 @@ class siswacontroller extends Controller
                 // Jika belum absen masuk, lakukan absen masuk
                 $status = ($jam > $batasMasuk) ? 'Terlambat' : 'Hadir';
                 $data = [
-                    'nis' => '00' . $nis,
+                    'nis' =>  $nis,
                     'status' => $status,
                     'photo_in' => $fileName,
                     'date' => $date,
                     'jam_masuk' => $jam,
+                    'jam_pulang' => $jam,
                     'titik_koordinat_masuk' => $lokasiSiswa,
                 ];
 
@@ -300,100 +307,122 @@ class siswacontroller extends Controller
     }
 
     public function uploadfile(Request $request)
-{
+    {
+        try {
+            // Validate request
+            $request->validate([
+                'status' => 'required|in:sakit,izin',
+                'keterangan' => 'required|string',
+                'photo_in' => 'required'
+            ]);
+    
+            $user = Auth::user();
+            $nis = $user->siswa->nis;
+            $date = date("Y-m-d");
+            $status = $request->input('status');
+            $keterangan = $request->input('keterangan');
+    
+            // Handle base64 image from webcam
+            $image_parts = explode(";base64,", $request->photo_in);
+            $image_base64 = base64_decode($image_parts[1]);
+            
+            $fileName = $nis . '_' . $date . '_' . $status . '.jpeg';
+            $folderPath = 'public/uploads/absensi/';
+            $filePath = $folderPath . $fileName;
+    
+            // Save image
+            Storage::put($filePath, $image_base64);
+    
+            // Save to database
+            $data = [
+                'nis' => $nis,
+                'status' => $status,
+                'photo_in' => $fileName,
+                'keterangan' => $keterangan,
+                'date' => $date,
+            ];
+    
+            $simpan = Absensi::create($data);
+    
+            if ($simpan) {
+                return redirect()->back()->with('berhasil', 'Kehadiran berhasil dicatat.');
+            }
+            
+            return redirect()->route('siswa')->with('gagal', 'Gagal menyimpan data.');
+            
+        } catch (\Exception $e) {
+            return redirect()->route('siswa')->with('gagal', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
+    }
 
-    if ($request->hasFile('photo_in')) {
-        // Ambil data dari request
-        $user = Auth::user();
-        $nis = $user->siswa->nis;
-        $date = date("Y-m-d");
-        $status = $request->input('status');
-        $keterangan = $request->input('keterangan');
+        public function profile()
+                {
+                    $siswa = Auth::user();
+                    return view('siswa.profile', compact('siswa'));
+                }
 
-        // Ambil file dari request
-        $foto = $request->file('photo_in');
+                public function updateprofile(Request $request)
+                {
+            // dd($request->all());
+            $request->validate([
+                'photo_in' => 'nullable|mimes:png,jpg,jpeg,pdf', // Field boleh kosong jika menggunakan webcam
+                'photo_webcam' => 'nullable|string', // Field untuk gambar dari webcam
+                'status' => 'required|string',
+                'keterangan' => 'required|string',
+            ]);
 
-        // Menyimpan file dengan nama unik menggunakan Storage Laravel
-        $extension = $foto->getClientOriginalExtension();
-        $folderPath =('public/uploads/absensi/');
-        $fileName = $nis . '_' . $date . '_' . $status . '.' . $extension;
-        $file = $folderPath . $fileName;
+            // Ambil data dari request
+            $user = Auth::user();
+            $nis = $user->siswa->nis;
+            $date = date("Y-m-d");
+            $status = $request->input('status');
+            $keterangan = $request->input('keterangan');
+            $fileName = null;
 
-        // $foto->move($folderPath, $fileName);
+            if ($request->filled('photo_webcam')) {
+                // Jika file webcam dikirim, simpan sebagai gambar
+                $photoWebcam = $request->input('photo_webcam');
 
-        // Simpan data ke database
-        $data = [
-            'nis' => '00' . $nis,
-            'status' => $status,
-            'photo_in' => $fileName,
-            'keterangan' => $keterangan,
-            'date' => $date,
-        ];
+                // Decode Base64 ke file gambar
+                $folderPath = 'public/uploads/absensi/';
+                $fileName = $nis . '_' . $date . '_' . $status . '.png';
+                $image_parts = explode(";base64", $photoWebcam);
+                $image_base64 = base64_decode($image_parts[1]);
 
-        $simpan = Absensi::create($data);
-        if ($simpan) {
-            Storage::put($file, file_get_contents($foto));
-            return redirect()->back()->with('berhasil', 'Kehadiran berhasil dicatat.');
+                Storage::put($folderPath . $fileName, $image_base64);
+            } elseif ($request->hasFile('photo_in')) {
+                // Cek jika file diupload
+                $foto = $request->file('photo_in');
+
+                // Menyimpan file dengan nama unik
+                $extension = $foto->getClientOriginalExtension();
+                $folderPath = 'public/uploads/absensi/';
+                $fileName = $nis . '_' . $date . '_' . $status . '.' . $extension;
+                $file = $folderPath . $fileName;
+
+                // Pindahkan file ke folder public/uploads/absensi
+                Storage::put($file, file_get_contents($foto));
+            }
+
+            if ($fileName) {
+                // Simpan data ke database
+                $data = [
+                    'nis' => $nis,
+                    'status' => $status,
+                    'photo_in' => $fileName, // Gunakan file yang sudah diproses
+                    'keterangan' => $keterangan,
+                    'date' => $date,
+                ];
+
+                $simpan = Absensi::create($data);
+                if ($simpan) {
+                    return redirect()->route('siswa.siswa')->with('berhasil', 'Kehadiran berhasil dicatat.');
+                } else {
+                    return redirect()->route('siswa.siswa')->with('gagal', 'Gagal menyimpan kehadiran.');
+                }
             } else {
-                return redirect()->route('siswa')->with('gagal', 'File tidak ada.');
+                return redirect()->route('siswa.siswa')->with('gagal', 'Tidak ada file yang dikirim.');
             }
-        }
-    }
-
-    public function profile()
-    {
-        $siswa = Auth::user();
-        return view('siswa.profile', compact('siswa'));
-    }
-
-    public function updateprofile(Request $request)
-    {
-        $user = Auth::user();  // Mengambil data user yang sedang login
-
-        // Validasi data
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'nullable|min:6|confirmed', // Password hanya diubah jika diisi dan dikonfirmasi
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
-
-        $updateFields = [];
-
-        // Update email
-        if ($request->email !== $user->email) {
-            $updateFields['email'] = $request->email;
-        }
-
-        // Update password jika diisi
-        if ($request->password) {
-            $updateFields['password'] = bcrypt($request->password);
-        }
-
-        // Update foto profil jika ada file yang diupload
-        if ($request->hasFile('foto')) {
-            $foto = $request->file('foto');
-            $fileName = $user->nis . '.' . $foto->getClientOriginalExtension();
-            $folderPath = 'user_avatar/';  // Tanpa 'public/' di depan
-
-            // Simpan foto di storage/public/user_avatar/
-            $foto->storeAs($folderPath, $fileName, 'public');
-
-            // Hapus foto lama jika ada
-            if ($user->foto && Storage::disk('public')->exists($folderPath . $user->foto)) {
-                Storage::disk('public')->delete($folderPath . $user->foto);
-            }
-
-            // Update nama file foto baru ke database
-            $updateFields['foto'] = $fileName;
-        }
-
-        // Update data di database jika ada perubahan
-        if (!empty($updateFields)) {
-            User::where('id', $user->id)->update($updateFields);
-        }
-
-        // Redirect dengan pesan sukses
-        return redirect()->back()->with('success', 'Data Berhasil di Update');
 
     }
 

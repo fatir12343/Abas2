@@ -15,25 +15,27 @@ class Wali_kelas extends Model
     // public $incrementing = false; // Karena primary key bukan incrementing integer
     // protected $keyType = 'string'; // Tipe data primary key
 
+    public $primaryKey = 'nip';
+
     protected $fillable = [
-        'nuptk',
+        'nip',
         'id_user',
         'jenis_kelamin',
-        'nip',
+        'nuptk',
     ];
 
     public function user()
     {
-        return $this->hasOne(User::class, 'id_user');
+        return $this->hasOne(User::class, 'id', 'id_user');
     }
 
     public function kelas()
     {
-        return $this->hasOne(kelas::class, 'nuptk', 'nuptk');
+        return $this->hasOne(kelas::class, foreignKey: 'nip', localKey: 'nip');
     }
     public function jurusan()
     {
-        return $this->hasOneThrough(jurusan::class,kelas::class, 'nuptk', 'id_jurusan', 'nuptk', 'id_jurusan');
+        return $this->hasOneThrough(jurusan::class,kelas::class, 'nip', 'id_jurusan', 'nip', 'id_jurusan');
     }
 
     public $timestamps = false;
