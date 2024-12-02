@@ -112,6 +112,8 @@ Route::middleware(['auth', 'operator:operator'])->group(function () {
     Route::put('/operator/wali/{id}', [App\Http\Controllers\OperatorController::class, 'updateWali'])->name('operator.wali.update');
     Route::delete('/operator/wali/{nuptk}', [App\Http\Controllers\OperatorController::class, 'destroyWali'])->name('operator.wali.destroy');
     Route::post('/operator/import', [App\Http\Controllers\OperatorController::class, 'importwalikelas'])->name('wali.import');
+    Route::get('/formattt/export', [App\Http\Controllers\OperatorController::class, 'Formatwali'])->name('format-walikelas');
+
     //kelas
     Route::get('/qq', [App\Http\Controllers\OperatorController::class, 'kelas'])->name('kelas');
     Route::post('kelas', [App\Http\Controllers\OperatorController::class, 'storeKelas'])->name('kelas.store');
@@ -127,21 +129,26 @@ Route::middleware(['auth', 'operator:operator'])->group(function () {
     //Siswa
     Route::get('/siswa/{id}',[App\Http\Controllers\OperatorController::class, 'siswa'])->name('siswa');
     Route::post('/siswatambah',[App\Http\Controllers\OperatorController::class, 'storesiswa'])->name('siswa.store');
-    Route::put('siswaedit',[App\Http\Controllers\OperatorController::class, 'updatesiswa'])->name('siswa.update');
+    Route::put('siswa/{id}',[App\Http\Controllers\OperatorController::class, 'updatesiswa'])->name('siswa.update');
     Route::delete('/siswa/delete/{id}',[App\Http\Controllers\OperatorController::class, 'destroysiswa'])->name('siswa.destroy');
     Route::post('/siswa/import',[App\Http\Controllers\OperatorController::class, 'importsiswa'])->name('siswa.import');
+    Route::get('/formatt/export',[App\Http\Controllers\OperatorController::class, 'Formatsiswa'])->name('formatsiswa');
     //kesiswaan
-    Route::get('/kesiswaan', [App\Http\Controllers\OperatorController::class, 'kesiswaan'])->name('kesiswaan');
+    Route::get('/kesiswaann', [App\Http\Controllers\OperatorController::class, 'kesiswaan'])->name('kesiswaan.dashboard');
     Route::post('/upkesiswaan', [App\Http\Controllers\OperatorController::class, 'storekesiswaan'])->name('kesiswaan.store');
     Route::put('/kesiswaan/{id}', [App\Http\Controllers\OperatorController::class, 'updatekesiswaan'])->name('kesiswaan.update');
     Route::delete('/kesiswaan/delete/{id}', [App\Http\Controllers\OperatorController::class, 'destroykesiswaan'])->name('kesiswaan.destroy');
-    Route::post('/walis/import', [App\Http\Controllers\OperatorController::class, 'importwalisiswa'])->name('walis.import');
     //wali_siswa
     Route::get('/walisiswa', [App\Http\Controllers\OperatorController::class, 'walis'])->name('walisiswa');
     Route::get('/walisshow', [App\Http\Controllers\OperatorController::class, 'showwalis'])->name('walisshow');
     Route::post('/walistambah', [App\Http\Controllers\OperatorController::class, 'storewalis'])->name('walis.store');
+    Route::get('/walis/{id}/edit', [App\Http\Controllers\OperatorController::class, 'editwalis'])->name('walis.edit');
     Route::put('/walisiswaedit', [App\Http\Controllers\OperatorController::class, 'updatewalis'])->name('walis.update');
     Route::delete('/walis/{id}', [App\Http\Controllers\OperatorController::class, 'destroywalis'])->name('walis.destroy');
+    Route::post('/walis/import', [App\Http\Controllers\OperatorController::class, 'importwalisiswa'])->name('walis.import');
+    Route::get('/format/export',[App\Http\Controllers\OperatorController::class, 'Formatwalisiwa'])->name('formatwalisiwa');
+
+
     //setting koordinat dan waktu
     Route::post('/updatelokasisekolah', [App\Http\Controllers\OperatorController::class, 'updatelokasisekolah'])->name('updatelokasi');
     Route::post('/updatewaktu', [App\Http\Controllers\OperatorController::class, 'updatewaktu'])->name('updatewaktu');

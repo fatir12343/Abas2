@@ -42,25 +42,20 @@ class SiswaSeeder extends Seeder
             'nik_wali' => '2108412',
         ]);
 
+        $faker = \Faker\Factory::create('id_ID'); // Set locale ke Indonesia
         $kelas = kelas::all();
         $jk = ['laki laki', 'perempuan'];
 
-        foreach($kelas as $k)
-        {
-            for($i = 1; $i <= 30 ; $i++)
-            {
+        foreach($kelas as $k) {
+            for($i = 1; $i <= 30; $i++) {
                 $random = rand(0, 1);
-                $no_absen = $i;
-                if(strlen($no_absen) == 1)
-                {
-                    $no_absen = "0$i";
-                }
+                $no_absen = str_pad($i, 2, '0', STR_PAD_LEFT);
 
                 $nis = $k->id_kelas . $no_absen;
                 $nisn = $k->id_kelas . $no_absen;
 
                 $user = User::create([
-                    'name' => fake()->name(),
+                    'name' => $faker->name(), // Menggunakan Faker dengan nama Indonesia
                     'email' => 'siswa'. $i . strtolower("$k->tingkat$k->id_jurusan$k->nomor_kelas") . '@gmail.com',
                     'password' => password_hash("12345678", PASSWORD_DEFAULT),
                     'role' => 'siswa',
@@ -78,6 +73,7 @@ class SiswaSeeder extends Seeder
             }
         }
 
-    
+
+
     }
 }

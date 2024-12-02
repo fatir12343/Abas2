@@ -79,7 +79,7 @@
 
                           <li class="relative px-6 py-3">
                               <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                                  href="/kesiswaan">
+                                  href="{{route('kesiswaan.dashboard')}}">
                                   <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                       stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                       <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
@@ -185,7 +185,7 @@
 
                           <li class="relative px-6 py-3">
                               <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                                  href="/kesiswaan">
+                                  href="{{route('kesiswaan.dashboard')}}">
                                   <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                       stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                       <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
@@ -399,414 +399,441 @@
                     <!-- New Table -->
 
                     <!-- New Table -->
+
                     <div class="container mx-auto mt-8">
-                        <div class="flex justify-end mb-4">
-                            <button id="open-modal-btn" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Tambah Kelas</button>
+                        <div class="flex justify-between mb-4 items-center">
+                            <!-- Search Input -->
+                            <div class="flex items-center space-x-2">
+                                <input type="text" id="search-input" placeholder="Cari..." class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" oninput="searchTable()">
+                                <button class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400" onclick="clearSearch()">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
 
-                            <button class="bg-red-500 text-white font-bold py-2 px-4 rounded" onclick="openModal()">
-                                Import
-                            </button>
-                            {{-- <button id="add-kelas-btn" class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-700">Tambah Kelas</button> --}}
+                            <!-- Buttons -->
+                            <div class="flex space-x-2">
+                                <button id="open-modal-btn" class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                                    <i class="fas fa-plus mr-2"></i> Tambah Kelas
+                                </button>
+                                <button class="flex items-center bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-600" onclick="openModal()">
+                                    <i class="fas fa-file-import mr-2"></i> Import
+                                </button>
+                            </div>
                         </div>
-                        <!-- New Table -->
-                        <div class="w-full overflow-hidden rounded-lg shadow-xs">
-                            <div class="w-full overflow-x-auto">
-                                <table class="w-full whitespace-no-wrap">
-                                    <thead>
-                                        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                                            <th class="px-4 py-3">ID</th>
-                                            <th class="px-4 py-3">Jurusan</th>
-                                            <th class="px-4 py-3">Nomor Kelas</th>
-                                            <th class="px-4 py-3">NIP</th>
-                                            <th class="px-4 py-3">Tingkat</th>
-                                            <th class="px-4 py-3">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="kelas-tbody" class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                                        @foreach ($kelas as $item)
-                                        <tr class="text-gray-700 dark:text-gray-400">
-                                            <td class="px-4 py-3 text-sm">{{ $item->id_kelas }}</td>
-                                            <td class="px-4 py-3 text-sm">{{ $item->jurusan->id_jurusan }}</td>
-                                            <td class="px-4 py-3 text-sm">{{ $item->nomor_kelas }}</td>
-                                            <td class="px-4 py-3 text-sm">{{ $item->nip }}</td>
-                                            <td class="px-4 py-3 text-sm">{{ $item->tingkat }}</td>
-                                            <td class="px-4 py-3 text-sm">
-                                                <div class="flex items-center space-x-4 text-sm">
-                                                    <button
-                                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                                        aria-label="Edit"
-                                                        onclick="toggleEditModal('{{ $item->id_kelas }}')"
-                                                    >
-                                                        <svg
-                                                            class="w-5 h-5"
-                                                            aria-hidden="true"
-                                                            fill="currentColor"
-                                                            viewBox="0 0 20 20"
-                                                        >
-                                                            <path
-                                                                d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
-                                                            ></path>
-                                                        </svg>
-                                                    </button>
-                                                    <button
-                                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                                        aria-label="Delete"
-                                                        onclick="toggleDeleteModal('{{ $item->id_kelas }}')"
-                                                    >
-                                                        <svg
-                                                            class="w-5 h-5"
-                                                            aria-hidden="true"
-                                                            fill="currentColor"
-                                                            viewBox="0 0 20 20"
-                                                        >
-                                                            <path
-                                                                fill-rule="evenodd"
-                                                                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                                                clip-rule="evenodd"
-                                                            ></path>
-                                                        </svg>
-                                                    </button>
 
-                                                       <a href="{{ route('siswa', $item->id_kelas) }}"
-                                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-gray-500 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                                        aria-label="Detail"
-                                                    >
-                                                        <svg
-                                                            class="w-5 h-5"
-                                                            viewBox="0 0 24 24"
-                                                            stroke-width="2"
-                                                            stroke="currentColor"
-                                                            fill="none"
-                                                            stroke-linecap="round"
-                                                            stroke-linejoin="round"
-                                                        >
-                                                            <path stroke="none" d="M0 0h24v24H0z" />
-                                                            <circle cx="12" cy="12" r="2" />
-                                                            <path d="M2 12l1.5 2a11 11 0 0 0 17 0l1.5 -2" />
-                                                            <path d="M2 12l1.5 -2a11 11 0 0 1 17 0l1.5 2" />
-                                                        </svg>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
+                        <!-- Table -->
+                        <div class="w-full overflow-x-auto">
+                            <table class="w-full whitespace-no-wrap" id="kelas-table">
+                                <thead>
+                                    <tr id="kelas-tbody" class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                        <th onclick="sortTable(0)" class="cursor-pointer px-4 py-3">
+                                            ID
+                                            <svg id="sort-icon-0" class="inline w-4 h-4 ml-1 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path>
+                                            </svg>
+                                        </th>
+                                        <th onclick="sortTable(1)" class="cursor-pointer px-4 py-3">
+                                            Jurusan
+                                            <svg id="sort-icon-0" class="inline w-4 h-4 ml-1 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path>
+                                            </svg>
+                                        </th>
+                                        <th onclick="sortTable(2)" class="cursor-pointer px-4 py-3">
+                                            Nomor Kelas
+                                            <svg id="sort-icon-0" class="inline w-4 h-4 ml-1 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path>
+                                            </svg>
+                                        </th>
+                                        <th onclick="sortTable(3)" class="cursor-pointer px-4 py-3">
+                                            NIP
+                                            <svg id="sort-icon-0" class="inline w-4 h-4 ml-1 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path>
+                                            </svg>
+                                        </th>
+                                        <th onclick="sortTable(4)" class="cursor-pointer px-4 py-3">
+                                            Tingkat
+                                            <svg id="sort-icon-0" class="inline w-4 h-4 ml-1 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path>
+                                            </svg>
+                                        </th>
+                                        <th class="px-4 py-3">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="kelas-tbody" class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                                    @foreach ($kelas as $item)
+                                    <tr class="text-gray-700 dark:text-gray-400">
+                                        <td class="px-4 py-3 text-sm">{{ $item->id_kelas }}</td>
+                                        <td class="px-4 py-3 text-sm">{{ $item->jurusan->id_jurusan }}</td>
+                                        <td class="px-4 py-3 text-sm">{{ $item->nomor_kelas }}</td>
+                                        <td class="px-4 py-3 text-sm">{{ $item->nip }}</td>
+                                        <td class="px-4 py-3 text-sm">{{ $item->tingkat }}</td>
+                                        <td class="px-4 py-3 text-sm">
+                                            <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray edit-btn" data-id="{{ $item->id_kelas }}" aria-label="Edit" onclick="toggleEditModal('{{ $item->id_kelas }}')">
+                                                <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
+                                                </svg>
+                                            </button>
+                                            <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray delete-btn" data-id="{{ $item->id_kelas }}" aria-label="Delete" onclick="toggleDeleteModal('{{ $item->id_kelas }}')">
+                                                <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                                                </svg>
+                                            </button>
+
+                                            <a href="{{ route('siswa', $item->id_kelas) }}" class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-gray-500 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray" aria-label="Detail">
+                                                <svg class="w-5 h-5" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" />
+                                                    <circle cx="12" cy="12" r="2" />
+                                                    <path d="M2 12l1.5 2a11 11 0 0 0 17 0l1.5 -2" />
+                                                    <path d="M2 12l1.5 -2a11 11 0 0 1 17 0l1.5 2" />
+                                                </svg>
+                                            </a>
+                                        </td>
+                                    </tr>
                                     @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                </tbody>
+                            </table>
                         </div>
-
-                        @foreach ($kelas as $item)
-                        <div id="delete-modal-{{ $item->id_kelas }}" class="fixed inset-0 z-50 hidden overflow-y-auto">
-                            <div class="flex items-center justify-center min-h-screen px-4">
-                                <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
-                                    <div class="bg-gray-100 px-4 py-2 flex justify-between items-center">
-                                        <h5 class="text-lg font-bold">Peringatan!!</h5>
-                                        <button class="text-gray-500" onclick="toggleDeleteModal('{{ $item->id_kelas }}')">&times;</button>
-                                    </div>
-                                    <div class="px-4 py-6">
-                                        Apakah anda yakin ingin menghapus ini?
-                                    </div>
-                                    <div class="bg-gray-100 px-4 py-3 flex justify-end space-x-2">
-                                        <button class="bg-gray-500 text-white px-4 py-2 rounded" onclick="toggleDeleteModal('{{ $item->id_kelas }}')">Tidak</button>
-                                        <button class="bg-red-500 text-white px-4 py-2 rounded" onclick="event.preventDefault(); document.getElementById('destroy-form{{ $item->id_kelas }}').submit();">Yakin</button>
-                                    </div>
-                                    <form id="destroy-form{{ $item->id_kelas }}" action="{{ route('kelas.destroy', $item->id_kelas) }}" method="POST" class="hidden">
-                                        @csrf
-                                        @method('DELETE')
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                        <!-- Modal -->
-                        <!-- Modal Structure -->
-                        <div id="kelas-modal" class="fixed inset-0 z-10 hidden overflow-y-auto bg-gray-500 bg-opacity-75 transition-opacity">
-                            <div class="flex items-center justify-center min-h-screen p-4">
-                                <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
-                                    <div class="px-4 py-5 sm:p-6">
-                                        <h3 id="modal-title" class="text-lg font-medium text-gray-900">Tambah Kelas</h3>
-                                        <div class="mt-2">
-                                            <form id="kelas-form-element" action="{{ route('kelas.store') }}" method="POST">
-                                                @csrf
-                                                <!-- Hidden Inputs if necessary -->
-                                                <input type="hidden" id="form-id" name="form-id">
-                                                <input type="hidden" id="form-mode" name="form-mode">
-
-                                                <!-- Jurusan -->
-                                                <div class="mb-4">
-                                                    <label for="id_jurusan" class="block text-sm font-medium text-gray-700">Jurusan</label>
-                                                    <select id="id_jurusan" name="id_jurusan" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
-                                                        @foreach ($jurusan as $jur)
-                                                            <option value="{{ $jur->id_jurusan }}">{{ $jur->id_jurusan }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-
-
-
-                                                <!-- Nomor Kelas -->
-                                                <div class="mb-4">
-                                                    <label for="nomor_kelas" class="block text-sm font-medium text-gray-700">Nomor Kelas</label>
-                                                    <input type="text" id="nomor_kelas" name="nomor_kelas" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
-                                                </div>
-
-                                                <div class="mb-4">
-                                                    <label for="nip" class="block text-sm font-medium text-gray-700">NUPTK</label>
-                                                    <select id="nip" name="nip" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
-                                                        @foreach ($walikelas as $wali)
-                                                            <option value="{{ $wali->nip }}">{{ $wali->nip}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-
-                                                <!-- Tingkat -->
-                                                <div class="mb-4">
-                                                    <label for="tingkat" class="block text-sm font-medium text-gray-700">Tingkat</label>
-                                                    <input type="text" id="tingkat" name="tingkat" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
-                                                </div>
-
-                                                <!-- Buttons -->
-                                                <div class="flex gap-2">
-                                                    <button type="submit" id="submit-btn" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Submit</button>
-                                                    <button type="button" id="cancel-btn" class="px-4 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-400">Cancel</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="edit-kelas-{{$item->id_kelas}}" class="fixed inset-0 z-10 hidden overflow-y-auto bg-gray-500 bg-opacity-75 transition-opacity">
-                            <div class="flex items-center justify-center min-h-screen p-4">
-                                <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
-                                    <div class="px-4 py-5 sm:p-6">
-                                        <h3 class="text-lg font-medium text-gray-900">Edit Kelas</h3>
-                                        <div class="mt-2">
-                                            <form id="edit-kelas-form-{{$item->id_kelas}}" action="{{ route('kelas.update', ['kelas' => $item->id_kelas]) }}" method="POST">
-                                                @csrf
-                                                @method('PUT')
-                                                <input type="hidden" name="id_kelas" value="{{$item->id_kelas}}">
-
-                                                <!-- Jurusan -->
-                                                <div class="mb-4">
-                                                    <label for="edit_id_jurusan_{{$item->id_kelas}}" class="block text-sm font-medium text-gray-700">Jurusan</label>
-                                                    <select id="edit_id_jurusan_{{$item->id_kelas}}" name="id_jurusan" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
-                                                        @foreach ($jurusan as $jur)
-                                                            <option value="{{ $jur->id_jurusan }}" {{ $item->id_jurusan == $jur->id_jurusan ? 'selected' : '' }}>
-                                                                {{ $jur->id_jurusan }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-
-                                                <!-- Nomor Kelas -->
-                                                <div class="mb-4">
-                                                    <label for="edit_nomor_kelas_{{$item->id_kelas}}" class="block text-sm font-medium text-gray-700">Nomor Kelas</label>
-                                                    <input type="text" id="edit_nomor_kelas_{{$item->id_kelas}}" name="nomor_kelas" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" value="{{$item->nomor_kelas}}">
-                                                </div>
-
-                                                <!-- NUPTK -->
-                                                <div class="mb-4">
-                                                    <label for="edit_nip_{{$item->id_kelas}}" class="block text-sm font-medium text-gray-700">NUPTK</label>
-                                                    <select id="nip" name="nip" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
-                                                        @foreach ($walikelas as $wali)
-                                                            <option value="{{ $wali->nip }}">{{ $wali->nip}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-
-                                                <!-- Tingkat -->
-                                                <div class="mb-4">
-                                                    <label for="edit_tingkat_{{$item->id_kelas}}" class="block text-sm font-medium text-gray-700">Tingkat</label>
-                                                    <input type="text" id="edit_tingkat_{{$item->id_kelas}}" name="tingkat" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" value="{{$item->tingkat}}" required>
-                                                </div>
-
-                                                <!-- Buttons -->
-                                                <div class="flex gap-2">
-                                                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Submit</button>
-                                                    <button type="button" onclick="closeEditModal({{$item->id_kelas}})" class="px-4 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-400">Cancel</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                      <div id="importModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-                        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-
-                            <!-- Modal Content -->
-                            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                <div class="sm:flex sm:items-start">
-                                <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
-                                    <!-- Icon Import -->
-                                    <svg class="h-6 w-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                                    </svg>
-                                </div>
-                                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                    <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Import Data Kelas</h3>
-                                    <div class="mt-2">
-                                    <form action="{{ route('kelas.import') }}" method="POST" enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="mb-4">
-                                        <label class="block text-sm font-medium text-gray-700">Pilih File (.xlsx atau .csv)</label>
-                                        <input type="file" name="importFile" accept=".xlsx, .csv" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                        </div>
-                                        <div class="flex justify-end">
-                                        <button type="button" class="mr-3 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" onclick="closeModal()">Batal</button>
-                                        <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Import</button>
-                                        </div>
-                                    </form>
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                        </div>
-
-                        <!-- Tailwind Script for Modal Interaction -->
-                        <script>
-                        function openModal() {
-                            document.getElementById('importModal').classList.remove('hidden');
-                        }
-
-                        function closeModal() {
-                            document.getElementById('importModal').classList.add('hidden');
-                        }
-                        </script>
-                        <script>
-                            function closeEditModal(id) {
-                                document.getElementById('edit-kelas-' + id).classList.add('hidden');
-                            }
-                        </script>
-
-                        @endforeach
-
-
-
-                        <script>
-                            function toggleDeleteModal(id) {
-                                const modal = document.getElementById(`delete-modal-${id}`);
-                                modal.classList.toggle('hidden');
-                            }
-                                // Function to show the modal
-                            function showModal() {
-                                document.getElementById('kelas-modal').classList.remove('hidden');
-                            }
-
-                            function toggleEditModal(id) {
-                                const modal = document.getElementById(`edit-kelas-${id}`);
-                                modal.classList.toggle('hidden');
-                            }
-
-
-                            // Function to hide the modal
-                            function hideModal() {
-                                document.getElementById('kelas-modal').classList.add('hidden');
-                            }
-
-                            // Event listener for the cancel button
-                            document.getElementById('cancel-btn').addEventListener('click', hideModal);
-
-                            // Example usage: Show the modal when a button is clicked
-                            document.getElementById('open-modal-btn').addEventListener('click', showModal);
-
-                            // function editKelas(id, jurusan, wali, nomor, tingkat) {
-                            //     document.getElementById('edit-kelas-form').action = `/kelas/${id}`;
-                            //     document.getElementById('edit-form-id').value = id;
-                            //     document.getElementById('edit_id_jurusan').value = jurusan;
-                            //     document.getElementById('edit_NUPTK').value = wali;
-                            //     document.getElementById('edit_nomor_kelas').value = nomor;
-                            //     document.getElementById('edit_tingkat').value = tingkat;
-                            //     showModal('edit-kelas-modal');
-                            // }
-
-                            document.getElementById('add-cancel-btn').addEventListener('click', () => hideModal('add-kelas-modal'));
-                            document.getElementById('edit-cancel-btn').addEventListener('click', () => hideModal('edit-kelas-modal'));
-                        </script>
                     </div>
-                    <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
-                        <span class="flex items-center col-span-3">
-                            Showing 21-30 of 100
-                        </span>
-                        <span class="col-span-2"></span>
-                        <!-- Pagination -->
-                        <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
-                            <nav aria-label="Table navigation">
-                                <ul class="inline-flex items-center">
-                                    <li>
-                                        <button
-                                            class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple"
-                                            aria-label="Previous">
-                                            <svg aria-hidden="true" class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                                <path
-                                                    d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                                                    clip-rule="evenodd" fill-rule="evenodd"></path>
+
+                    @foreach ($kelas as $item)
+                    <div id="delete-modal-{{ $item->id_kelas }}" class="fixed inset-0 z-50 hidden overflow-y-auto">
+                        <div class="flex items-center justify-center min-h-screen px-4">
+                            <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
+                                <div class="bg-gray-100 px-4 py-2 flex justify-between items-center">
+                                    <h5 class="text-lg font-bold">Peringatan!!</h5>
+                                    <button class="text-gray-500" onclick="toggleDeleteModal('{{ $item->id_kelas }}')">&times;</button>
+                                </div>
+                                <div class="px-4 py-6">
+                                    Apakah anda yakin ingin menghapus ini?
+                                </div>
+                                <div class="bg-gray-100 px-4 py-3 flex justify-end space-x-2">
+                                    <button class="bg-gray-500 text-white px-4 py-2 rounded" onclick="toggleDeleteModal('{{ $item->id_kelas }}')">Tidak</button>
+                                    <button class="bg-red-500 text-white px-4 py-2 rounded" onclick="event.preventDefault(); document.getElementById('destroy-form{{ $item->id_kelas }}').submit();">Yakin</button>
+                                </div>
+                                <form id="destroy-form{{ $item->id_kelas }}" action="{{ route('kelas.destroy', $item->id_kelas) }}" method="POST" class="hidden">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- Modal -->
+                    <!-- Modal Structure -->
+                    <div id="kelas-modal" class="fixed inset-0 z-10 hidden overflow-y-auto bg-gray-500 bg-opacity-75 transition-opacity">
+                        <div class="flex items-center justify-center min-h-screen p-4">
+                            <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
+                                <div class="px-4 py-5 sm:p-6">
+                                    <h3 id="modal-title" class="text-lg font-medium text-gray-900">Tambah Kelas</h3>
+                                    <div class="mt-2">
+                                        <form id="kelas-form-element" action="{{ route('kelas.store') }}" method="POST">
+                                            @csrf
+                                            <!-- Hidden Inputs if necessary -->
+                                            <input type="hidden" id="form-id" name="form-id">
+                                            <input type="hidden" id="form-mode" name="form-mode">
+
+                                            <!-- Jurusan -->
+                                            <div class="mb-4">
+                                                <label for="id_jurusan" class="block text-sm font-medium text-gray-700">Jurusan</label>
+                                                <select id="id_jurusan" name="id_jurusan" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
+                                                    @foreach ($jurusan as $jur)
+                                                        <option value="{{ $jur->id_jurusan }}">{{ $jur->id_jurusan }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+
+
+                                            <!-- Nomor Kelas -->
+                                            <div class="mb-4">
+                                                <label for="nomor_kelas" class="block text-sm font-medium text-gray-700">Nomor Kelas</label>
+                                                <input type="text" id="nomor_kelas" name="nomor_kelas" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
+                                            </div>
+
+                                            <div class="mb-4">
+                                                <label for="nip" class="block text-sm font-medium text-gray-700">NIP</label>
+                                                <select id="nip" name="nip" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
+                                                    @foreach ($walikelas as $wali)
+                                                        <option value="{{ $wali->nip }}">{{ $wali->nip}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+                                            <!-- Tingkat -->
+                                            <div class="mb-4">
+                                                <label for="tingkat" class="block text-sm font-medium text-gray-700">Tingkat</label>
+                                                <input type="text" id="tingkat" name="tingkat" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
+                                            </div>
+
+                                            <!-- Buttons -->
+                                            <div class="flex gap-2">
+                                                <button type="submit" id="submit-btn" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Submit</button>
+                                                <button type="button" id="cancel-btn" class="px-4 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-400">Cancel</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="edit-kelas-{{$item->id_kelas}}" class="fixed inset-0 z-10 hidden overflow-y-auto bg-gray-500 bg-opacity-75 transition-opacity">
+                        <div class="flex items-center justify-center min-h-screen p-4">
+                            <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
+                                <div class="px-4 py-5 sm:p-6">
+                                    <h3 class="text-lg font-medium text-gray-900">Edit Kelas</h3>
+                                    <div class="mt-2">
+                                        <form id="edit-kelas-form-{{$item->id_kelas}}" action="{{ route('kelas.update', ['kelas' => $item->id_kelas]) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="hidden" name="id_kelas" value="{{$item->id_kelas}}">
+
+                                            <!-- Jurusan -->
+                                            <div class="mb-4">
+                                                <label for="edit_id_jurusan_{{$item->id_kelas}}" class="block text-sm font-medium text-gray-700">Jurusan</label>
+                                                <select id="edit_id_jurusan_{{$item->id_kelas}}" name="id_jurusan" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                                                    @foreach ($jurusan as $jur)
+                                                        <option value="{{ $jur->id_jurusan }}" {{ $item->id_jurusan == $jur->id_jurusan ? 'selected' : '' }}>
+                                                            {{ $jur->id_jurusan }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+                                            <!-- Nomor Kelas -->
+                                            <div class="mb-4">
+                                                <label for="edit_nomor_kelas_{{$item->id_kelas}}" class="block text-sm font-medium text-gray-700">Nomor Kelas</label>
+                                                <input type="text" id="edit_nomor_kelas_{{$item->id_kelas}}" name="nomor_kelas" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" value="{{$item->nomor_kelas}}">
+                                            </div>
+
+                                            <!-- NIP -->
+                                            <div class="mb-4">
+                                                <label for="edit_nip_{{$item->id_kelas}}" class="block text-sm font-medium text-gray-700">NIP</label>
+                                                <select id="nip" name="nip" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
+                                                    @foreach ($walikelas as $wali)
+                                                        <option value="{{ $wali->nip }}">{{ $wali->nip}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+                                            <!-- Tingkat -->
+                                            <div class="mb-4">
+                                                <label for="edit_tingkat_{{$item->id_kelas}}" class="block text-sm font-medium text-gray-700">Tingkat</label>
+                                                <input type="text" id="edit_tingkat_{{$item->id_kelas}}" name="tingkat" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" value="{{$item->tingkat}}" required>
+                                            </div>
+
+                                            <!-- Buttons -->
+                                            <div class="flex gap-2">
+                                                <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Submit</button>
+                                                <button type="button" id="cancel-btn" class="px-4 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-400">Cancel</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  <div id="importModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+
+                        <!-- Modal Content -->
+                        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                            <div class="sm:flex sm:items-start">
+                            <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
+                                <!-- Icon Import -->
+                                <svg class="h-6 w-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                </svg>
+                            </div>
+                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Import Data Kelas</h3>
+                                <div class="mt-2">
+                                <form action="{{ route('kelas.import') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="mb-4">
+                                    <label class="block text-sm font-medium text-gray-700">Pilih File (.xlsx atau .csv)</label>
+                                    <input type="file" name="importFile" accept=".xlsx, .csv" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    </div>
+                                    <div class="flex justify-end">
+                                    <button type="button" class="mr-3 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" onclick="closeModal()">Batal</button>
+                                    <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Import</button>
+                                    </div>
+                                </form>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+
+                    @endforeach
+
+                    <script>
+                        // Show/Hide Modal Functions
+                        function showModal(modalId) {
+                            document.getElementById(modalId).classList.remove('hidden');
+                        }
+
+                        function hideModal(modalId) {
+                            document.getElementById(modalId).classList.add('hidden');
+                        }
+
+                        // Event Listeners for Modal
+                        document.getElementById('open-modal-btn').addEventListener('click', () => showModal('kelas-modal'));
+                        document.getElementById('cancel-btn').addEventListener('click', () => hideModal('kelas-modal'));
+
+                        document.querySelectorAll('.edit-btn').forEach(btn => {
+                            btn.addEventListener('click', () => showModal(`edit-kelas-${btn.dataset.id}`));
+                        });
+
+                        document.querySelectorAll('.delete-btn').forEach(btn => {
+                            btn.addEventListener('click', () => showModal(`delete-modal-${btn.dataset.id}`));
+                        });
+
+                        function sortTable(n) {
+                            const table = document.getElementById("kelas-table");
+                            const rows = Array.from(table.rows).slice(1); // Get rows, skipping the header
+                            const sortDirection = table.dataset.sortDirection === "asc" ? "desc" : "asc";
+
+                            rows.sort((a, b,c,d,e) => {
+                                const aText = a.cells[n].textContent.trim();
+                                const bText = b.cells[n].textContent.trim();
+                                const cText = b.cells[n].textContent.trim();
+                                const dText = b.cells[n].textContent.trim();
+                                const eText = b.cells[n].textContent.trim();
+                                return sortDirection === "asc" ? aText.localeCompare(bText) : bText.localeCompare(aText);
+                            });
+
+                            // Remove existing rows
+                            const tbody = table.querySelector('tbody');
+                            tbody.innerHTML = "";
+
+                            // Append sorted rows
+                            rows.forEach(row => tbody.appendChild(row));
+
+                            // Update sort direction
+                            table.dataset.sortDirection = sortDirection;
+
+                            // Update sort icons
+                            updateSortIcons(n, sortDirection);
+                        }
+
+                        function updateSortIcons(n, direction) {
+                            const icons = document.querySelectorAll('[id^="sort-icon-"]');
+                            icons.forEach(icon => icon.classList.add('hidden'));
+                            const sortIcon = document.getElementById(`sort-icon-${n}`);
+                            sortIcon.classList.remove('hidden');
+                            sortIcon.style.transform = direction === 'asc' ? 'rotate(180deg)' : 'rotate(0deg)';
+                        }
+
+                        // Search Function
+                        function searchTable() {
+                            const input = document.getElementById("search-input").value.toLowerCase();
+                            const rows = document.querySelectorAll("#kelas-tbody tr");
+
+                            rows.forEach(row => {
+                                const cells = row.querySelectorAll("td");
+                                const match = Array.from(cells).some(cell => cell.textContent.toLowerCase().includes(input));
+                                row.style.display = match ? "" : "none";
+                            });
+                        }
+
+                        function clearSearch() {
+                            document.getElementById("search-input").value = "";
+                            searchTable();
+                        }
+                    </script>
+                      <div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+                        <div class="flex flex-1 justify-between sm:hidden">
+                            @if ($kelas->previousPageUrl())
+                                <a href="{{ $kelas->previousPageUrl() }}"
+                                    class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Previous</a>
+                            @endif
+                            @if ($kelas->nextPageUrl())
+                                <a href="{{ $kelas->nextPageUrl() }}"
+                                    class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Next</a>
+                            @endif
+                        </div>
+
+                        <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+                            <div>
+                                <p class="text-sm text-gray-700">
+                                    Showing
+                                    <span class="font-medium">{{ $kelas->firstItem() }}</span>
+                                    to
+                                    <span class="font-medium">{{ $kelas->lastItem() }}</span>
+                                    of
+                                    <span class="font-medium">{{ $kelas->total() }}</span>
+                                    results
+                                </p>
+                            </div>
+                            <div>
+                                <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm"
+                                    aria-label="Pagination">
+                                    @if ($kelas->onFirstPage())
+                                        <span
+                                            class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300">
+                                            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd"
+                                                    d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z"
+                                                    clip-rule="evenodd" />
                                             </svg>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button
-                                            class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
-                                            1
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button
-                                            class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
-                                            2
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button
-                                            class="px-3 py-1 text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600 rounded-md focus:outline-none focus:shadow-outline-purple">
-                                            3
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button
-                                            class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
-                                            4
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <span class="px-3 py-1">...</span>
-                                    </li>
-                                    <li>
-                                        <button
-                                            class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
-                                            8
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button
-                                            class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
-                                            9
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button
-                                            class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple"
-                                            aria-label="Next">
-                                            <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
-                                                <path
-                                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                                    clip-rule="evenodd" fill-rule="evenodd"></path>
+                                        </span>
+                                    @else
+                                        <a href="{{ $kelas->previousPageUrl() }}"
+                                            class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20">
+                                            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd"
+                                                    d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z"
+                                                    clip-rule="evenodd" />
                                             </svg>
-                                        </button>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </span>
+                                        </a>
+                                    @endif
+
+                                    @foreach ($kelas->links()->elements as $element)
+                                        @if (is_string($element))
+                                            <span
+                                                class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300">{{ $element }}</span>
+                                        @endif
+
+                                        @if (is_array($element))
+                                            @foreach ($element as $page => $url)
+                                                @if ($page == $kelas->currentPage())
+                                                    <span aria-current="page"
+                                                        class="relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white">{{ $page }}</span>
+                                                @else
+                                                    <a href="{{ $url }}"
+                                                        class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">{{ $page }}</a>
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                    @endforeach
+
+                                    @if ($kelas->hasMorePages())
+                                        <a href="{{ $kelas->nextPageUrl() }}"
+                                            class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                                            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd"
+                                                    d="M8.22 14.78a.75.75 0 0 1 0-1.06L11.94 10 8.22 6.28a.75.75 0 1 1 1.06-1.06l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0Z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </a>
+                                    @endif
+                                </nav>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                    </div>
+
+
+
+
         </div>
         </main>
     </div>

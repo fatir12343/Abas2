@@ -85,7 +85,7 @@
 
                   <li class="relative px-6 py-3">
                       <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                          href="/kesiswaan">
+                          href="{{route('kesiswaan.dashboard')}}">
                           <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                               stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                               <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
@@ -202,7 +202,7 @@
 
                   <li class="relative px-6 py-3">
                       <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                          href="/kesiswaan">
+                          href="{{route('kesiswaan.dashboard')}}">
                           <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                               stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                               <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
@@ -509,78 +509,74 @@
             </a> --}}
             <!-- Cards -->
 
-
-            <!-- New Table -->
             <div class="container mx-auto mt-2">
-                {{-- <h1>Daftar Siswa di Kelas {{ $kelas->tingkat }} {{ $kelas->jurusan->nama_jurusan }}</h1> --}}
-
-                <!-- Display Success Messages -->
+                <!-- Display Success and Error Messages -->
                 @if (session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
                     </div>
                 @endif
-
-                <!-- Display Error Messages -->
                 @if (session('error'))
                     <div class="alert alert-danger">
                         {{ session('error') }}
                     </div>
                 @endif
-                
-                 <!-- Add New Student Button -->
-                 <div class="mt-4">
-                    <button
-                        class="px-4 py-2 bg-blue-600 text-white rounded-lg"
-                        onclick="toggleModalAdd()"
-                    >
-                        Tambah Siswa Baru
-                    </button>
-                    <button class="px-4 py-2 bg-green-600 text-white rounded-lg" onclick="openSiswaModal()">
-                        Import
-                    </button>
-                </div> 
+            
+                <!-- Search and Add New Student Button -->
+                <div class="flex justify-between items-center mb-4">
+                    <!-- Search Input -->
+                    <div class="flex items-center space-x-2">
+                        <input
+                            type="text"
+                            id="search-input"
+                            placeholder="Cari..."
+                            class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            oninput="searchTable()"
+                        />
+                        <button class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400" onclick="clearSearch()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+            
+                    <!-- Buttons for Add and Import -->
+                    <div class="flex space-x-2">
+                        <button onclick="toggleModalAdd()" class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                            <i class="fas fa-plus mr-2"></i> Tambah Siswa
+                        </button>
+                        <button class="flex items-center bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-600" onclick="openSiswaModal()">
+                            <i class="fas fa-file-import mr-2"></i> Import
+                        </button>
+                    </div>
+                </div>
+            
                 <!-- List of Students -->
                 <div class="w-full overflow-hidden rounded-lg shadow-xs">
                     <div class="w-full overflow-x-auto">
                         <table class="w-full whitespace-no-wrap">
                             <thead>
-                                <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                                    <th class="px-4 py-3">NIS</th>
-                                    <th class="px-4 py-3">ID_USER</th>
-                                    <th class="px-4 py-3">ID_kelas</th>
-                                    <th class="px-4 py-3">NIK</th>
-                                    <th class="px-4 py-3">Jenis Kelamin</th>
-                                    <th class="px-4 py-3">NISN</th>
+                                <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-gray-50">
+                                    <th onclick="sortTable(0)" class="px-4 py-3 cursor-pointer">NIS <span id="sort-icon-0" class="ml-1 fa fa-sort"></span></th>
+                                    <th onclick="sortTable(1)" class="px-4 py-3 cursor-pointer">Kelas <span id="sort-icon-1" class="ml-1 fa fa-sort"></span></th>
+                                    <th onclick="sortTable(2)" class="px-4 py-3 cursor-pointer">Nama <span id="sort-icon-2" class="ml-1 fa fa-sort"></span></th>
+                                    <th onclick="sortTable(3)" class="px-4 py-3 cursor-pointer">Jenis Kelamin <span id="sort-icon-3" class="ml-1 fa fa-sort"></span></th>
+                                    <th onclick="sortTable(4)" class="px-4 py-3 cursor-pointer">NISN <span id="sort-icon-4" class="ml-1 fa fa-sort"></span></th>
                                     <th class="px-4 py-3">Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                            <tbody id="kelas-tbody" class="bg-white divide-y">
                                 @foreach ($siswa as $s)
-                                <tr class="text-gray-700 dark:text-gray-400">
-                                    <td class="px-4 py-3 text-sm">{{ $s->nis }}</td>
-                                    <td class="px-4 py-3 text-sm">{{ $s->id_user }}</td>
-                                    <td class="px-4 py-3 text-sm">{{ $s->id_kelas }}</td>
-                                    <td class="px-4 py-3 text-sm">{{ $s->nik }}</td>
-                                    <td class="px-4 py-3 text-sm">{{ $s->jenis_kelamin }}</td>
-                                    <td class="px-4 py-3 text-sm">{{ $s->nisn }}</td>
+                                    <tr class="text-gray-700">
+                                        <td class="px-4 py-3 text-sm">{{ $s->nis }}</td>
+                                        <td class="px-4 py-3 text-sm">{{ strtoupper($s->kelas->tingkat . ' ' . $s->kelas->id_jurusan . ' ' . $s->kelas->nomor_kelas) }}</td>
+                                        <td class="px-4 py-3 text-sm">{{ $s->user->name }}</td>
+                                        <td class="px-4 py-3 text-sm">{{ $s->jenis_kelamin }}</td>
+                                        <td class="px-4 py-3 text-sm">{{ $s->nisn }}</td>            
                                     <td class="px-4 py-3 text-sm">
                                         <div class="flex space-x-2">
                                             <!-- Edit Button -->
-                                            <button
-                                                class="flex items-center px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                                aria-label="Edit"
-                                                onclick="toggleModalEdit('{{ $s->id }}')"
-                                            >
-                                                <svg
-                                                    class="w-5 h-5"
-                                                    aria-hidden="true"
-                                                    fill="currentColor"
-                                                    viewBox="0 0 20 20"
-                                                >
-                                                    <path
-                                                        d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
-                                                    ></path>
+                                            <button onclick="toggleModalEdit('{{ $s->id }}')" class="flex items-center px-2 py-2 text-sm font-medium text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none">
+                                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
                                                 </svg>
                                             </button>
 
@@ -588,22 +584,9 @@
                                             <form action="{{ route('siswa.destroy', ['id' => $s->id_user]) }}" method="POST" class="inline">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button
-                                                    type="submit"
-                                                    class="flex items-center px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                                    aria-label="Delete"
-                                                >
-                                                    <svg
-                                                        class="w-5 h-5"
-                                                        aria-hidden="true"
-                                                        fill="currentColor"
-                                                        viewBox="0 0 20 20"
-                                                    >
-                                                        <path
-                                                            fill-rule="evenodd"
-                                                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 012 0v6a1 1 11-2 0V8zm5-1a1 1 00-1 1v6a1 1 102 0V8a1 1 00-1-1z"
-                                                            clip-rule="evenodd"
-                                                        ></path>
+                                                <button type="submit" class="flex items-center px-2 py-2 text-sm font-medium text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none">
+                                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 012 0v6a1 1 11-2 0V8zm5-1a1 1 00-1 1v6a1 1 102 0V8a1 1 00-1-1z" clip-rule="evenodd"></path>
                                                     </svg>
                                                 </button>
                                             </form>
@@ -615,28 +598,25 @@
                                 <div id="modal-edit-{{ $s->id }}" class="fixed inset-0 z-50 hidden overflow-y-auto">
                                     <div class="flex items-center justify-center min-h-screen px-4">
                                         <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
-                                            <form action="{{ route('siswa.update', $s->nis) }}" method="POST">
+                                            <form action="{{ route('siswa.update', $s->id_user) }}" method="POST">
                                                 @csrf
                                                 @method('PUT')
-                                                <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                                    <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Edit Siswa</h3>
+                                                <div class="px-4 pt-5 pb-4 sm:p-6">
+                                                    <h3 class="text-lg font-medium text-gray-900 mb-4">Edit Siswa</h3>
                                                     <div class="mb-4">
                                                         <label for="nis">NIS</label>
                                                         <input type="text" name="nis" class="form-control" value="{{ $s->nis }}" required>
                                                     </div>
-                                                    <div class="mb-4">
-                                                        <label for="id">ID_USER</label>
-                                                        <input type="id" name="id_user" class="form-control" value="{{ $s->id_user }}" required>
+                                                    <div class="col mb-3">
+                                                        <label for="kelas" class="form-label">Kelas</label>
+                                                        <select name="kelas" class="form-control" required>
+                                                            <option hidden>Pilih Kelas</option>
+                                                            @foreach ($kelas as $k)
+                                                                <option value="{{ $k->id_kelas }}">{{ $k->tingkat }} {{ strtoupper($k->id_jurusan) }} {{ $k->nomor_kelas }}</option>
+                                                            @endforeach
+                                                        </select>
+                                
                                                     </div>
-                                                    <div class="mb-4">
-                                                        <label for="id">ID_KELAS</label>
-                                                        <input type="id" name="id_kelas" class="form-control" value="{{ $s->id_kelas }}" required>
-                                                    </div>
-                                                    <div class="mb-4">
-                                                        <label for="nik">NIK</label>
-                                                        <input type="text" name="nik" class="form-control" value="{{ $s->nik }}" required>
-                                                    </div>
-
                                                     <div class="mb-4">
                                                         <label for="jenis_kelamin">Jenis Kelamin</label>
                                                         <select name="jenis_kelamin" class="form-control" required>
@@ -649,13 +629,9 @@
                                                         <input type="text" name="nisn" class="form-control" value="{{ $s->nisn }}" required>
                                                     </div>
                                                 </div>
-                                                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                                                    <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
-                                                        Simpan Perubahan
-                                                    </button>
-                                                    <button type="button" onclick="toggleModalEdit('{{ $s->id }}')" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-                                                        Batal
-                                                    </button>
+                                                <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse">
+                                                    <button type="submit" class="w-full inline-flex justify-center rounded-md bg-blue-600 text-white px-4 py-2 font-medium hover:bg-blue-700 focus:outline-none sm:ml-3 sm:w-auto">Simpan Perubahan</button>
+                                                    <button type="button" onclick="toggleModalEdit('{{ $s->id }}')" class="mt-3 w-full inline-flex justify-center rounded-md bg-white text-gray-700 px-4 py-2 font-medium hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto">Batal</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -665,37 +641,31 @@
                                 <!-- Delete Confirmation Modal -->
                                 <div id="modal-{{ $s->id }}" class="fixed inset-0 z-50 hidden overflow-y-auto">
                                     <div class="flex items-center justify-center min-h-screen px-4">
-                                        <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
+                                        <div class="bg-white rounded-lg overflow-hidden shadow-xl max-w-lg w-full">
                                             <div class="bg-gray-100 px-4 py-2 flex justify-between items-center">
                                                 <h5 class="text-lg font-bold">Peringatan!!</h5>
                                                 <button class="text-gray-500" onclick="toggleModal('{{ $s->id }}')">&times;</button>
                                             </div>
-                                            <div class="px-4 py-6">
-                                                Apakah anda yakin ingin menghapus siswa <strong>{{ $s->nis }}</strong> ?
-                                            </div>
-                                            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                                            <div class="px-4 py-6">Apakah anda yakin ingin menghapus siswa <strong>{{ $s->nis }}</strong>?</div>
+                                            <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse">
                                                 <form action="{{ route('siswa.destroy',['id' => $s->id_user]) }}" method="POST" class="inline">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
-                                                        Hapus
-                                                    </button>
+                                                    <button type="submit" class="w-full inline-flex justify-center rounded-md bg-red-600 text-white px-4 py-2 font-medium hover:bg-red-700 focus:outline-none sm:ml-3 sm:w-auto">Hapus</button>
                                                 </form>
-                                                <button type="button" onclick="toggleModal('{{ $s->id }}')" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-                                                    Batal
-                                                </button>
+                                                <button type="button" onclick="toggleModal('{{ $s->id }}')" class="mt-3 w-full inline-flex justify-center rounded-md bg-white text-gray-700 px-4 py-2 font-medium hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto">Batal</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
 
-               
+
+
 
                 <!-- Add Siswa Modal -->
                 <div id="add-siswa-modal" class="fixed inset-0 z-50 hidden overflow-y-auto">
@@ -703,43 +673,58 @@
                         <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
                             <form action="{{ route('siswa.store') }}" method="POST">
                                 @csrf
-                                <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                <div class="px-6 pt-5 pb-4 sm:pt-6 sm:pb-4">
                                     <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Tambah Siswa Baru</h3>
+                
                                     <div class="mb-4">
-                                        <label for="nis">NIS</label>
-                                        <input type="text" name="nis" id="nis" class="form-control" required>
+                                        <label for="name" class="form-label">Nama</label>
+                                        <input type="text" name="name" id="name" class="form-control" required placeholder="Masukkan Nama Siswa">
                                     </div>
+                
                                     <div class="mb-4">
-                                        <label for="id_user">ID_USER</label>
-                                        <input type="id" name="id_user" id="id_user" class="form-control" required>
+                                        <label for="password" class="form-label">Password</label>
+                                        <input type="password" name="password" id="password" class="form-control" placeholder="Default Password '12345678'">
                                     </div>
+                
                                     <div class="mb-4">
-                                        <label for="id_kelas">ID_Kelas</label>
-                                        <input type="id" name="id_kelas" id="id_kelas" class="form-control" required>
+                                        <label for="id_kelas" class="form-label">Kelas</label>
+                                        <select name="id_kelas" class="form-control" required>
+                                            <option hidden>Pilih Kelas</option>
+                                            @foreach ($kelas as $k)
+                                                <option value="{{ $k->id_kelas }}">{{ $k->tingkat }} {{ strtoupper($k->id_jurusan) }} {{ $k->nomor_kelas }}</option>
+                                            @endforeach
+                                        </select>                
                                     </div>
+                
                                     <div class="mb-4">
-                                        <label for="nik">NIK</label>
-                                        <input type="text" name="nik" id="nik" class="form-control" required>
+                                        <label for="nis" class="form-label">NIS</label>
+                                        <input type="text" name="nis" id="nis" class="form-control" required placeholder="Masukkan NIS">
                                     </div>
-
+                
                                     <div class="mb-4">
-                                        <label for="jenis_kelamin">Jenis Kelamin</label>
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="email" name="email" id="email" class="form-control" required placeholder="contoh@example.com">
+                                    </div>
+                
+                                    <div class="mb-4">
+                                        <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
                                         <select name="jenis_kelamin" id="jenis_kelamin" class="form-control" required>
-                                            <option value="L">Laki-laki</option>
-                                            <option value="P">Perempuan</option>
+                                            <option value="Laki-laki">Laki-laki</option>
+                                            <option value="Perempuan">Perempuan</option>
                                         </select>
                                     </div>
-
+                
                                     <div class="mb-4">
-                                        <label for="nisn">NISN</label>
-                                        <input type="text" name="nisn" id="nisn" class="form-control" required>
+                                        <label for="nisn" class="form-label">NISN</label>
+                                        <input type="text" name="nisn" id="nisn" class="form-control" required placeholder="Masukkan NISN">
                                     </div>
                                 </div>
-                                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                                    <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm">
+                
+                                <div class="bg-gray-50 px-4 py-3 sm:px-6 flex justify-end space-x-3">
+                                    <button type="submit" class="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:w-auto sm:text-sm">
                                         Tambah Siswa
                                     </button>
-                                    <button type="button" onclick="toggleModalAdd()" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                                    <button type="button" onclick="toggleModalAdd()" class="inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:w-auto sm:text-sm">
                                         Batal
                                     </button>
                                 </div>
@@ -747,11 +732,13 @@
                         </div>
                     </div>
                 </div>
+                
 
+               {{-- Modal Impor Data Siswa --}}
                 <div id="importSiswaModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
                     <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                         <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-                
+
                         <!-- Modal Content -->
                         <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                             <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
@@ -763,17 +750,21 @@
                                         </svg>
                                     </div>
                                     <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                        <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Import Data Siswa</h3>
-                                        <div class="mt-2">
+                                        <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Impor Data Siswa</h3>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <p>Gunakan <a href={{ route('formatsiswa') }}><i><u>Format
+                                                                Ini</u></i></a> Untuk Impor Data!</p>
+                                            </div>
                                             <form action="{{ route('siswa.import') }}" method="POST" enctype="multipart/form-data">
                                                 @csrf
                                                 <div class="mb-4">
                                                     <label class="block text-sm font-medium text-gray-700">Pilih File (.xlsx atau .csv)</label>
-                                                    <input type="file" name="importFile" accept=".xlsx, .csv" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                                    <input name="file" type="file" accept=".xlsx, .csv" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                                 </div>
                                                 <div class="flex justify-end">
                                                     <button type="button" class="mr-3 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" onclick="closeSiswaModal()">Batal</button>
-                                                    <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Import</button>
+                                                    <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Impor</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -783,6 +774,9 @@
                         </div>
                     </div>
                 </div>
+
+
+
             </div>
 
             <!-- JavaScript for Modal Toggle -->
@@ -808,7 +802,134 @@
             function closeSiswaModal() {
                 document.getElementById('importSiswaModal').classList.add('hidden');
             }
+
+           // Sorting Function
+                        let currentSort = { column: null, ascending: true };
+
+                    function sortTable(columnIndex) {
+                        const tableBody = document.getElementById("kelas-tbody");
+                        const rows = Array.from(tableBody.rows);
+
+                        // Toggle sort direction
+                        currentSort.ascending = currentSort.column === columnIndex ? !currentSort.ascending : true;
+                        currentSort.column = columnIndex;
+
+                        // Sort rows
+                        rows.sort((a, b) => {
+                            const cellA = a.cells[columnIndex].innerText.toLowerCase();
+                            const cellB = b.cells[columnIndex].innerText.toLowerCase();
+                            return cellA < cellB ? (currentSort.ascending ? -1 : 1) : (cellA > cellB ? (currentSort.ascending ? 1 : -1) : 0);
+                        });
+
+                        // Update table with sorted rows
+                        tableBody.innerHTML = "";
+                        rows.forEach(row => tableBody.appendChild(row));
+                        updateSortIcons();
+                    }
+
+                    function updateSortIcons() {
+                        document.querySelectorAll("thead th span").forEach(icon => icon.className = "ml-1 fa fa-sort");
+                        const icon = document.getElementById(`sort-icon-${currentSort.column}`);
+                        icon.className = currentSort.ascending ? "ml-1 fa fa-sort-up" : "ml-1 fa fa-sort-down";
+                    }
+
+                    // Search Function
+                    function searchTable() {
+                        const input = document.getElementById("search-input").value.toLowerCase();
+                        const rows = document.querySelectorAll("#kelas-tbody tr");
+
+                        rows.forEach(row => {
+                            const cells = row.querySelectorAll("td");
+                            const match = Array.from(cells).some(cell => cell.textContent.toLowerCase().includes(input));
+                            row.style.display = match ? "" : "none";
+                        });
+                    }
+
+                    function clearSearch() {
+                        document.getElementById("search-input").value = "";
+                        searchTable();
+                    }
             </script>
+             <div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+                <div class="flex flex-1 justify-between sm:hidden">
+                    @if ($siswa->previousPageUrl())
+                        <a href="{{ $siswa->previousPageUrl() }}"
+                            class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Previous</a>
+                    @endif
+                    @if ($siswa->nextPageUrl())
+                        <a href="{{ $siswa->nextPageUrl() }}"
+                            class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Next</a>
+                    @endif
+                </div>
+
+                <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+                    <div>
+                        <p class="text-sm text-gray-700">
+                            Showing
+                            <span class="font-medium">{{ $siswa->firstItem() }}</span>
+                            to
+                            <span class="font-medium">{{ $siswa->lastItem() }}</span>
+                            of
+                            <span class="font-medium">{{ $siswa->total() }}</span>
+                            results
+                        </p>
+                    </div>
+                    <div>
+                        <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm"
+                            aria-label="Pagination">
+                            @if ($siswa->onFirstPage())
+                                <span
+                                    class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300">
+                                    <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                            @else
+                                <a href="{{ $siswa->previousPageUrl() }}"
+                                    class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20">
+                                    <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </a>
+                            @endif
+
+                            @foreach ($siswa->links()->elements as $element)
+                                @if (is_string($element))
+                                    <span
+                                        class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300">{{ $element }}</span>
+                                @endif
+
+                                @if (is_array($element))
+                                    @foreach ($element as $page => $url)
+                                        @if ($page == $siswa->currentPage())
+                                            <span aria-current="page"
+                                                class="relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white">{{ $page }}</span>
+                                        @else
+                                            <a href="{{ $url }}"
+                                                class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">{{ $page }}</a>
+                                        @endif
+                                    @endforeach
+                                @endif
+                            @endforeach
+
+                            @if ($siswa->hasMorePages())
+                                <a href="{{ $siswa->nextPageUrl() }}"
+                                    class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                                    <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M8.22 14.78a.75.75 0 0 1 0-1.06L11.94 10 8.22 6.28a.75.75 0 1 1 1.06-1.06l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0Z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </a>
+                            @endif
+                        </nav>
+                    </div>
+                </div>
+            </div>
 
         </main>
       </div>

@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\Format_siswa;
+use App\Exports\Format_walikelas;
+use App\Exports\Format_walisiwa;
 use App\Imports\KelasImport;
 use App\Imports\SiswaImport;
 use App\Imports\WalikelasImport;
 use App\Imports\WalisiswaImport;
+use App\Models\absensi;
 use App\Models\koordinat_sekolah;
 use App\Models\waktu_absen;
 use App\Models\wali_siswa;
@@ -34,7 +38,7 @@ class OperatorController extends Controller
     {
 
         $jenis_Kelamin = ['laki-laki','Perempuan'];
-        $wali = wali_kelas::all();
+        $wali = wali_kelas::paginate(4);
         return view('operator.wali', compact('wali','jenis_Kelamin'));
     }
 
@@ -54,7 +58,10 @@ class OperatorController extends Controller
 
         return redirect()->back()->with('success', 'Data Kelas Berhasil di import.');
     }
-
+    public function Formatwali()
+    {
+        return Excel::download(new Format_walikelas, 'formatwalikelas.xlsx');
+    }
     public function storeWali(Request $request)
     {
 
@@ -99,11 +106,11 @@ class OperatorController extends Controller
         return redirect()->back()->with('success', 'Wali Kelas berhasil ditambahkan.');
     }
 
-    public function editWali(string $nip): View
-    {
-        $waliKelas =wali_kelas::findOrFail(id: $nip);
-        return view('operator.edit_wali', compact('waliKelas'));
-    }
+    // public function editWali(string $nip): View
+    // {
+    //     $waliKelas =wali_kelas::findOrFail(id: $nip);
+    //     return view('operator.edit_wali', compact('waliKelas'));
+    // }
 
     public function updateWali(Request $request)
     {
@@ -134,10 +141,11 @@ class OperatorController extends Controller
 
     public function kelas()
     {
-        $kelas = Kelas::with('walikelas')->paginate(10);
+        $kelas = Kelas::paginate(3);
+        $id_kelas = Kelas::withCount('siswa')->get();
         $jurusan = Jurusan::all();
-        $walikelas = Wali_Kelas::all();
-        return view('Operator.kelas', compact('kelas', 'jurusan', 'walikelas'));
+        $walikelas = Wali_Kelas::doesntHave('kelas')->get();
+        return view('Operator.kelas', compact('kelas', 'jurusan', 'walikelas','id_kelas'));
     }
     public function import(Request $request)
     {
@@ -149,12 +157,7 @@ class OperatorController extends Controller
 
         return redirect()->back()->with('success', 'Data Kelas Berhasil di import.');
     }
-    public function create()
-    {
-        // $jurusan = Jurusan::all();
-        // $walikelas = Wali_kelas::all();
-        // return view('operator.kelas', ['jurusan' => $jurusan, 'walikelas' => $walikelas, 'action' => 'create']);
-    }
+
 
     public function storekelas(Request $request)
     {
@@ -170,18 +173,7 @@ class OperatorController extends Controller
         return redirect()->back()->with('success', 'Data Berhasil Ditambahkan!');
     }
 
-    // public function show(Kelas $kelas)
-    // {
-    //     return view('operator.kelas', ['kelas' => $kelas, 'action' => 'show']);
-    // }
 
-    // public function edit(string $id_jurusan): View
-    // {
-
-    //     $Kelas =wali_kelas::findOrFail($id_jurusan);
-    //     return view('kelas.wali', compact('kelas'));
-
-    // }
 
     public function update(Request $request, string $id_kelas)
     {
@@ -244,15 +236,10 @@ class OperatorController extends Controller
 
     public function siswa($id)
     {
-        $siswa = Siswa::where('id_kelas', $id)->get();
-        // $siswa = Siswa::where('id_kelas', $kelas->id_kelas)->get();
-        // $siswa = Siswa::where('id_kelas', $kelas->id_kelasid)->get();
-        // return $siswa;
-        // $siswa = $kelas->siswa()->with('user')->get();
-        // return $kelas;
-        $siswa = siswa::all();
+        $siswa = siswa::with('user', 'kelas')->paginate(10);
+        $kelas = kelas::with('jurusan', 'walikelas')->get();
 
-        return view('operator.siswa', compact( 'siswa'));
+        return view('operator.siswa', compact('siswa', 'kelas'));
     }
 
     public function importsiswa(Request $request)
@@ -266,63 +253,106 @@ class OperatorController extends Controller
         return redirect()->back()->with('success', 'Data Kelas Berhasil di import.');
     }
 
+    public function Formatsiswa()
+    {
+        return Excel::download(new Format_siswa, 'formatSiswa.xlsx');
+    }
+
     public function storesiswa(Request $request)
 {
-    // Pastikan data request tidak null dengan pengecekan sederhana
-    if ($request->has(['name', 'email', 'password', 'nis', 'id_kelas', 'jenis_kelamin', 'nisn'])) {
-        // Buat user baru jika semua data yang dibutuhkan tersedia
+    // Validasi data sebelum pemrosesan
+    $request->validate([
+        'id' => 'whereclause|integer',
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email',
+        'password' => 'nullable|string|min:8',
+        'nis' => 'required|numeric|unique:siswa,nis',
+        'id_kelas' => 'required|exists:kelas,id', // Pastikan id_kelas valid
+        'jenis_kelamin' => 'required|in:Laki laki,Perempuan', // Validasi hanya Laki-laki atau Perempuan
+        'nisn' => 'nullable|numeric',
+        'nik_ayah' => 'nullable|numeric',
+        'nik_ibu' => 'nullable|numeric',
+        'nik_wali' => 'nullable|numeric',
+    ]);
+    if (strlen($request->password) > 0) {
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'password' => password_hash($request->password, PASSWORD_DEFAULT),
+            'role' => 'siswa'
         ]);
 
-        // Insert data siswa jika user berhasil dibuat
-        Siswa::create([
+        Siswa::insert([
             'nis' => $request->nis,
-            'id_user' => $user->id, // Pastikan user->id adalah kolom yang benar
+            'id_user' => $user->id,
             'id_kelas' => $request->id_kelas,
             'jenis_kelamin' => $request->jenis_kelamin,
             'nisn' => $request->nisn,
+            'nik_ayah' => $request->nik_ayah ?? null,
+            'nik_ibu' => $request->nik_ibu ?? null,
+            'nik_wali' => $request->nik_wali ?? null,
+        ]);
+    } else {
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'role' => 'wali'
         ]);
 
-        return redirect()->back()->with('success', 'Data Berhasil Ditambahkan!');
+        Siswa::insert([
+            'nis' => $request->nis,
+            'id_user' => $user->id,
+            'id_kelas' => $request->id_kelas,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'nisn' => $request->nisn,
+            'nik_ayah' => $request->nik_ayah ?? null,
+            'nik_ibu' => $request->nik_ibu ?? null,
+            'nik_wali' => $request->nik_wali ?? null,
+        ]);
     }
-
-    // Jika data yang dibutuhkan tidak tersedia, kembali dengan pesan error
-    return redirect()->back()->with('error', 'Data tidak lengkap, periksa kembali input Anda.');
+    return redirect()->back()->with('success', value: 'Data Berhasil Ditambahkan!');
 }
 
 
-    public function updatesiswa(Request $request, $id)
-    {
-        DB::table('siswa')->where('siswa_id', $request->id)->update([
-            'nis' => $request->nis,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'nisn' => $request->nisn,
-        ]);
+public function updatesiswa(Request $r)
+{
+    DB::table('siswas')->where('id_user', $r->id)->update([
+        'nis' => $r->nis,
+        'jenis_kelamin' => $r->jenis_kelamin,
+        'nisn' => $r->nisn,
+        'nik_ayah' => $r->nik_ayah ?? null,
+        'nik_ibu' => $r->nik_ibu ?? null,
+        'nik_wali' => $r->nik_wali ?? null,
+    ]);
 
 
-        //DB user
-        DB::table('user')->where('id', $request->id)->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => password_hash($request->password, PASSWORD_DEFAULT),
-        ]);
+    //DB user
+    DB::table('users')->where('id', $r->id)->update([
+        'nama' => $r->name,
+        'email' => $r->email,
+        'password' => password_hash($r->password, PASSWORD_DEFAULT),
+    ]);
 
-        return redirect()->back()->with('success', 'Data Berhasil Diupdate!');
-    }
+    return redirect()->back()->with('success', 'Data Berhasil Diupdate!');
+}
 
-    public function destroysiswa($id)
-    {
-        $siswa = User::find($id);
-        $siswa->delete();
 
-        return redirect()->back()->with('success', 'Data Berhasil Dihapus!');
-    }
+public function destroysiswa($id)
+{
+    // Hapus data absensi terkait terlebih dahulu
+    absensi::where('nis', siswa::where('id_user', $id)->value('nis'))->delete();
+
+    // Hapus data siswa dan user
+    siswa::where('id_user', $id)->delete();
+    User::find($id)->delete();
+
+    return redirect()->back()->with('success', 'Data siswa berhasil dihapus');
+}
+
 
     public function kesiswaan()
     {
+        // $kesiswaan = kesiswaan::paginate(3);
         $kesiswaan = User::where('role', 'kesiswaan')->get();
         return view('operator.kesiswaan', compact('kesiswaan'));
     }
@@ -389,6 +419,10 @@ class OperatorController extends Controller
         return redirect()->back()->with('success', 'Data Kelas Berhasil di import.');
     }
 
+    public function Formatwalisiwa()
+    {
+        return Excel::download(new Format_walisiwa, 'formatWalisiwa.xlsx');
+    }
     // Simpan data wali baru
     public function storewalis(Request $r)
     {
@@ -428,13 +462,13 @@ class OperatorController extends Controller
     }
 
     // Update data wali
-    public function updatewalis(Request $r)
+    public function updatewalis(Request $r, $id)
     {
        //DB wali
        wali_siswa::where('id_user', $r->id)->update([
         'nik' => $r->nik,
         'jenis_kelamin' => $r->jenis_kelamin,
-        'alamat' => $r->alamat,
+        'alamat' => $r->alamat
     ]);
 
 
@@ -447,8 +481,11 @@ class OperatorController extends Controller
         'password' => password_hash($r->password, PASSWORD_DEFAULT),
     ]);
 
-    return redirect()->back()->with('success', 'walis ' . $user->name . ' Berhasil Diedit');
-    }
+    return redirect()->back()->with('success', 'Wali Siswa ' . $user->name . ' Berhasil Diedit');
+}
+    
+    
+
 
     // Hapus data wali
     public function destroywalis($id)

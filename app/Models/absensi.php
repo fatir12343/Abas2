@@ -21,8 +21,8 @@ class absensi extends Model
         'photo_in',
         'photo_out',
         'date',
-        'jam_masuk',
-        'jam_pulang',
+        'mulai_absen',
+        'mulai_pulang',
         'titik_koordinat',
     ];
 

@@ -559,7 +559,7 @@
                         </div>
                         <!-- Total TAP -->
                         <div class="bg-white p-8 rounded-lg shadow-lg text-center">
-                            <h2 class="text-3xl font-bold text-purple-500">{{ $countTAP }} ({{ number_format($percentageTAP, 2) }}%)</h2>
+                            <h2 class="text-3xl font-bold text-purple-500">{{ $countTAP }}</h2>
                             <p class="mt-2 text-gray-700">Total TAP</p>
                         </div>
                     </div>

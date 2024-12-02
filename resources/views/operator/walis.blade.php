@@ -74,7 +74,7 @@
 
                     <li class="relative px-6 py-3">
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="/kesiswaan">
+                            href="{{route('kesiswaan.dashboard')}}">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                 <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
@@ -174,7 +174,7 @@
 
                     <li class="relative px-6 py-3">
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="/kesiswaan">
+                            href="{{route('kesiswaan.dashboard')}}">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                 <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
@@ -354,67 +354,82 @@
             </header>
 
             <div class="container mx-auto p-6">
-                <h1 class="text-2xl font-bold mb-5  text-gray-800 dark:text-gray-200">Daftar Wali Siswa</h1>
-
+                <h1 class="text-2xl font-bold mb-5 text-gray-800 dark:text-gray-200">Daftar Wali Siswa</h1>
+            
                 <!-- Notifikasi sukses -->
                 @if (session('success'))
                     <div class="alert alert-success bg-green-100 text-green-700 p-4 rounded mb-4">
                         {{ session('success') }}
                     </div>
                 @endif
-                <!-- Form Pencarian -->
+            
                 <!-- Search Bar dan Tambah Wali Button -->
                 <div class="flex items-center justify-between mb-5">
-                    <!-- Search Form -->
-                    <form action="{{ route('walisiswa') }}" method="GET" class="flex items-center">
-                        <input type="text" name="search" class="border rounded-l-md p-2 w-64 focus:outline-none"
-                            placeholder="Cari nama wali, NIK, email..." value="{{ request()->get('search') }}">
-                        <button type="submit" class="bg-blue-500 text-white p-2 rounded-r-md focus:outline-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                fill="currentColor">
-                                <path fill-rule="evenodd"
-                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1.293-10.707a1 1 0 00-1.414 0L9 8.586V7a1 1 0 10-2 0v2a1 1 0 001 1h2a1 1 0 100-2H9.414l.293-.293a1 1 0 000-1.414z"
-                                    clip-rule="evenodd" />
-                            </svg>
+                    <!-- Search Input -->
+                    <div class="flex items-center space-x-2">
+                        <input type="text" id="search-input" placeholder="Cari..." class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" oninput="searchTable()">
+                        <button class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400" onclick="clearSearch()">
+                            <i class="fas fa-times"></i>
                         </button>
-                    </form>
-
+                    </div>
+            
                     <!-- Tombol Tambah dan Import -->
                     <div class="flex">
-                        <button onclick="openAddModal()"
-                            class="bg-blue-500 text-white px-4 py-2 rounded-md mr-2 flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20"
-                                fill="currentColor">
+                        <button onclick="openAddModal()" class="bg-blue-500 text-white px-4 py-2 rounded-md mr-2 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd"
                                     d="M10 5a1 1 0 00-1 1v3H6a1 1 0 100 2h3v3a1 1 0 102 0v-3h3a1 1 0 100-2h-3V6a1 1 0 00-1-1z"
                                     clip-rule="evenodd" />
                             </svg>
                             Tambah Wali
                         </button>
-                        <button onclick="openWaliModal()"
-                            class="bg-green-500 text-white px-4 py-2 rounded-md flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20"
-                                fill="currentColor">
+                        <button onclick="openWaliModal()" class="bg-green-500 text-white px-4 py-2 rounded-md flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd"
-                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1.293-10.707a1 1 0 00-1.414 0L9 8.586V7a1 1 0 10-2 0v2a1 1 0 001 1h2a1 1 0 100-2H9.414l.293-.293a1 1 0 000-1.414z"
+                                    d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z"
                                     clip-rule="evenodd" />
                             </svg>
                             Import Wali
                         </button>
                     </div>
                 </div>
+            
                 <!-- Tabel Data Wali -->
                 <div class="w-full overflow-hidden rounded-lg shadow-xs">
                     <div class="w-full overflow-x-auto">
-                        <table class="w-full whitespace-no-wrap">
+                        <table id="walisTable" class="w-full whitespace-no-wrap">
                             <thead>
-                                <tr
-                                    class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                                    <th class="px-4 py-3">Nama</th>
-                                    <th class="px-4 py-3">NIK</th>
-                                    <th class="px-4 py-3">Email</th>
-                                    <th class="px-4 py-3">Jenis Kelamin</th>
-                                    <th class="px-4 py-3">Alamat</th>
+                                <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                    <th class="px-4 py-3 cursor-pointer" onclick="sortTable(0)">
+                                        Nama
+                                        <svg class="inline w-4 h-4 ml-1 hidden sort-icon" id="sort-icon-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path>
+                                        </svg>
+                                    </th>
+                                    <th class="px-4 py-3 cursor-pointer" onclick="sortTable(1)">
+                                        NIK
+                                        <svg class="inline w-4 h-4 ml-1 hidden sort-icon" id="sort-icon-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path>
+                                        </svg>
+                                    </th>
+                                    <th class="px-4 py-3 cursor-pointer" onclick="sortTable(2)">
+                                        Email
+                                        <svg class="inline w-4 h-4 ml-1 hidden sort-icon" id="sort-icon-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path>
+                                        </svg>
+                                    </th>
+                                    <th class="px-4 py-3 cursor-pointer" onclick="sortTable(3)">
+                                        Jenis Kelamin
+                                        <svg class="inline w-4 h-4 ml-1 hidden sort-icon" id="sort-icon-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path>
+                                        </svg>
+                                    </th>
+                                    <th class="px-4 py-3 cursor-pointer" onclick="sortTable(4)">
+                                        Alamat
+                                        <svg class="inline w-4 h-4 ml-1 hidden sort-icon" id="sort-icon-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path>
+                                        </svg>
+                                    </th>
                                     <th class="px-4 py-3">Aksi</th>
                                 </tr>
                             </thead>
@@ -432,12 +447,9 @@
                                                 <button
                                                     class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                                     aria-label="Edit"
-                                                    onclick="openEditModal('{{ $w->name }}', '{{ $w->nik }}','{{ $w->email }}', '{{ $w->jenis_kelamin }}','{{ $w->alamat }}')">
-                                                    <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
-                                                        viewBox="0 0 20 20">
-                                                        <path
-                                                            d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
-                                                        </path>
+                                                    onclick="openEditModal('{{ $w->user->name }}', '{{ $w->nik }}', '{{ $w->user->email }}', '{{ $w->user->jenis_kelamin }}',  '{{ $w->alamat }}')">
+                                                    <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
                                                     </svg>
                                                 </button>
 
@@ -463,55 +475,42 @@
                                         </td>
                                     </tr>
 
-                                    
 
-                                    <div id="editModal"
-                                        class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center hidden opacity-0 transition-opacity duration-300 ease-in-out">
+
+                                    <div id="editModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center hidden opacity-0 transition-opacity duration-300 ease-in-out">
                                         <div class="bg-white w-1/3 rounded-lg shadow-lg p-6 relative">
-                                            <button onclick="closeEditModal()"
-                                                class="absolute top-3 right-3 text-gray-600 font-bold text-xl">&times;</button>
+                                            <button onclick="closeEditModal()" class="absolute top-3 right-3 text-gray-600 font-bold text-xl">&times;</button>
                                             <h2 class="text-2xl font-bold mb-4">Edit Wali</h2>
-                                            <form id="editForm" action="" method="POST">
+                                            <form id="editForm"  method="POST">
                                                 @csrf
                                                 @method('PUT')
                                                 <div class="mb-4">
                                                     <label for="edit_name" class="block text-gray-700">Nama:</label>
-                                                    <input type="text" id="edit_name"
-                                                        class="w-full border rounded p-2" name="name" required>
+                                                    <input type="text" id="edit_name" class="w-full border rounded p-2" name="name" required>
                                                 </div>
                                                 <div class="mb-4">
                                                     <label for="edit_nik" class="block text-gray-700">NIK:</label>
-                                                    <input type="text" id="edit_nik"
-                                                        class="w-full border rounded p-2" name="nik" required>
+                                                    <input type="text" id="edit_nik" class="w-full border rounded p-2" name="nik" required>
                                                 </div>
                                                 <div class="mb-4">
                                                     <label for="edit_email" class="block text-gray-700">Email:</label>
-                                                    <input type="email" id="edit_email"
-                                                        class="w-full border rounded p-2" name="email" required>
+                                                    <input type="email" id="edit_email" class="w-full border rounded p-2" name="email" required>
                                                 </div>
                                                 <div class="mb-4">
-                                                    <label for="edit_jenis_kelamin" class="block text-gray-700">Jenis
-                                                        Kelamin:</label>
-                                                    <select id="edit_jenis_kelamin" name="jenis_kelamin"
-                                                        class="w-full border rounded p-2">
+                                                    <label for="edit_jenis_kelamin" class="block text-gray-700">Jenis Kelamin:</label>
+                                                    <select id="edit_jenis_kelamin" name="jenis_kelamin" class="w-full border rounded p-2">
                                                         <option value="Laki laki">Laki-laki</option>
                                                         <option value="Perempuan">Perempuan</option>
                                                     </select>
                                                 </div>
                                                 <div class="mb-4">
                                                     <label for="edit_alamat" class="block text-gray-700">Alamat:</label>
-                                                    <input type="text" id="edit_alamat"
-                                                        class="w-full border rounded p-2" name="alamat" required>
+                                                    <input type="text" id="edit_alamat" class="w-full border rounded p-2" name="alamat" required>
                                                 </div>
-                                                <div class="flex justify-end">
-                                                    <button type="button" onclick="closeEditModal()"
-                                                        class="mr-3 bg-gray-500 text-white px-4 py-2 rounded">Batal</button>
-                                                    <button type="submit"
-                                                        class="bg-blue-500 text-white px-4 py-2 rounded">Update</button>
-                                                </div>
+                                                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">Simpan Perubahan</button>
                                             </form>
                                         </div>
-                                    </div>
+                                    </div>                                    
                                 @endforeach
                             </tbody>
                         </table>
@@ -584,7 +583,11 @@
                                     <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                                         <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Import
                                             Data Wali Siswa</h3>
-                                        <div class="mt-2">
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <p>Gunakan <a href={{ route('formatwalisiwa') }}><i><u>Format
+                                                                Ini</u></i></a> Untuk Impor Data!</p>
+                                            </div>
                                             <form action="{{ route('walis.import') }}" method="POST"
                                                 enctype="multipart/form-data">
                                                 @csrf
@@ -631,36 +634,113 @@
                     }, 300);
                 }
 
-                function openEditModal(name, nik, email, jenis_kelamin, alamat, id_user) {
-                    const modal = document.getElementById('editModal');
-                    const form = document.getElementById('editForm');
+                // Function untuk membuka modal dan mengisi data
+    function openEditModal(name, nik, email, jenis_kelamin, alamat, id_user) {
+        const modal = document.getElementById('editModal');
+        const form = document.getElementById('editForm');
 
-                    // Update action URL to match the correct ID
-                    form.action = `/walis/${id_user}`;
+        // Update action URL ke route yang sesuai dengan id_user
+        form.action = `{{ route('walis.update', ['id' => '']) }}/${id_user}`;
 
-                    // Populate form fields
-                    document.getElementById('edit_name').value = name;
-                    document.getElementById('edit_nik').value = nik;
-                    document.getElementById('edit_email').value = email;
-                    document.getElementById('edit_jenis_kelamin').value = jenis_kelamin;
-                    document.getElementById('edit_alamat').value = alamat;
+        // Isi form dengan data yang diterima
+        document.getElementById('edit_name').value = name;
+        document.getElementById('edit_nik').value = nik;
+        document.getElementById('edit_email').value = email;
+        document.getElementById('edit_jenis_kelamin').value = jenis_kelamin;
+        document.getElementById('edit_alamat').value = alamat;
 
-                    // Show the modal
-                    modal.classList.remove('hidden');
-                    setTimeout(() => {
-                        modal.classList.remove('opacity-0');
-                        modal.classList.add('opacity-100');
-                    }, 10);
+        // Tampilkan modal
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+            modal.classList.remove('opacity-0');
+            modal.classList.add('opacity-100');
+        }, 10);
+    }
+
+    // Function untuk menutup modal
+    function closeEditModal() {
+        const modal = document.getElementById('editModal');
+        modal.classList.remove('opacity-100');
+        modal.classList.add('opacity-0');
+        setTimeout(() => {
+            modal.classList.add('hidden');
+        }, 300);
+    }
+
+                let currentSortCol = -1;
+            let currentSortDirection = 'asc';
+
+              // Filter Search
+    function searchTable() {
+        const searchInput = document.getElementById("search-input").value.toLowerCase();
+        const tableRows = document.querySelectorAll("#walisTable tbody tr");
+        
+        tableRows.forEach(row => {
+            const rowText = row.innerText.toLowerCase();
+            row.style.display = rowText.includes(searchInput) ? "" : "none";
+        });
+    }
+
+    // Clear Search
+    function clearSearch() {
+        document.getElementById("search-input").value = "";
+        searchTable();
+    }
+
+            // Function to sort table
+            function sortTable(colIndex) {
+                const table = document.getElementById('walisTable');
+                const tbody = table.querySelector('tbody');
+                const rows = Array.from(tbody.querySelectorAll('tr'));
+                
+                // Update sort direction
+                if (currentSortCol === colIndex) {
+                    currentSortDirection = currentSortDirection === 'asc' ? 'desc' : 'asc';
+                } else {
+                    currentSortDirection = 'asc';
                 }
+                currentSortCol = colIndex;
 
-                function closeEditModal() {
-                    const modal = document.getElementById('editModal');
-                    modal.classList.remove('opacity-100');
-                    modal.classList.add('opacity-0');
-                    setTimeout(() => {
-                        modal.classList.add('hidden');
-                    }, 300);
+                // Update sort icons
+                updateSortIcons(colIndex, currentSortDirection);
+
+                // Sort rows
+                const sortedRows = rows.sort((a, b) => {
+                    const aCol = a.querySelectorAll('td')[colIndex].textContent.trim();
+                    const bCol = b.querySelectorAll('td')[colIndex].textContent.trim();
+                    
+                    // Handle numeric values
+                    if (!isNaN(aCol) && !isNaN(bCol)) {
+                        return currentSortDirection === 'asc' 
+                            ? parseFloat(aCol) - parseFloat(bCol)
+                            : parseFloat(bCol) - parseFloat(aCol);
+                    }
+                    
+                    // Handle text values
+                    return currentSortDirection === 'asc'
+                        ? aCol.localeCompare(bCol)
+                        : bCol.localeCompare(aCol);
+                });
+
+                // Clear and re-append sorted rows
+                while (tbody.firstChild) {
+                    tbody.removeChild(tbody.firstChild);
                 }
+                sortedRows.forEach(row => tbody.appendChild(row));
+            }
+
+            // Function to update sort icons
+            function updateSortIcons(colIndex, direction) {
+                const icons = document.querySelectorAll('.sort-icon');
+                icons.forEach((icon, index) => {
+                    if (index === colIndex) {
+                        icon.classList.remove('hidden');
+                        icon.style.transform = direction === 'asc' ? 'rotate(180deg)' : 'rotate(0deg)';
+                    } else {
+                        icon.classList.add('hidden');
+                    }
+                });
+            }
 
 
                 function openWaliModal() {
@@ -682,7 +762,7 @@
                         class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Next</a>
                 @endif
             </div>
-        
+
             <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
                 <div>
                     <p class="text-sm text-gray-700">
@@ -716,13 +796,13 @@
                                 </svg>
                             </a>
                         @endif
-        
+
                         <!-- Pagination Elements -->
                         @foreach ($walis->links()->elements as $element)
                             @if (is_string($element))
                                 <span class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300">{{ $element }}</span>
                             @endif
-        
+
                             @if (is_array($element))
                                 @foreach ($element as $page => $url)
                                     @if ($page == $walis->currentPage())
@@ -735,7 +815,7 @@
                                 @endforeach
                             @endif
                         @endforeach
-        
+
                         <!-- Next Page Link -->
                         @if ($walis->hasMorePages())
                             <a href="{{ $walis->nextPageUrl() }}"
@@ -751,8 +831,8 @@
                 </div>
             </div>
         </div>
-        
-       
+
+
     </div>
         </div>
     </div>

@@ -532,18 +532,7 @@
                         <!-- Filter Kelas dan Tanggal -->
                         <form action="{{ url('laporan-kelas') }}" method="GET" class="mb-8 bg-white shadow sm:rounded-lg">
                             <div class="px-4 py-5 sm:p-6">
-                                <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-4">
-                                    {{-- <div class="form-group">
-                                        <label for="kelas">Pilih Kelas</label>
-                                        <select name="kelas" id="kelas" class="form-control">
-                                            <option value="">Semua Kelas</option>
-                                            @foreach ($kelasList as $kelas)
-                                                <option value="{{ $kelas->id }}" {{ request('kelas') == $kelas->id ? 'selected' : '' }}>
-                                                    {{ $kelas->tingkat }} {{ $kelas->jurusan->nama_jurusan }} {{ $kelas->nomor_kelas }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div> --}}
+                                <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                                     <div>
                                         <label for="start" class="block text-sm font-medium text-gray-700">Tanggal Mulai:</label>
                                         <input type="date" id="start" name="start" value="{{ $startDate }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
@@ -552,14 +541,41 @@
                                         <label for="end" class="block text-sm font-medium text-gray-700">Tanggal Akhir:</label>
                                         <input type="date" id="end" name="end" value="{{ $endDate }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                                     </div>
+                                    <div>
+                                        <label for="tingkat" class="block text-sm font-medium text-gray-700">Tingkat:</label>
+                                        <select id="tingkat" name="tingkat" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                            <option value="">Semua Tingkat</option>
+                                            <option value="10" {{ $selectedTingkat == '10' ? 'selected' : '' }}>10</option>
+                                            <option value="11" {{ $selectedTingkat == '11' ? 'selected' : '' }}>11</option>
+                                            <option value="12" {{ $selectedTingkat == '12' ? 'selected' : '' }}>12</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="jurusan" class="block text-sm font-medium text-gray-700">Jurusan:</label>
+                                        <select id="jurusan" name="jurusan" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                            <option value="">Semua Jurusan</option>
+                                            @foreach($jurusans as $j)
+                                                <option value="{{ $j->id_jurusan }}" {{ $selectedJurusan == $j->id_jurusan ? 'selected' : '' }}>
+                                                    {{ $j->nama_jurusan }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     <div class="flex items-end space-x-2">
                                         <button type="submit" class="inline-flex justify-center rounded-md bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 w-full">Filter</button>
-                                        {{-- <a href="{{ url('laporan-kelas/export') }}" class="inline-flex justify-center rounded-md bg-green-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 w-full">Ekspor</a> --}}
+                                    </div>
+                                    <div class="flex items-end space-x-2">
+                                        <button type="reset" class="inline-flex justify-center rounded-md bg-gray-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 w-full">Reset</button>
                                     </div>
                                 </div>
                             </div>
                         </form>
-            
+
+                        <!-- Summary Card -->
+                        <div class="bg-white shadow-md rounded-lg p-6 mb-8">
+                            <h2 class="text-xl font-semibold mb-4 text-gray-800">Rata-rata Kehadiran Keseluruhan: {{ number_format($averagePercentageHadir, 2) }}%</h2>
+                        </div>
+
                         <!-- Rata-rata Kehadiran -->
                         <div class="bg-white shadow-md rounded-lg p-6 mb-8">
                             <h2 class="text-2xl font-semibold mb-4 text-gray-800">Rata-Rata Kehadiran Per Kelas</h2>
@@ -567,15 +583,21 @@
                                 @foreach ($kelasData as $kelas)
                                     <div class="bg-gray-50 rounded-lg p-4">
                                         <h3 class="text-lg font-semibold mb-2 text-gray-700">{{ $kelas['kelas'] }}</h3>
+                                        {{-- <div class="text-sm text-gray-500 mb-2">Total Absensi: {{ $kelas['total'] }}</div> --}}
                                         <div class="grid grid-cols-1 gap-2">
                                             @foreach(['Hadir', 'Sakit/Izin', 'Alfa', 'Terlambat', 'TAP'] as $status)
                                                 <div>
                                                     <div class="flex items-center mb-1">
                                                         <span class="w-24 text-gray-600 font-medium">{{ $status }}:</span>
                                                         <div class="w-full bg-gray-200 rounded-full h-2.5 mx-2">
-                                                            <div class="bg-blue-600 h-2.5 rounded-full" style="width: {{ $kelas['percentage' . ($status === 'Sakit/Izin' ? 'SakitIzin' : $status)] }}%"></div>
+                                                            @php
+                                                                $statusKey = $status === 'Sakit/Izin' ? 'SakitIzin' : $status;
+                                                                $count = $kelas['count' . $statusKey];
+                                                                $percentage = $kelas['percentage' . $statusKey];
+                                                            @endphp
+                                                            <div class="bg-blue-600 h-2.5 rounded-full" style="width: {{ $percentage }}%"></div>
                                                         </div>
-                                                        <span class="text-sm font-medium text-gray-500">{{ number_format($kelas['percentage' . ($status === 'Sakit/Izin' ? 'SakitIzin' : $status)], 1) }}%</span>
+                                                        <span class="text-sm font-medium text-gray-500">{{ $count }} ({{ number_format($percentage, 1) }}%)</span>
                                                     </div>
                                                 </div>
                                             @endforeach
@@ -584,7 +606,7 @@
                                 @endforeach
                             </div>
                         </div>
-            
+
                         <!-- Tabel Kelas -->
                         <div class="bg-white shadow sm:rounded-lg overflow-hidden">
                             <div class="px-4 py-5 sm:px-6">
@@ -596,7 +618,7 @@
                                         <thead class="bg-gray-50">
                                             <tr>
                                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kelas</th>
-                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Absensi</th>
+                                                {{-- <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Absensi</th> --}}
                                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hadir</th>
                                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sakit/Izin</th>
                                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Alfa</th>
@@ -610,15 +632,32 @@
                                             @foreach($kelasData as $kelas)
                                                 <tr>
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $kelas['kelas'] }}</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $kelas['total'] }}</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $kelas['countHadir'] }}</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $kelas['countSakitIzin'] }}</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $kelas['countAlfa'] }}</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $kelas['countTerlambat'] }}</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $kelas['countTAP'] }}</td>
+                                                    {{-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $kelas['total'] }}</td> --}}
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                        {{ $kelas['countHadir'] }}
+                                                        <span class="text-xs text-gray-400">({{ number_format($kelas['percentageHadir'], 1) }}%)</span>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                        {{ $kelas['countSakitIzin'] }}
+                                                        <span class="text-xs text-gray-400">({{ number_format($kelas['percentageSakitIzin'], 1) }}%)</span>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                        {{ $kelas['countAlfa'] }}
+                                                        <span class="text-xs text-gray-400">({{ number_format($kelas['percentageAlfa'], 1) }}%)</span>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                        {{ $kelas['countTerlambat'] }}
+                                                        <span class="text-xs text-gray-400">({{ number_format($kelas['percentageTerlambat'], 1) }}%)</span>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                        {{ $kelas['countTAP'] }}
+                                                        <span class="text-xs text-gray-400">({{ number_format($kelas['percentageTAP'], 1) }}%)</span>
+                                                    </td>
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ number_format($kelas['percentageHadir'], 2) }}%</td>
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                         <form action="{{ route('kesiswaan.laporansiswa', ['kelas_id' => $kelas['kelas_id']]) }}" method="GET">
+                                                            <input type="hidden" name="start" value="{{ $startDate }}">
+                                                            <input type="hidden" name="end" value="{{ $endDate }}">
                                                             <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Lihat Detail</button>
                                                         </form>
                                                     </td>
@@ -629,14 +668,15 @@
                                 </div>
                             </div>
                         </div>
-            
+
                         <!-- Pagination -->
                         <div class="mt-4 flex justify-center">
                             {{ $kelasData->links() }}
                         </div>
+                    </div>
                 </main>
             </div>
-            
+
 
 
 

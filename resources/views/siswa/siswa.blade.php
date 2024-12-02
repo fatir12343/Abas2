@@ -112,9 +112,9 @@
                                         {{ $statusAbsen == 'Sudah Absen Pulang' ? 'gradasigrey' : ($statusAbsen == 'Sudah Absen Masuk' ? 'gradasired' : 'gradasigreen') }} shadow-sm">
                                         <div class="card-body d-flex flex-column justify-content-center align-items-center p-3">
                                             <div class="iconpresence mb-2">
-                                                <!-- Tombol absen masuk/pulang: disable jika sudah absen pulang, terlambat, izin, sudah absen kemarin, atau absen di akun lain -->
+                                                <!-- Tombol absen masuk/pulang: disable jika sudah absen pulang atau izin -->
                                                 <button type="submit" class="btn btn-link"
-                                                    {{ $statusAbsen == 'Sudah Absen Pulang' || $izin ? 'disabled' : '' }}>
+                                                    {{ $statusAbsen == 'Sudah Absen Pulang' || $statusAbsen == 'Sudah Absen Masuk' || $izin ? 'disabled' : '' }}>
                                                     <ion-icon name="camera" size="large"></ion-icon>
                                                 </button>
                                             </div>
@@ -182,7 +182,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                    
+
                                         <!-- Keterangan -->
                                         <div class="form-group row mt-3">
                                             <label class="col-md-3 col-form-label">Keterangan</label>
@@ -190,7 +190,7 @@
                                                 <input type="text" id="keterangan" name="keterangan" placeholder="Tuliskan keterangan Anda" class="form-control" required>
                                             </div>
                                         </div>
-                    
+
                                         <!-- Kamera -->
                                         <div class="form-group row mt-3">
                                             <label class="col-md-3 col-form-label">Ambil Foto</label>
@@ -482,7 +482,7 @@
     // Fungsi mengambil foto
     function takePhoto() {
         Webcam.snap(function(data_uri) {
-            document.getElementById('results').innerHTML = 
+            document.getElementById('results').innerHTML =
                 '<img src="' + data_uri + '" class="img-fluid"/>';
             document.getElementById('photo_in').value = data_uri;
             document.getElementById('my_camera').style.display = 'none';
@@ -504,7 +504,7 @@
     // Handle form submission
     document.getElementById('uploadForm').onsubmit = function(e) {
         e.preventDefault();
-        
+
         // Validasi form
         if (!this.status.value) {
             alert('Pilih status kehadiran');

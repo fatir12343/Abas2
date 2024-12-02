@@ -41,7 +41,7 @@
             <div class="col-lg-7 mb-4">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title text-center mb-4">Rekap Kehadiran</h4>
+                        <h4 class="card-title text-center mb-4">laporan absensi</h4>
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped">
                                 <thead>

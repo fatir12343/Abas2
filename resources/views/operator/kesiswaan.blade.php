@@ -512,26 +512,35 @@
 
             <!-- New Table -->
             <div class="container mx-auto mt-2">
-                <div class="flex justify-end mb-2">
+                <!-- Filter and Sort Options -->
+                <div class="flex justify-between items-center mb-2">
+                    <!-- Search Input -->
+                    <div class="flex items-center space-x-2">
+                        <input type="text" id="search-input-kesiswaan" placeholder="Cari Nama atau Email..." class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" oninput="searchTableKesiswaan()">
+                        <button class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400" onclick="clearSearchKesiswaan()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <!-- Add New Kesiswaan Button -->
                     <button onclick="toggleAddModal()" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700">Tambah Kesiswaan</button>
                 </div>
-
+            
                 <!-- Kesiswaan Table -->
-                    <div class="w-full overflow-hidden rounded-lg shadow-xs">
-                        <div class="w-full overflow-x-auto">
-                            <table class="w-full whitespace-no-wrap">
-                                <thead>
-                                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                                        <th class="px-4 py-3">Nama</th>
-                                        <th class="px-4 py-3">Email</th>
-                                        <th class="px-4 py-3">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                                    @foreach($kesiswaan as $k)
-                                        <tr class="text-gray-700 dark:text-gray-400">
-                                            <td class="px-4 py-3 text-sm">{{ $k->name }}</td>
-                                            <td class="px-4 py-3 text-sm">{{ $k->email }}</td>
+                <div class="w-full overflow-hidden rounded-lg shadow-xs">
+                    <div class="w-full overflow-x-auto">
+                        <table class="w-full whitespace-no-wrap">
+                            <thead>
+                                <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                    <th onclick="sortTable(0)" class="px-4 py-3 cursor-pointer">Nama <span id="sort-icon-2" class="ml-1 fa fa-sort"></span></th>
+                                    <th onclick="sortTable(1)" class="px-4 py-3 cursor-pointer">Email <span id="sort-icon-2" class="ml-1 fa fa-sort"></span></th>
+                                    <th class="px-4 py-3">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="kesiswaan-tbody" class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                                @foreach($kesiswaan as $k)
+                                    <tr class="text-gray-700 dark:text-gray-400">
+                                        <td class="px-4 py-3 text-sm">{{ $k->name }}</td>
+                                        <td class="px-4 py-3 text-sm">{{ $k->email }}</td>
                                             <td class="px-4 py-3 text-sm">
                                                 <div class="flex items-center justify-between space-x-2">
                                                     <div class="flex items-center space-x-1">
@@ -676,6 +685,52 @@
             </div>
 
             <script>
+             // Search Function
+    function searchTableKesiswaan() {
+        const input = document.getElementById("search-input-kesiswaan").value.toLowerCase();
+        const rows = document.querySelectorAll("#kesiswaan-tbody tr");
+
+        rows.forEach(row => {
+            const cells = row.querySelectorAll("td");
+            const match = Array.from(cells).some(cell => cell.textContent.toLowerCase().includes(input));
+            row.style.display = match ? "" : "none";
+        });
+    }
+
+    // Clear Search Input
+    function clearSearchKesiswaan() {
+        document.getElementById("search-input-kesiswaan").value = "";
+        searchTableKesiswaan();
+    }
+    let currentSort = { column: null, ascending: true };
+
+function sortTable(columnIndex) {
+    const tableBody = document.getElementById("kelas-tbody");
+    const rows = Array.from(tableBody.rows);
+
+    // Toggle sort direction
+    currentSort.ascending = currentSort.column === columnIndex ? !currentSort.ascending : true;
+    currentSort.column = columnIndex;
+
+    // Sort rows
+    rows.sort((a, b) => {
+        const cellA = a.cells[columnIndex].innerText.toLowerCase();
+        const cellB = b.cells[columnIndex].innerText.toLowerCase();
+        return cellA < cellB ? (currentSort.ascending ? -1 : 1) : (cellA > cellB ? (currentSort.ascending ? 1 : -1) : 0);
+    });
+
+    // Update table with sorted rows
+    tableBody.innerHTML = "";
+    rows.forEach(row => tableBody.appendChild(row));
+    updateSortIcons();
+}
+
+function updateSortIcons() {
+    document.querySelectorAll("thead th span").forEach(icon => icon.className = "ml-1 fa fa-sort");
+    const icon = document.getElementById(`sort-icon-${currentSort.column}`);
+    icon.className = currentSort.ascending ? "ml-1 fa fa-sort-up" : "ml-1 fa fa-sort-down";
+}
+
             function toggleModal(id) {
                 const modal = document.getElementById(`modal-${id}`);
                 modal.classList.toggle('hidden');
@@ -691,6 +746,7 @@
                 modal.classList.toggle('hidden');
             }
             </script>
+            
           </div>
         </main>
       </div>

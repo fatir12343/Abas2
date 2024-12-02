@@ -85,27 +85,32 @@ class WaliController extends Controller
         $startDate = $request->input('start');
         $endDate = $request->input('end');
     
-        // Jika tanggal tidak diisi, default ke bulan ini
+        // Set default date range to current month if not specified
         if (!$startDate || !$endDate) {
             $startDate = Carbon::now()->startOfMonth()->toDateString();
             $endDate = Carbon::now()->endOfMonth()->toDateString();
         }
     
-        // Mengambil data wali kelas berdasarkan user yang sedang login
+        // Get wali kelas data for logged-in user
         $user = Wali_Kelas::where('id_user', auth()->id())->with('kelas')->first();
-    
-        // Ambil kelas berdasarkan `nip` wali kelas yang sedang login
+        
+        // Get class based on wali kelas NIP
         $kelas = Kelas::where('nip', $user->nip)->first();
-        $students = Siswa::where('id_kelas', $kelas->id_kelas)->with('user')->get();
+        
+        // Get students with their user data (for names)
+        $students = Siswa::where('id_kelas', $kelas->id_kelas)
+            ->with('user')
+            ->get();
+        
         $siswaIds = $students->pluck('nis');
     
-        // Mengambil absensi siswa dalam rentang tanggal
+        // Get attendance data within date range
         $siswaAbsensi = Absensi::whereIn('nis', $siswaIds)
             ->whereBetween('date', [$startDate, $endDate])
             ->get();
     
-        // Hitung jumlah siswa dan jumlah kehadiran berdasarkan status
-        $totalStudents = count($students);
+        // Calculate attendance statistics
+        $totalStudents = $students->count();
         $attendanceCounts = [
             'Hadir' => $siswaAbsensi->where('status', 'Hadir')->count(),
             'Sakit' => $siswaAbsensi->where('status', 'Sakit')->count(),
@@ -115,7 +120,7 @@ class WaliController extends Controller
             'TAP' => $siswaAbsensi->where('status', 'TAP')->count(),
         ];
     
-        // Siapkan data siswa dan persentase kehadirannya
+        // Prepare student data with attendance percentages
         $studentsData = [];
     
         foreach ($students as $student) {
@@ -124,7 +129,7 @@ class WaliController extends Controller
     
             $studentData = [
                 'nis' => $student->nis,
-                'name' => $student->user->nama,
+                'name' => $student->user->name, // Make sure this matches your user model column name
                 'attendancePercentages' => [],
             ];
     
@@ -141,7 +146,7 @@ class WaliController extends Controller
             $studentsData[] = $studentData;
         }
     
-        // Hitung rata-rata persentase kehadiran
+        // Calculate average attendance percentages
         $averageAttendancePercentages = [];
         $attendanceCounts['Sakit/Izin'] = $attendanceCounts['Sakit'] + $attendanceCounts['Izin'];
     
@@ -160,8 +165,16 @@ class WaliController extends Controller
             $averageAttendancePercentages[$status] = $totalStudents > 0 ? $totalPercentage / $totalStudents : 0;
         }
     
-        return view('wali.laporansiswa', compact('studentsData', 'attendanceCounts', 'averageAttendancePercentages', 'kelas', 'startDate', 'endDate'));
+        return view('wali.laporansiswa', compact(
+            'studentsData',
+            'attendanceCounts',
+            'averageAttendancePercentages',
+            'kelas',
+            'startDate',
+            'endDate'
+        ));
     }
+
     
     
     
@@ -171,7 +184,7 @@ class WaliController extends Controller
         // Retrieve the date range from the request
         $startDate = $request->input('start');
         $endDate = $request->input('end');
-    
+
         // Set default to the current month if no dates are provided
         if (!$startDate || !$endDate) {
             $startDate = Carbon::now()->startOfMonth()->toDateString();

@@ -74,7 +74,7 @@
 
                     <li class="relative px-6 py-3">
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="/kesiswaan">
+                            href="{{route('kesiswaan.dashboard')}}">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                 <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
@@ -174,7 +174,7 @@
 
                     <li class="relative px-6 py-3">
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="/kesiswaan">
+                            href="{{route('kesiswaan.dashboard')}}">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                 <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
@@ -386,106 +386,208 @@
                         <!-- Search Bar -->
                         <div class="flex justify-between mb-4">
                             <input type="text" id="search-jurusan" onkeyup="searchJurusan()" placeholder="Cari jurusan..."
-                                class="px-4 py-2 border rounded-lg w-1/2" />
-                            <button id="add-jurusan-btn"
-                                class="mt-4 flex items-center px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700">
+                                   class="px-4 py-2 border rounded-lg w-1/2" />
+                            <button id="add-jurusan-btn" onclick="toggleAddModal()"
+                                    class="mt-4 flex items-center px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700">
                                 <svg class="w-5 h-5 mr-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg">
+                                     xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 4v16m8-8H4"></path>
+                                          d="M12 4v16m8-8H4"></path>
                                 </svg>
                                 Tambah Jurusan
                             </button>
                         </div>
-                    
+
+                        <!-- Modal for Adding Jurusan -->
+                        <div id="add-jurusan-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50">
+                            <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+                                <h3 class="text-lg font-medium">Tambah Jurusan</h3>
+                                <form action="{{ route('jurusan.store') }}" method="POST">
+                                    @csrf
+                                    <div class="mt-2">
+                                        <input type="text" name="id_jurusan" placeholder="id_jurusan"
+                                               class="w-full px-4 py-2 border rounded-lg mb-2" required />
+                                    </div>
+                                    <div class="mt-2">
+                                        <input type="text" name="nama_jurusan" placeholder="Nama Jurusan"
+                                               class="w-full px-4 py-2 border rounded-lg mb-2" required />
+                                    </div>
+                                    <div class="flex justify-end mt-4">
+                                        <button type="button" onclick="toggleAddModal()"
+                                                class="px-4 py-2 mr-2 bg-gray-500 text-white rounded-lg">Batal
+                                        </button>
+                                        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-lg">
+                                            Tambah
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
                         <!-- Jurusan Table -->
                         <div class="w-full overflow-hidden rounded-lg shadow-xs">
                             <div class="w-full overflow-x-auto">
                                 <table class="w-full whitespace-no-wrap" id="jurusan-table">
                                     <thead>
-                                        <tr
-                                            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                                            <th class="px-4 py-3">ID Jurusan</th>
-                                            <th class="px-4 py-3">Nama Jurusan</th>
-                                            <th class="px-4 py-3">Actions</th>
-                                        </tr>
+                                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-gray-50">
+                                        <th onclick="sortTable(0)" class="cursor-pointer px-4 py-3">
+                                            ID Jurusan
+                                            <svg id="sort-icon-0" class="inline w-4 h-4 ml-1 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path>
+                                            </svg>
+                                        </th>
+                                        <th onclick="sortTable(1)" class="cursor-pointer px-4 py-3">
+                                            Nama Jurusan
+                                            <svg id="sort-icon-1" class="inline w-4 h-4 ml-1 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path>
+                                            </svg>
+                                        </th>
+                                        <th class="px-4 py-3">Actions</th>
+                                    </tr>
                                     </thead>
-                                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                                        @foreach ($jurusan as $j)
-                                            <tr class="text-gray-700 dark:text-gray-400">
-                                                <td class="px-4 py-3 text-sm">{{ $j->id_jurusan }}</td>
-                                                <td class="px-4 py-3 text-sm">{{ $j->nama_jurusan }}</td>
-                                                <td class="px-4 py-3 text-sm">
-                                                    <div class="flex items-center space-x-4 text-sm">
-                                                        <button
-                                                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                                            aria-label="Edit"
-                                                            onclick="toggleModalEdit('{{ $j->id_jurusan }}')">
-                                                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
-                                                                <path
-                                                                    d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
-                                                                </path>
-                                                            </svg>
+                                    <tbody class="bg-white divide-y" id="jurusan-body">
+                                    @foreach ($jurusan as $j)
+                                        <tr class="text-gray-700" data-id="{{ $j->id_jurusan }}">
+                                            <td class="px-4 py-3 text-sm">{{ $j->id_jurusan }}</td>
+                                            <td class="px-4 py-3 text-sm">{{ $j->nama_jurusan }}</td>
+                                            <td class="px-4 py-3 text-sm">
+                                                <div class="flex items-center space-x-4 text-sm">
+                                                    <button
+                                                        class="flex items-center px-2 py-2 text-sm text-purple-600 rounded-lg hover:bg-gray-200"
+                                                        aria-label="Edit" onclick="toggleModalEdit('{{ $j->id_jurusan }}')">
+                                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                                            <path
+                                                                d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
+                                                            </path>
+                                                        </svg>
+                                                    </button>
+                                                    <button
+                                                        class="flex items-center px-2 py-2 text-sm text-red-600 rounded-lg hover:bg-gray-200"
+                                                        aria-label="Delete" onclick="toggleModal('{{ $j->id_jurusan }}')">
+                                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                                            <path fill-rule="evenodd"
+                                                                  d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                                                  clip-rule="evenodd"></path>
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Modal Edit Jurusan -->
+                                        <div id="modal-edit-{{ $j->id_jurusan }}" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50">
+                                            <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+                                                <div class="mt-3 text-center">
+                                                    <h3 class="text-lg font-medium">Edit Jurusan</h3>
+                                                    <form action="{{ route('jurusan.update', $j->id_jurusan) }}" method="POST">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <div class="mt-2">
+                                                            <input type="text" name="nama_jurusan" value="{{ $j->nama_jurusan }}"
+                                                                   class="w-full px-4 py-2 border rounded-lg mb-2" required />
+                                                        </div>
+                                                        <div class="flex justify-end mt-4">
+                                                            <button type="button" onclick="toggleModalEdit('{{ $j->id_jurusan }}')"
+                                                                    class="px-4 py-2 mr-2 bg-gray-500 text-white rounded-lg">Batal
+                                                            </button>
+                                                            <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-lg">
+                                                                Update
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal Delete -->
+                                        <div id="modal-{{ $j->id_jurusan }}" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden">
+                                            <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+                                                <h5 class="text-lg font-bold">Peringatan!!</h5>
+                                                <p>Apakah Anda yakin ingin menghapus jurusan {{ $j->nama_jurusan }}?</p>
+                                                <form action="{{ route('jurusan.destroy', $j->id_jurusan) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <div class="flex justify-end mt-4">
+                                                        <button type="button" onclick="toggleModal('{{ $j->id_jurusan }}')"
+                                                                class="px-4 py-2 mr-2 bg-gray-500 text-white rounded-lg">Batal
                                                         </button>
-                                                        <button
-                                                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                                            aria-label="Delete"
-                                                            onclick="toggleModal('{{ $j->id_jurusan }}')">
-                                                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
-                                                                <path fill-rule="evenodd"
-                                                                    d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                                                    clip-rule="evenodd"></path>
-                                                            </svg>
+                                                        <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-lg">
+                                                            Hapus
                                                         </button>
                                                     </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                                </form>
+                                            </div>
+                                        </div>
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
                         </div>
+                    </div>
 
-                        <script>
-                            // Toggle modal functions (unchanged)
-                            function toggleModal(id) {
-                                const modal = document.getElementById(`modal-${id}`);
-                                modal.classList.toggle('hidden');
-                            }
+                    <script>
+                        function toggleAddModal() {
+                            const modal = document.getElementById('add-jurusan-modal');
+                            modal.classList.toggle('hidden');
+                        }
 
-                            function toggleModalEdit(id) {
-                                const modal = document.getElementById(`modal-edit-${id}`);
-                                modal.classList.toggle('hidden');
-                            }
+                        function toggleModalEdit(id) {
+                            const modal = document.getElementById(`modal-edit-${id}`);
+                            modal.classList.toggle('hidden');
+                        }
 
-                            function toggleAddModal() {
-                                const modal = document.getElementById('add-jurusan-modal');
-                                modal.classList.toggle('hidden');
-                            }
+                        function toggleModal(id) {
+                            const modal = document.getElementById(`modal-${id}`);
+                            modal.classList.toggle('hidden');
+                        }
 
-                            document.getElementById('add-jurusan-btn').addEventListener('click', toggleAddModal);
+                        function sortTable(n) {
+                            const table = document.getElementById("jurusan-table");
+                            const rows = Array.from(table.rows).slice(1); // Get rows, skipping the header
+                            const sortDirection = table.dataset.sortDirection === "asc" ? "desc" : "asc";
 
-                            // Search function
-                            function searchJurusan() {
-                                let input, filter, table, tr, td, i, txtValue;
-                                input = document.getElementById('search-jurusan');
-                                filter = input.value.toUpperCase();
-                                table = document.getElementById('jurusan-table');
-                                tr = table.getElementsByTagName('tr');
+                            rows.sort((a, b) => {
+                                const aText = a.cells[n].textContent.trim();
+                                const bText = b.cells[n].textContent.trim();
+                                return sortDirection === "asc" ? aText.localeCompare(bText) : bText.localeCompare(aText);
+                            });
 
-                                for (i = 1; i < tr.length; i++) { // Mulai dari 1 untuk skip header
-                                    td = tr[i].getElementsByTagName('td')[1]; // Kolom nama jurusan
-                                    if (td) {
-                                        txtValue = td.textContent || td.innerText;
-                                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                                            tr[i].style.display = "";
-                                        } else {
-                                            tr[i].style.display = "none";
-                                        }
-                                    }
-                                }
-                            }
-                        </script>
+                            // Remove existing rows
+                            const tbody = table.querySelector('tbody');
+                            tbody.innerHTML = "";
+
+                            // Append sorted rows
+                            rows.forEach(row => tbody.appendChild(row));
+
+                            // Update sort direction
+                            table.dataset.sortDirection = sortDirection;
+
+                            // Update sort icons
+                            updateSortIcons(n, sortDirection);
+                        }
+
+                        function updateSortIcons(n, direction) {
+                            const icons = document.querySelectorAll('[id^="sort-icon-"]');
+                            icons.forEach(icon => icon.classList.add('hidden'));
+                            const sortIcon = document.getElementById(`sort-icon-${n}`);
+                            sortIcon.classList.remove('hidden');
+                            sortIcon.style.transform = direction === 'asc' ? 'rotate(180deg)' : 'rotate(0deg)';
+                        }
+
+                        function searchJurusan() {
+                            const input = document.getElementById("search-jurusan").value.toLowerCase();
+                            const rows = document.querySelectorAll("#jurusan-body tr");
+
+                            rows.forEach(row => {
+                                const cells = row.getElementsByTagName("td");
+                                const match = Array.from(cells).some(cell => cell.textContent.toLowerCase().includes(input));
+                                row.style.display = match ? "" : "none";
+                            });
+                        }
+                    </script>
+
+
+
                         <!-- Pagination -->
                         <div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
                             <div class="flex flex-1 justify-between sm:hidden">

@@ -15,10 +15,10 @@ class waktu_absen extends Model
     protected $keyType = 'int';
 
     protected $fillable = [
-        'jam_absen',
-        'batas_absen_masuk',
-        'jam_pulang',
-        'batas_absen_pulang'
+        'mulai_absen',
+        'batas_absen',
+        'mulai_pulang',
+        'batas_pulang'
     ];
 
     public function waktu_absen()

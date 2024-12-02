@@ -74,7 +74,7 @@
 
                     <li class="relative px-6 py-3">
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="/kesiswaan">
+                            href="{{route('kesiswaan.dashboard')}}">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                 <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
@@ -174,7 +174,7 @@
 
                     <li class="relative px-6 py-3">
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="/kesiswaan">
+                            href="{{route('kesiswaan.dashboard')}}">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                 <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
@@ -386,9 +386,8 @@
                     <div class="container mx-auto mt-2">
                         <!-- Search Bar -->
                         <div class="flex justify-between mb-4">
-                            <input type="text" id="search-wali" placeholder="Cari Wali Kelas..."
-                                class="px-4 py-2 w-1/3 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
-                                onkeyup="searchWali()" />
+                            <input id="searchInput" onkeyup="searchTable()" type="text" placeholder="Cari..."
+                            class="px-4 py-2 border rounded-md text-sm">
                             <div class="flex justify-end">
                                 <button id="add-wali-btn"
                                     class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 m-2 flex items-center">
@@ -415,157 +414,116 @@
                             <div class="w-full overflow-x-auto">
                                 <table class="w-full whitespace-no-wrap">
                                     <thead>
-                                        <tr
-                                            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                                            <th class="px-4 py-3">NIP</th>
-                                            <th class="px-4 py-3">ID_user</th>
-                                            <th class="px-4 py-3">Jenis Kelamin</th>
-                                            <th class="px-4 py-3">NUPTK</th>
+                                        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                            <th onclick="sortTable(0)" class="cursor-pointer px-4 py-3">
+                                                NIP <span id="sort-icon-0" class="ml-1 fa fa-sort"></span>
+                                            </th>
+                                            <th onclick="sortTable(1)" class="cursor-pointer px-4 py-3">
+                                                ID User <span id="sort-icon-1" class="ml-1 fa fa-sort"></span>
+                                            </th>
+                                            <th onclick="sortTable(2)" class="cursor-pointer px-4 py-3">
+                                                Jenis Kelamin <span id="sort-icon-2" class="ml-1 fa fa-sort"></span>
+                                            </th>
+                                            <th onclick="sortTable(3)" class="cursor-pointer px-4 py-3">
+                                                NUPTK <span id="sort-icon-3" class="ml-1 fa fa-sort"></span>
+                                            </th>
                                             <th class="px-4 py-3">Actions</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="wali-tbody"
-                                        class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                                        @foreach ($wali as $wali)
-                                            <tr class="text-gray-700 dark:text-gray-400">
-                                                <td class="px-4 py-3 text-sm">{{ $wali->nip }}</td>
-                                                <td class="px-4 py-3 text-sm">{{ $wali->id_user }}</td>
-                                                <td class="px-4 py-3 text-sm">{{ $wali->jenis_kelamin }}</td>
-                                                <td class="px-4 py-3 text-sm">{{ $wali->nuptk }}</td>
-                                                <td class="px-4 py-3 text-sm">
-                                                    <div class="flex items-center space-x-1">
-                                                        <button
-                                                            class="flex items-center px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                                            aria-label="Edit"
-                                                            onclick="toggleModalEdit('{{ $wali->id_user }}')">
-                                                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
-                                                                viewBox="0 0 20 20">
-                                                                <path
-                                                                    d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
-                                                                </path>
-                                                            </svg>
-                                                        </button>
+                                    <tbody id="wali-tbody" class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                                        <!-- Data rows go here -->
+                                        @foreach ($wali as $item)
+                                        <tr class="text-gray-700 dark:text-gray-400">
+                                            <td class="px-4 py-3 text-sm">{{ $item->nip }}</td>
+                                            <td class="px-4 py-3 text-sm">{{ $item->id_user }}</td>
+                                            <td class="px-4 py-3 text-sm">{{ $item->jenis_kelamin }}</td>
+                                            <td class="px-4 py-3 text-sm">{{ $item->nuptk }}</td>
+                                            <td class="px-4 py-3 text-sm">
+                                                <div class="flex items-center space-x-1">
+                                                    <button class="flex items-center px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray" aria-label="Edit" onclick="toggleModalEdit('{{ $item->id_user }}')">
+                                                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                                                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
+                                                        </svg>
+                                                    </button>
 
-                                                        <button
-                                                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                                            aria-label="Delete"
-                                                            onclick="toggleModal('{{ $wali->id_user }}')">
-                                                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
-                                                                viewBox="0 0 20 20">
-                                                                <path fill-rule="evenodd"
-                                                                    d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                                                    clip-rule="evenodd"></path>
-                                                            </svg>
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <div id="modal-edit-{{ $wali->id_user }}"
-                                                class="fixed inset-0 z-50 hidden overflow-y-auto">
-                                                <div class="flex items-center justify-center min-h-screen px-4">
-                                                    <div
-                                                        class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
-                                                        <div
-                                                            class="bg-gray-100 px-4 py-2 flex justify-between items-center">
-                                                            <h5 class="text-lg font-bold">Edit Wali Kelas</h5>
-                                                            <button class="text-gray-500"
-                                                                onclick="toggleModal('edit-{{ $wali->id_user }}')">&times;</button>
-                                                        </div>
-                                                        <form action="{{ route('operator.wali.update', $wali->id_user) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('PUT')
-                                                            <div class="px-4 py-6">
-                                                                <div class="mb-4">
-                                                                    <label for="nip"
-                                                                        class="block text-sm font-medium text-gray-700">NIP</label>
-                                                                    <input type="text" id="nip" name="nip"
-                                                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-                                                                        required value="{{ $wali->nip }}">
-                                                                </div>
-                                                                <div class="mb-4">
-                                                                    <label for="email"
-                                                                        class="block text-sm font-medium text-gray-700">Email</label>
-                                                                    <input type="email" id="email" name="email"
-                                                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-                                                                        required value="{{ $wali->user }}">
-                                                                </div>
-                                                                <div class="mb-4">
-                                                                    <label for="password"
-                                                                        class="block text-sm font-medium text-gray-700">Password</label>
-                                                                    <input type="password" id="password" name="password"
-                                                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-                                                                        placeholder="Leave blank to keep current password">
-                                                                </div>
-                                                                <div class="mb-4">
-                                                                    <label for="jenis_kelamin"
-                                                                        class="block text-sm font-medium text-gray-700">Jenis
-                                                                        Kelamin</label>
-                                                                    <select id="jenis_kelamin" name="jenis_kelamin"
-                                                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-                                                                        required>
-                                                                        <option value="laki laki"
-                                                                            {{ $wali->jenis_kelamin == 'laki laki' ? 'selected' : '' }}>
-                                                                            Laki Laki</option>
-                                                                        <option value="perempuan"
-                                                                            {{ $wali->jenis_kelamin == 'perempuan' ? 'selected' : '' }}>
-                                                                            Perempuan</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="mb-4">
-                                                                    <label for="nip"
-                                                                        class="block text-sm font-medium text-gray-700">NIP</label>
-                                                                    <input type="text" id="nip" name="nip"
-                                                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-                                                                        required value="{{ $wali->nip }}">
-                                                                </div>
-                                                            </div>
-                                                            <div class="bg-gray-100 px-4 py-3 flex justify-end space-x-2">
-                                                                <button type="button"
-                                                                    class="bg-gray-500 text-white px-4 py-2 rounded"
-                                                                    onclick="toggleModal('edit-{{ $wali->id_user }}')">Batal</button>
-                                                                <button type="submit"
-                                                                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Simpan</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
+                                                    <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray" aria-label="Delete" onclick="toggleModal('{{ $item->id_user }}')">
+                                                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                                                            <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                                                        </svg>
+                                                    </button>
                                                 </div>
-                                            </div>
+                                            </td>
+                                        </tr>
 
-                                            <div id="modal-{{ $wali->id_user }}"
-                                                class="fixed inset-0 z-50 hidden overflow-y-auto">
-                                                <div class="flex items-center justify-center min-h-screen px-4">
-                                                    <div
-                                                        class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
-                                                        <div
-                                                            class="bg-gray-100 px-4 py-2 flex justify-between items-center">
-                                                            <h5 class="text-lg font-bold">Peringatan!!</h5>
-                                                            <button class="text-gray-500"
-                                                                onclick="toggleModal('{{ $wali->id_user }}')">&times;</button>
-                                                        </div>
+                                        <!-- Edit Modal -->
+                                        <div id="modal-edit-{{ $item->id_user }}" class="fixed inset-0 z-50 hidden overflow-y-auto">
+                                            <div class="flex items-center justify-center min-h-screen px-4">
+                                                <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
+                                                    <div class="bg-gray-100 px-4 py-2 flex justify-between items-center">
+                                                        <h5 class="text-lg font-bold">Edit Wali Kelas</h5>
+                                                        <button class="text-gray-500" onclick="toggleModal('edit-{{ $item->id_user }}')">&times;</button>
+                                                    </div>
+                                                    <form action="{{ route('operator.wali.update', $item->id_user) }}" method="POST">
+                                                        @csrf
+                                                        @method('PUT')
                                                         <div class="px-4 py-6">
-                                                            Apakah anda yakin ingin menghapus ini?
+                                                            <div class="mb-4">
+                                                                <label for="nip" class="block text-sm font-medium text-gray-700">NIP</label>
+                                                                <input type="text" id="nip" name="nip" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required value="{{ $item->nip }}">
+                                                            </div>
+                                                            <div class="mb-4">
+                                                                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                                                                <input type="email" id="email" name="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required value="{{ $item->user->email }}">
+                                                            </div>
+                                                            <div class="mb-4">
+                                                                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                                                                <input type="password" id="password" name="password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" placeholder="Leave blank to keep current password">
+                                                            </div>
+                                                            <div class="mb-4">
+                                                                <label for="jenis_kelamin" class="block text-sm font-medium text-gray-700">Jenis Kelamin</label>
+                                                                <select id="jenis_kelamin" name="jenis_kelamin" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+                                                                    <option value="laki laki" {{ $item->jenis_kelamin == 'laki laki' ? 'selected' : '' }}>Laki Laki</option>
+                                                                    <option value="perempuan" {{ $item->jenis_kelamin == 'perempuan' ? 'selected' : '' }}>Perempuan</option>
+                                                                </select>
+                                                            </div>
                                                         </div>
                                                         <div class="bg-gray-100 px-4 py-3 flex justify-end space-x-2">
-                                                            <button class="bg-gray-500 text-white px-4 py-2 rounded"
-                                                                onclick="toggleModal('{{ $wali->id_user }}')">Tidak</button>
-                                                            <button class="bg-red-500 text-white px-4 py-2 rounded"
-                                                                onclick="event.preventDefault(); document.getElementById('destroy-form{{ $wali->id_user }}').submit();">Yakin</button>
+                                                            <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded" onclick="toggleModal('edit-{{ $item->id_user }}')">Batal</button>
+                                                            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Simpan</button>
                                                         </div>
-                                                        <form id="destroy-form{{ $wali->id_user }}"
-                                                            action="{{ route('operator.wali.destroy', $wali->id_user) }}"
-                                                            method="POST" class="hidden">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                        </form>
-                                                    </div>
+                                                    </form>
                                                 </div>
                                             </div>
+                                        </div>
+
+                                        <!-- Delete Modal -->
+                                        <div id="modal-{{ $item->id_user }}" class="fixed inset-0 z-50 hidden overflow-y-auto">
+                                            <div class="flex items-center justify-center min-h-screen px-4">
+                                                <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
+                                                    <div class="bg-gray-100 px-4 py-2 flex justify-between items-center">
+                                                        <h5 class="text-lg font-bold">Peringatan!!</h5>
+                                                        <button class="text-gray-500" onclick="toggleModal('{{ $item->id_user }}')">&times;</button>
+                                                    </div>
+                                                    <div class="px-4 py-6">
+                                                        Apakah anda yakin ingin menghapus ini?
+                                                    </div>
+                                                    <div class="bg-gray-100 px-4 py-3 flex justify-end space-x-2">
+                                                        <button class="bg-gray-500 text-white px-4 py-2 rounded" onclick="toggleModal('{{ $item->id_user }}')">Tidak</button>
+                                                        <button class="bg-red-500 text-white px-4 py-2 rounded" onclick="event.preventDefault(); document.getElementById('destroy-form{{ $item->id_user }}').submit();">Yakin</button>
+                                                    </div>
+                                                    <form id="destroy-form{{ $item->id_user }}" action="{{ route('operator.wali.destroy', $item->id_user) }}" method="POST" class="hidden">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                         @endforeach
                                     </tbody>
                                 </table>
                             </div>
                         </div>
+
 
                         <!-- Modal Form -->
                         <div id="wali-modal" class="hidden fixed z-10 inset-0 overflow-y-auto">
@@ -618,9 +576,9 @@
                                                     </select>
                                                 </div>
                                                 <div class="mb-4">
-                                                    <label for="nip"
-                                                        class="block text-sm font-medium text-gray-700">NIP</label>
-                                                    <input type="text" id="nip" name="nip"
+                                                    <label for="nuptk"
+                                                        class="block text-sm font-medium text-gray-700">NUPTK</label>
+                                                    <input type="text" id="nuptk" name="nuptk"
                                                         class="mt-1 block w-full" required>
                                                 </div>
                                                 <div>
@@ -636,58 +594,46 @@
                             </div>
                         </div>
 
-                        <div id="importWaliModal" class="fixed z-10 inset-0 overflow-y-auto hidden"
-                            aria-labelledby="modal-title" role="dialog" aria-modal="true">
-                            <div
-                                class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-                                    aria-hidden="true"></div>
-
-                                <!-- Modal Content -->
-                                <div
-                                    class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                        <div id="importWaliModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+                                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                                     <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                                         <div class="sm:flex sm:items-start">
-                                            <div
-                                                class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
-                                                <!-- Icon Import -->
-                                                <svg class="h-6 w-6 text-blue-600" xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                        d="M12 4v16m8-8H4" />
+                                            <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
+                                                <svg class="h-6 w-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                                                 </svg>
                                             </div>
                                             <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                                                    Import Data Wali Kelas</h3>
-                                                <div class="mt-2">
-                                                    <form action="{{ route('wali.import') }}" method="POST"
-                                                        enctype="multipart/form-data">
-                                                        @csrf
-                                                        <div class="mb-4">
-                                                            <label class="block text-sm font-medium text-gray-700">Pilih
-                                                                File (.xlsx atau .csv)</label>
-                                                            <input type="file" name="importFile" accept=".xlsx, .csv"
-                                                                required
-                                                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                                        </div>
-                                                        <div class="flex justify-end">
-                                                            <button type="button"
-                                                                class="mr-3 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
-                                                                onclick="closeWaliModal()">Batal</button>
-                                                            <button type="submit"
-                                                                class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Import</button>
-                                                        </div>
-                                                    </form>
+                                                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Import Data Wali Kelas</h3>
+                                                <div class="modal-body">
+                                                <div class="row">
+                                                    <p>Gunakan <a href={{ route('format-walikelas') }}><i><u>Format
+                                                                    Ini</u></i></a> Untuk Impor Data!</p>
                                                 </div>
+                                                <form action="{{ route('wali.import') }}" method="POST" enctype="multipart/form-data">
+                                                    @csrf
+                                                    <div class="mt-2">
+                                                        <label class="block text-sm font-medium text-gray-700">Pilih File (.xlsx atau .csv)</label>
+                                                        <input type="file" name="importFile" accept=".xlsx, .csv" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+                                                    </div>
+                                                    <div class="mt-4 flex justify-end">
+                                                        <button type="button" class="mr-3 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" onclick="closeWaliModal()">Batal</button>
+                                                        <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Import</button>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
 
+                        
+                    </div>
                         <script>
                             //script by davi
                             function toggleModal(nip) {
@@ -791,114 +737,159 @@
                                 });
                             });
 
+                            let currentSort = { column: null, ascending: true };
+
+                            function searchTable() {
+                                let input = document.getElementById("searchInput").value.toUpperCase();
+                                let table = document.getElementById("wali-tbody");
+                                let rows = table.getElementsByTagName("tr");
+                                for (let i = 0; i < rows.length; i++) {
+                                    let cells = rows[i].getElementsByTagName("td");
+                                    let match = false;
+                                    for (let j = 0; j < cells.length; j++) {
+                                        if (cells[j].textContent.toUpperCase().indexOf(input) > -1) {
+                                            match = true;
+                                            break;
+                                        }
+                                    }
+                                    rows[i].style.display = match ? "" : "none";
+                                }
+                            }
+
+                            function sortTable(columnIndex) {
+                            const tableBody = document.getElementById("wali-tbody");
+                            const rows = Array.from(tableBody.rows);
+
+                            // Toggle sorting direction
+                            currentSort.ascending = currentSort.column === columnIndex ? !currentSort.ascending : true;
+                            currentSort.column = columnIndex;
+
+                            // Sort rows
+                            rows.sort((a, b) => {
+                                const cellA = a.cells[columnIndex].innerText.toLowerCase();
+                                const cellB = b.cells[columnIndex].innerText.toLowerCase();
+
+                                if (cellA < cellB) return currentSort.ascending ? -1 : 1;
+                                if (cellA > cellB) return currentSort.ascending ? 1 : -1;
+                                return 0;
+                            });
+
+                            // Update table body
+                            tableBody.innerHTML = "";
+                            rows.forEach(row => tableBody.appendChild(row));
+
+                            // Update icons
+                            updateSortIcons();
+                        }
+
+                        function updateSortIcons() {
+                            // Reset all icons to default
+                            document.querySelectorAll("thead th span").forEach(icon => {
+                                icon.className = "ml-1 fa fa-sort";
+                            });
+
+                            // Update icon for the current sorted column
+                            const icon = document.getElementById(`sort-icon-${currentSort.column}`);
+                            if (currentSort.ascending) {
+                                icon.className = "ml-1 fa fa-sort-up";
+                            } else {
+                                icon.className = "ml-1 fa fa-sort-down";
+                            }
+                        }
+
+
                             function openWaliModal() {
-                                document.getElementById('importWaliModal').classList.remove('hidden');
+                                document.getElementById("importWaliModal").classList.remove("hidden");
                             }
 
                             function closeWaliModal() {
-                                document.getElementById('importWaliModal').classList.add('hidden');
+                                document.getElementById("importWaliModal").classList.add("hidden");
                             }
 
-                            function searchWali() {
-                                const searchInput = document.getElementById('search-wali').value.toLowerCase();
-                                const waliRows = document.querySelectorAll('.wali-row');
+                            // Initial Pagination
+                            window.onload = paginateTable;
 
-                                waliRows.forEach(row => {
-                                    const nip = row.cells[0].textContent.toLowerCase();
-                                    const idUser = row.cells[1].textContent.toLowerCase();
-
-                                    if (nip.includes(searchInput) || idUser.includes(searchInput)) {
-                                        row.style.display = '';
-                                    } else {
-                                        row.style.display = 'none';
-                                    }
-                                });
-                            }
                         </script>
+                      <div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+                        <div class="flex flex-1 justify-between sm:hidden">
+                            @if ($wali->previousPageUrl())
+                                <a href="{{ $wali->previousPageUrl() }}"
+                                    class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Previous</a>
+                            @endif
+                            @if ($wali->nextPageUrl())
+                                <a href="{{ $wali->nextPageUrl() }}"
+                                    class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Next</a>
+                            @endif
+                        </div>
 
-                        {{-- <div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
-                            <div class="flex flex-1 justify-between sm:hidden">
-                                @if ($wali->previousPageUrl())
-                                    <a href="{{ $wali->previousPageUrl() }}"
-                                        class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Previous</a>
-                                @endif
-                                @if ($wali->nextPageUrl())
-                                    <a href="{{ $wali->nextPageUrl() }}"
-                                        class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Next</a>
-                                @endif
+                        <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+                            <div>
+                                <p class="text-sm text-gray-700">
+                                    Showing
+                                    <span class="font-medium">{{ $wali->firstItem() }}</span>
+                                    to
+                                    <span class="font-medium">{{ $wali->lastItem() }}</span>
+                                    of
+                                    <span class="font-medium">{{ $wali->total() }}</span>
+                                    results
+                                </p>
                             </div>
+                            <div>
+                                <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm"
+                                    aria-label="Pagination">
+                                    @if ($wali->onFirstPage())
+                                        <span
+                                            class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300">
+                                            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd"
+                                                    d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </span>
+                                    @else
+                                        <a href="{{ $wali->previousPageUrl() }}"
+                                            class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20">
+                                            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd"
+                                                    d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </a>
+                                    @endif
 
-                            <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
-                                <div>
-                                    <p class="text-sm text-gray-700">
-                                        Showing
-                                        <span class="font-medium">{{ $wali->firstItem() }}</span>
-                                        to
-                                        <span class="font-medium">{{ $wali->lastItem() }}</span>
-                                        of
-                                        <span class="font-medium">{{ $wali->total() }}</span>
-                                        results
-                                    </p>
-                                </div>
-                                <div>
-                                    <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm"
-                                        aria-label="Pagination">
-                                        @if ($wali->onFirstPage())
+                                    @foreach ($wali->links()->elements as $element)
+                                        @if (is_string($element))
                                             <span
-                                                class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300">
-                                                <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                                    <path fill-rule="evenodd"
-                                                        d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z"
-                                                        clip-rule="evenodd" />
-                                                </svg>
-                                            </span>
-                                        @else
-                                            <a href="{{ $wali->previousPageUrl() }}"
-                                                class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20">
-                                                <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                                    <path fill-rule="evenodd"
-                                                        d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z"
-                                                        clip-rule="evenodd" />
-                                                </svg>
-                                            </a>
+                                                class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300">{{ $element }}</span>
                                         @endif
 
-                                        @foreach ($wali->links()->elements as $element)
-                                            @if (is_string($element))
-                                                <span
-                                                    class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300">{{ $element }}</span>
-                                            @endif
-
-                                            @if (is_array($element))
-                                                @foreach ($element as $page => $url)
-                                                    @if ($page == $wali->currentPage())
-                                                        <span aria-current="page"
-                                                            class="relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white">{{ $page }}</span>
-                                                    @else
-                                                        <a href="{{ $url }}"
-                                                            class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">{{ $page }}</a>
-                                                    @endif
-                                                @endforeach
-                                            @endif
-                                        @endforeach
-
-                                        @if ($wali->hasMorePages())
-                                            <a href="{{ $wali->nextPageUrl() }}"
-                                                class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                                                <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                                    <path fill-rule="evenodd"
-                                                        d="M8.22 14.78a.75.75 0 0 1 0-1.06L11.94 10 8.22 6.28a.75.75 0 1 1 1.06-1.06l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0Z"
-                                                        clip-rule="evenodd" />
-                                                </svg>
-                                            </a>
+                                        @if (is_array($element))
+                                            @foreach ($element as $page => $url)
+                                                @if ($page == $wali->currentPage())
+                                                    <span aria-current="page"
+                                                        class="relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white">{{ $page }}</span>
+                                                @else
+                                                    <a href="{{ $url }}"
+                                                        class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">{{ $page }}</a>
+                                                @endif
+                                            @endforeach
                                         @endif
-                                    </nav>
-                                </div>
+                                    @endforeach
+
+                                    @if ($wali->hasMorePages())
+                                        <a href="{{ $wali->nextPageUrl() }}"
+                                            class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                                            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd"
+                                                    d="M8.22 14.78a.75.75 0 0 1 0-1.06L11.94 10 8.22 6.28a.75.75 0 1 1 1.06-1.06l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0Z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </a>
+                                    @endif
+                                </nav>
                             </div>
-                        </div> --}}
-                        {{-- <div class="pagination">
-                            {{ $wali->links() }}
-                        </div> --}}
+                        </div>
+                    </div>
                     </div>
                 </div>
             </main>
